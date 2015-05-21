@@ -1,0 +1,12 @@
+961125 - updates to amip2.parm.txt
+
+-	changed precision on psl from 0.1 mb to 0.01 mb (Pa)
+-	added bcs variables to distinquish Taylor et al psuedo obs from real obs
+-	merged in changes from ../amip2.parms from LATS
+-	changed compression on radiation to 0.1 Wm^2
+
+
+961203 - update to amip2.parm.txt
+
+-	increased precision on SST to 0.01 deg
+

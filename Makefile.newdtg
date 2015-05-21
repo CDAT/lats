@@ -1,0 +1,21 @@
+#
+#
+include ./config.os.newdtg
+
+OBJ = 
+
+LOCAL_FLAGS =  
+
+LOCAL_LIBS =  
+
+TARGETS = newdtg
+
+target : $(TARGETS) 
+
+newdtg : newdtg.c 
+	$(CC)  $(CFLAGS) $(LOCAL_FLAGS)  newdtg.c -o newdtg
+
+clean :
+	rm -f $(TARGETS) 
+	rm -f *.o 
+	rm -f core 

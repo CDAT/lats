@@ -1,0 +1,245 @@
+#---------------------------------------------------------------------------------------------------
+#
+# Sample LATS parameter file
+#
+# A parameter file is divided into sections, indicated by '#!' comments. The sections may appear
+# in any order. The 'center' section is only required for GRIB output.
+#
+# #!variable
+#
+#   Variable table: defines variable-specific parameters
+#
+# #!vert
+#
+#   Vertical dimension type table: defines categories of vertical dimensions
+#
+# #!center
+#
+#   Center table: defines GRIB parameters which identify the originating center.
+#
+# #!qc
+#
+#   Quality control marks table: defines the values controlling the quality control routines.
+# 
+#---------------------------------------------------------------------------------------------------
+#!variable
+#
+# Variables
+#   (max number of entries = LATS_MAX_PARMS in lats.h)
+#
+# The format of each record is:
+#   name | id | title | units | datatype | surface | decimal_scale_factor | precision | comments_1 | comments_2
+#
+# name = variable name (no blanks)
+# id = GRIB parameter number (>127 => AMIP-2 specific)
+# title = long name (description)
+# units = variable units
+# datatype = 'float' or 'int'
+# level_type = level_type in vertical dimension table, or blank if values must be defined via lats_vert_dim
+# decimal_scale_factor = GRIB decimal scale factor, or -999 if no decimal scaling
+# precision = number of bits of precision if stored in GRIB,
+#             or -999 for level-dependent bit length (ignored if decimal_scale_factor is set)
+# comments_1 = comments, ignored by LATS
+# comments_2 = comments, ignored by LATS
+#
+
+# AMIP2-specific variables
+
+cl      | 150 | Cloud amount                             | %          | float |        |  0   | -999 | 1    |    |
+cli     |  58 | Cloud ice                                | kg/m^3     | float |        | -999 | -999 | 1    | g1 |
+clivi   | 151 | Vertically integrated cloud ice          | kg/m^2     | float | atm    | -999 | -999 | 2    |    |
+clsv    | 152 | Cloud fraction (satellite view)          | %          | float |        |  0   | -999 | 1    |    |
+clt     |  71 | Total cloud cover                        | %          | float | cltlay |  0   | -999 | 2,4  | g1 |
+cltopht | 153 | Highest cloud top height                 | m          | float | cltmax | -999 | -999 | 2    |    |
+clw     |  76 | Cloud water                              | kg/m^3     | float |        | -999 | -999 | 1    | g1 |
+clwvi   | 154 | Vertically integrated cloud water        | kg/m^2     | float | atm    | -999 | -999 | 2    |    |
+cvuhusa | 192 | Covariance of ua and hus                 | m/s        | float |        | -999 |   16 | 1    |    |
+cvuta   | 197 | Covariance of ua and ta                  | m*degK/s   | float |        | -999 |   16 | 1    |    |
+cvuva   | 196 | Covariance of ua and va                  | m^2/s^2    | float |        | -999 |   16 | 1    |    |
+cvvhusa | 193 | Covariance of va and hus                 | m/s        | float |        | -999 |   16 | 1    |    |
+cvvta   | 198 | Covariance of va and ta                  | m*degK/s   | float |        | -999 |   16 | 1    |    |
+cvwhusa | 195 | Covariance of wap and hus                | Pa/s       | float |        | -999 |   16 | 1    |    |
+cvwta   | 194 | Covariance of wap and ta                 | degK*Pa/s  | float |        | -999 |   16 | 1    |    |
+cvwua   | 190 | Covariance of wap and ua                 | m*Pa/s^2   | float |        | -999 |   16 | 1    |    |
+cvwva   | 191 | Covariance of wap and va                 | m*Pa/s^2   | float |        | -999 |   16 | 1    |    |
+evs     | 140 | Evaporation                              | kg/(m^2*s) | float | sfc    | -999 | -999 | 2    |    |
+evspsbl | 141 | Sfc evap + sublimation rate              | kg/(m^2*s) | float | sfc    | -999 | -999 | 2    |    |
+hfls    | 121 | Heat flux latent sfc                     | W/m^2      | float | sfc    |  0   | -999 | 2,4  | g1 |
+hfns    | 170 | Heat flux net sfc                        | W/m^2      | float | sfc    | -999 | -999 | 2    |    |
+hfss    | 122 | Heat flux sensible sfc                   | W/m^2      | float | sfc    |  0   | -999 | 2,4  | g1 |
+hstdv   |   9 | Standard deviation of height             | m          | float | sfc    |  0   | -999 | 1    | g1 |
+htr     | 240 | Heating rate total                       | degK/s     | float |        | -999 |   16 | 1    |    |
+htrc    | 243 | Heating rate convective                  | degK/s     | float |        | -999 |   16 | 1    |    |
+htrl    | 241 | Heating rate latent                      | degK/s     | float |        | -999 |   16 | 1    |    |
+htrls   | 244 | Heating rate large scale precip          | degK/s     | float |        | -999 |   16 | 1    |    |
+htrlw   | 242 | Heating rate net LW radiation            | degK/s     | float |        | -999 |   16 | 1    |    |
+htrsw   | 245 | Heating rate net SW radiation            | degK/s     | float |        | -999 |   16 | 1    |    |
+hur     |  52 | Relative humidity                        | %          | float |        |  0   | -999 | 1    | g1 |
+hus     |  51 | Specific humidity                        | kg/kg      | float |        |  4   | -999 | 1,3  | g1 |
+huss    |  51 | Sfc specific humidity (2m)               | kg/kg      | float | sfc2m  |  4   | -999 | 2    | g1 |
+mrro    | 131 | Runoff rate total                        | kg/(m^2*s) | float | lands  | -999 | -999 | 2    |    |
+mrros   | 132 | Runoff rate sfc                          | kg/(m^2*s) | float | lands  | -999 | -999 | 2    |    |
+mrso    |  86 | Soil moisture total                      | kg/m^2     | float | landt  |  0   | -999 | 2    | g1 |
+mrsob   | 133 | Soil moisture sfc beta (%FC)             | %          | float | lands  |  0   | -999 | 2    |    |
+mrsocap | 134 | Soil moisture field capacity             | kg/m^2     | float | landt  | -999 | -999 | 2    |    |
+mrsos   | 135 | Soil moisture sfc                        | kg/m^2     | float | lands  |  1   | -999 | 2    |    |
+mrsotb  | 136 | Soil moisture total beta (%FC)           | %          | float | landt  |  0   | -999 | 2    |    |
+mrtotvi | 137 | Column liquid/frozen water               | kg/m^2     | float | landt  | -999 | -999 | 2    |    |
+orog    |   8 | Model orography                          | m          | float | sfc    |  0   | -999 | 6    | g1 |
+perpsag | 200 | Percent of time sfc. pres above ground   | %          | float |        | -999 | -999 | 2    |    |
+prc     | 144 | Convective precipitation rate            | kg/(m^2*s) | float | sfc    |  2   | -999 | 2    |    |
+prsn    |  64 | Snowfall rate water equivalent           | kg/(m^2/s) | float | sfc    |  6   | -999 | 2    | g1 |
+prw     |  54 | Precipitable water                       | kg/m^2     | float | sfc    |  1   | -999 | 2,4  | g1 |
+ps      |   1 | Sfc pressure                             | Pa         | float | sfc    |  0   | -999 | 2,4  | g1 |
+psl     |   2 | Pressure reduced to MSL                  | Pa         | float | sfc    | -1   | -999 | 2,4  | g1 |
+rldscs  | 163 | LW radiation downward sfc clear sky      | W/m^2      | float | sfc    |  0   | -999 | 2    |    |
+rls     | 112 | LW radiation sfc net                     | W/m^2      | float | sfc    |  0   | -999 | 2    | g1 |
+rlt     | 114 | LW radiation TOA (OLR)                   | W/m^2      | float | toa    |  0   | -999 | 2,4  | g1 |
+rltcs   | 162 | LW radiation TOA clear sky               | W/m^2      | float | toa    |  0   | -999 | 2    |    |
+rlus    | 188 | LW radiation upward sfc                  | W/m^2      | float | sfc    |  0   | -999 | 2    |    |
+rluscs  | 162 | LW radiation upward sfc clear sky        | W/m^2      | float | sfc    |  0   | -999 | 2    |    |
+rlutcs  | 162 | SW radiation upward TOA clear sky        | W/m^2      | float | toa    |  0   | -999 | 2    |    |
+rsds    | 204 | SW radiation downward sfc                | W/m^2      | float | sfc    |  0   | -999 | 2    |    |
+rsdscs  | 184 | SW radiation downward clear sky sfc      | W/m^2      | float | sfc    |  0   | -999 | 2    |    |
+rsdt    | 204 | SW radiation downward TOA                | W/m^2      | float | toa    |  0   | -999 | 2    |    |
+rss     | 111 | SW radiation net sfc                     | W/m^2      | float | sfc    |  0   | -999 | 2    | g1 |
+rst     | 113 | SW radiation net TOA                     | W/m^2      | float | toa    |  0   | -999 | 2,4  | g1 |
+rsus    | 181 | SW radiation upward sfc                  | W/m^2      | float | sfc    |  0   | -999 | 2,4  |    |
+rsuscs  | 185 | SW radiation upward sfc clear sky        | W/m^2      | float | sfc    |  0   | -999 | 2    |    |
+rsut    | 183 | SW radiation upward TOA                  | W/m^2      | float | toa    |  0   | -999 | 2    |    |
+rsutcs  | 186 | SW radiation upward TOA clear sky        | W/m^2      | float | toa    |  0   | -999 | 2    |    |
+sftgi   | 201 | Glacier-ice no-ice mask (1=ice; 0=no)    | -          | int   | sfc    |  0   |    1 | 6    |    |
+sftl    |  81 | Sfc type (0=100% ocean, 1=100% land/ice) | -          | float | sfc    | -999 |    1 | 6    | g1 |
+sic     |  91 | Sea-ice concentration                    | fraction   | float | sfc    |  2   | -999 | 2    | g1 |
+sit     |  92 | Ice thickness                            | m          | float | sfc    |  0   | -999 | 2    | g1 |
+snc     | 238 | Snow cover % area                        | %          | float | sfc    |  0   | -999 | 2    |    |
+snd     |  66 | Snow depth                               | m          | float | sfc    |  2   | -999 | 2    | g1 |
+snw     |  65 | Snow depth water equivalent              | kg/m^2     | float | sfc    |  0   | -999 | 2    | g1 |
+ta      |  11 | Temperature                              | degK       | float |        |  1   | -999 | 1,3  | g1 |
+tas     |  11 | Sfc (2m) air temperature                 | degK       | float | sfc2m  |  1   | -999 | 2    | g1 |
+tasmax  |  15 | Daily maximum surface (2m) temperature   | degK       | float | sfc2m  |  1   | -999 | 2    | g1 |
+tasmin  |  16 | Daily minimum surface (2m) temperature   | degK       | float | sfc2m  |  1   | -999 | 2    | g1 |
+tauu    | 124 | Eastward wind stress on surface          | N/m^2      | float | sfc    |  3   | -999 | 2,4  | g1 |
+tauv    | 125 | Northward wind stress on surface         | N/m^2      | float | sfc    |  3   | -999 | 2,4  | g1 |
+tg      |  11 | Sfc (ground) temperature                 | degK       | float | sfc    |  1   |   12 | 2    | g1 |
+ua      |  33 | u wind                                   | m/s        | float |        |  1   | -999 | 1,3  | g1 |
+uas     |  33 | Sfc (10m) eastward wind                  | m/s        | float | sfc10m | -999 | -999 | 2,4  | g1 |
+va      |  34 | v wind                                   | m/s        | float |        |  1   | -999 | 1,3  | g1 |
+varhus  | 210 | Variance of specific humidity            | kg/kg      | float |        | -999 |   16 | 1    |    |
+varspda | 211 | Variance of horizontal wind speed        | m^2/s^2    | float |        | -999 |   16 | 1    |    |
+varta   | 212 | Variance of air temperature              | degK^2     | float |        | -999 |   16 | 1    |    |
+varua   | 213 | Variance of eastward wind                | m^2/s^2    | float |        | -999 |   16 | 1    |    |
+varva   | 214 | Variance of northward wind               | (m/s)^2    | float |        | -999 |   16 | 1    |    |
+varwap  | 215 | Variance of vertical motion              | (Pa/s)^2   | float |        | -999 |   16 | 1    |    |
+varzg   | 216 | Variance of geopotential height          | m^2        | float |        | -999 |   16 | 1    |    |
+vas     |  24 | Sfc (10m) northward wind                 | m/s        | float | sfc10m |  1   | -999 | 2,4  | g1 |
+vorpot  | 220 | Potential vorticity                      | 1/(Pa*s)   | float |        | -999 | -999 | 3    |    |
+wap     |  39 | Pressure vertical velocity               | Pa/s       | float |        |  3   | -999 | 1,3  | g1 |
+
+#---------------------------------------------------------------------------------------------------
+#!  vert
+# Vertical dimension types
+#   (max number of entries = LATS_MAX_VERT_TYPES in lats.h)
+#
+# The format of each record is:
+#   level_type | description | units | verticality | positive | default | GRIB_id | GRIB_p1 | GRIB_p2 | GRIB_p3
+#
+# level_type = level type
+# description = level description
+# units = units for this level type
+# verticality = 'single' (single surface) or 'multi' (variable can have multiple levels of this type)
+# positive = 'up' (increasing values point up) or 'down' (increasing values point down)
+# GRIB_id = GRIB level type indicator (PDS octet 10)
+# GRIB_p1 = GRIB PDS octet 11
+# GRIB_p2 = GRIB PDS octet 12
+# GRIB_p3 = combined GRIB octets 11, 12 - overrides values of GRIB_p1, GRIB_p2 if specified
+
+0degiso	 | 0 deg isotherm    	     | hPa	| single |   up	|    4 | 0 |  0 | 0
+atm	 | Atmosphere (entire)	     |          | single |   up |  200 | 0 |  0 | 0 
+clhbot	 | High Cloud Bottom Level   | hPa      | single |   up	|  232 | 0 |  0 | 0
+clhlay	 | High Cloud Top Layer      |          | single |   up	|  234 | 0 |  0 | 0
+clhtop	 | High Cloud Top Level      | hPa      | single |   up	|  233 | 0 |  0 | 0
+cllbot	 | Low Cloud Bottom Level    | hPa      | single |   up	|  212 | 0 |  0 | 0
+clllay	 | Low Cloud Top Layer       |          | single |   up	|  214 | 0 |  0 | 0
+clltop	 | Low Cloud Top Level       | hPa      | single |   up	|  213 | 0 |  0 | 0
+clmbot	 | Mid Cloud Bottom Level    | hPa      | single |   up	|  222 | 0 |  0 | 0
+clmlay	 | Mid Cloud Top Layer       |          | single |   up	|  224 | 0 |  0 | 0
+clmtop	 | Mid Cloud Top Level       | hPa      | single |   up	|  223 | 0 |  0 | 0
+cltbot	 | Cloud base level 	     | hPa	| single |   up	|    2 | 0 |  0 | 0
+cltlay	 | Total Cloud layer 	     |		| single |   up	|    3 | 0 |  0 | 0
+cltmax	 | Highest Cloud height      | m        | single |   up	|  105 | 0 |  0 | 999
+landd	 | Below ground, 10 to 200 cm|		| single |   up |  112 |10 |200 | 0
+lands	 | Below ground, 0 to 10 cm  |		| single |   up |  112 | 0 | 10 | 0
+landt	 | Below ground, 0  to 200 cm|		| single |   up |  112 | 0 |200 | 0
+lcl      | Adiabatic cond level      | hPa	| single |   up	|    5 | 0 |  0 | 0
+maxwnd   | Maximum wind speed level  | hPa 	| single |   up	|    6 | 0 |  0 | 0
+msl	 | Mean Sea Level 	     |		| single |   up	|  102 | 0 |  0 | 0
+ocnbot	 | Ocean bottom      	     |		| single |   up	|    9 | 0 |  0 | 0
+plev	 | Pressure level	     | mb	| multi  | down |  100 | 0 |  0 | 0
+sfc      | Earth surface             |          | single |   up |    1 | 0 |  0 | 0
+sfc10m	 | 10 meters above earth surface| m	| single |   up	|  105 | 0 |  0 | 10
+sfc2m	 | 2 meters above earth surface| m	| single |   up	|  105 | 0 |  0 | 2
+toa	 | Top of atmosphere	     |		| single |   up	|    8 | 0 |  0 | 0
+troplev  | Tropopause level          | hPa 	| single |   up	|    7 | 0 |  0 | 0
+
+#---------------------------------------------------------------------------------------------------
+#!	Center
+# Modeling centers (GRIB only)
+#   (max number of entries = LATS_MAX_CENTERS in lats.h)
+#
+# The format of each record is:
+#   center | GRIB_id
+#
+# center = mnemonic for the center
+# GRIB_id = GRIB generating process id (PDS octet 6)
+
+bmrc	  |  1
+ccc	  |  2 
+cnrm	  |  3
+cola	  |  4
+csiro	  |  5
+csu	  |  6 
+dnm	  |  7 
+ecmwf	  |  8
+gfdl	  |  9
+gfdl/derf | 10
+giss	  | 11
+gla	  | 12
+gsfc	  | 13
+iap	  | 14
+jma	  | 15
+lmd	  | 16
+mgo	  | 17
+mpi	  | 18
+mri	  | 19
+ncar	  | 20
+ncep	  | 21
+nrl	  | 22
+rpn	  | 23
+sunya	  | 24
+sunya/ncar| 25
+ucla	  | 26
+ugamp	  | 27
+uill	  | 28
+ukmo	  | 29
+yonu	  | 30
+pcmdi	  | 100
+
+#---------------------------------------------------------------------------------------------------
+#!qc
+# Quality control marks
+#   (no limit on number of entries)
+#
+# The format of each record is:
+#   variable | level_type | level | mean | std | tolerance | range | rangetol
+#
+# variable = variable name
+# level_type = type of level, as defined in the leveltypes section, or blank if no associated level
+# level = level value, or blank if no specified level
+# mean = observed mean at specified level
+# std = observed standard deviation at specified level
+# tolerance = number of standard deviations about mean
+#     (if abs(calculated_mean - mean) > (std * tolerance), flag the value as 'mean out of range')
+# range = observed (maximum - minimum)
+# rangetol = range tolerance:
+#     (if calculated_range > (rangetol * range), flag as 'range is too large')

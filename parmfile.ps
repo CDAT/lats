@@ -1,0 +1,1903 @@
+%!PS-Adobe-1.0
+%%Creator: typhoon:fiorino (Mike Fiorino)
+%%Title: stdin
+%%CreationDate: Thu Jan 30 13:49:45 1997
+%%DocumentFonts: Times-Roman Times-Italic Times-Bold Symbol Times-Roman DIThacks
+%%Pages: (atend)
+%%EndComments
+% Start of pscat.pro -- prolog for troff translator
+% Copyright (c) 1985,1987 Adobe Systems Incorporated. All Rights Reserved. 
+% GOVERNMENT END USERS: See Notice file in TranScript library directory
+% -- probably /usr/lib/ps/Notice
+% RCS: $Header: pscat.pro,v 2.2 87/11/17 16:40:32 byron Rel $
+save /pscatsave exch def
+/$pscat 50 dict def
+$pscat begin
+/fm [1 0 0 1 0 0] def
+/xo 0 def /yo 0 def
+/M /moveto load def
+/R /show load def
+/S {exch currentpoint exch pop moveto show}def
+/T {exch currentpoint pop exch moveto show}def
+/U {3 1 roll moveto show}def
+/siz 0 def
+/font 0 def
+/Z {/siz exch def SF}def
+/F {/font exch def SF}def
+/SF{font 0 ne
+    {catfonts font 1 sub get fm 0 siz put fm 3 siz neg put 
+     fm makefont setfont}if}def
+/BP{save/catsv exch def 0 792 translate 72 432 div dup neg scale 
+  xo yo translate 0 0 moveto}def
+/BPL{save/catsv exch def 72 8.25 mul 792 translate -90 rotate
+  72 432 div dup neg scale xo yo translate 0 0 moveto}def
+/EP{catsv restore showpage}def
+
+/SetStTime{statusdict /manualfeedtimeout 120 put} def
+/SetStatus{statusdict /manualfeed true put
+   statusdict /product get (LaserWriter) eq 
+   {version (23.0) eq  % Don't redefine EP if printer is not "Classic LW"
+     {/EP {catsv restore
+	 {statusdict /printerstatus get exec 16#22000000 and 0 eq{exit}if}loop
+	 showpage}def}if }if}def
+% definitions for PPROC callback functions
+% each PPROC is called with the following number on the stack:
+% pointsize charcode railmag pswidth pschar x y wid
+/$pprocs 50 dict def
+/fractm [.65 0 0 .6 0 0] def
+% fractions
+/PS1{gsave $pprocs begin
+    /wid exch def pop pop pop pop pop /ch exch def /size exch def
+    /pair $pprocs ch get def /cf currentfont def
+    cf fractm makefont setfont
+    0 .3 size mul 6 mul 2 copy neg rmoveto pair 0 get show rmoveto
+    currentfont cf setfont (\244) show setfont
+    pair 1 get show grestore wid .06 div 0 rmoveto end}def
+$pprocs begin
+8#34 [(1)(4)] def
+8#36 [(1)(2)] def
+8#46 [(3)(4)] def
+end
+% DIThacks fonts for some special chars
+50 dict dup begin
+/FontType 3 def
+/FontName /DIThacks def
+/FontMatrix [.001 0.0 0.0 .001 0.0 0.0] def
+/FontBBox [-220 -280 900 900] def% a lie but ...
+/Encoding 256 array def
+0 1 255{Encoding exch /.notdef put}for
+Encoding
+ dup 8#040/space put %space
+ dup 8#110/rc put %right ceil
+ dup 8#111/lt put %left  top curl
+ dup 8#112/bv put %bold vert
+ dup 8#113/lk put %left  mid curl
+ dup 8#114/lb put %left  bot curl
+ dup 8#115/rt put %right top curl
+ dup 8#116/rk put %right mid curl
+ dup 8#117/rb put %right bot curl
+ dup 8#120/rf put %right floor
+ dup 8#121/lf put %left  floor
+ dup 8#122/lc put %left  ceil
+ dup 8#140/sq put %square
+ dup 8#141/bx put %box
+ dup 8#142/ci put %circle
+ dup 8#143/br put %box rule
+ dup 8#144/rn put %root extender
+ dup 8#145/vr put %vertical rule
+ dup 8#146/ob put %outline bullet
+ dup 8#147/bu put %bullet
+ dup 8#150/ru put %rule
+ dup 8#151/ul put %underline
+ pop
+/DITfd 100 dict def
+/BuildChar{0 begin
+ /cc exch def /fd exch def
+ /charname fd /Encoding get cc get def
+ /charwid fd /Metrics get charname get def
+ /charproc fd /CharProcs get charname get def
+ charwid 0 fd /FontBBox get aload pop setcachedevice
+ 40 setlinewidth
+ newpath 0 0 moveto gsave charproc grestore
+ end}def
+/BuildChar load 0 DITfd put
+%/UniqueID 5 def
+/CharProcs 50 dict def
+CharProcs begin
+/space{}def
+/.notdef{}def
+/ru{500 0 rls}def
+/rn{0 750 moveto 500 0 rls}def
+/vr{20 800 moveto 0 -770 rls}def
+/bv{20 800 moveto 0 -1000 rls}def
+/br{20 770 moveto 0 -1040 rls}def
+/ul{0 -250 moveto 500 0 rls}def
+/ob{200 250 rmoveto currentpoint newpath 200 0 360 arc closepath stroke}def
+/bu{200 250 rmoveto currentpoint newpath 200 0 360 arc closepath fill}def
+/sq{80 0 rmoveto currentpoint dround newpath moveto
+    640 0 rlineto 0 640 rlineto -640 0 rlineto closepath stroke}def
+/bx{80 0 rmoveto currentpoint dround newpath moveto
+    640 0 rlineto 0 640 rlineto -640 0 rlineto closepath fill}def
+/ci{355 333 rmoveto currentpoint newpath 333 0 360 arc
+    50 setlinewidth stroke}def
+
+/lt{20 -200 moveto 0 550 rlineto currx 800 2cx s4 add exch s4 a4p stroke}def
+/lb{20 800 moveto 0 -550 rlineto currx -200 2cx s4 add exch s4 a4p stroke}def
+/rt{20 -200 moveto 0 550 rlineto currx 800 2cx s4 sub exch s4 a4p stroke}def
+/rb{20 800 moveto 0 -500 rlineto currx -200 2cx s4 sub exch s4 a4p stroke}def
+/lk{20 800 moveto 20 300 -280 300 s4 arcto pop pop 1000 sub
+    currentpoint stroke moveto
+    20 300 4 2 roll s4 a4p 20 -200 lineto stroke}def
+/rk{20 800 moveto 20 300 320 300 s4 arcto pop pop 1000 sub
+    currentpoint stroke moveto
+    20 300 4 2 roll s4 a4p 20 -200 lineto stroke}def
+/lf{20 800 moveto 0 -1000 rlineto s4 0 rls}def
+/rf{20 800 moveto 0 -1000 rlineto s4 neg 0 rls}def
+/lc{20 -200 moveto 0 1000 rlineto s4 0 rls}def
+/rc{20 -200 moveto 0 1000 rlineto s4 neg 0 rls}def
+end
+
+/Metrics 50 dict def Metrics begin
+/.notdef 0 def
+/space 500 def
+/ru 500 def
+/br 0 def
+/lt 250 def
+/lb 250 def
+/rt 250 def
+/rb 250 def
+/lk 250 def
+/rk 250 def
+/rc 250 def
+/lc 250 def
+/rf 250 def
+/lf 250 def
+/bv 250 def
+/ob 350 def
+/bu 350 def
+/ci 750 def
+/bx 750 def
+/sq 750 def
+/rn 500 def
+/ul 500 def
+/vr 0 def
+end
+
+DITfd begin
+/s2 500 def /s4 250 def /s3 333 def
+/a4p{arcto pop pop pop pop}def
+/2cx{2 copy exch}def
+/rls{rlineto stroke}def
+/currx{currentpoint pop}def
+/dround{transform round exch round exch itransform} def
+end
+end
+/DIThacks exch definefont pop
+/catfonts [
+	/Times-Roman findfont
+	/Times-Italic findfont
+	/Times-Bold findfont
+	/Symbol findfont
+	/Times-Roman findfont
+	/DIThacks findfont
+	] def
+%%EndProlog
+%%Page: ? 1
+BP
+1 F
+60 Z
+432 222(lats)U
+526(\()S
+556(5)S
+596(\))S
+1759(LLNL)S
+3056(lats)S
+3150(\()S
+3180(5)S
+3220(\))S
+3 F
+54 Z
+432 510(NAME)U
+1 F
+60 Z
+648 582(LATS)U
+818(\261)S
+868(paramete)S
+1090(r)S
+1130(\256le)S
+3 F
+54 Z
+432 681(DESCRIPTION)U
+1 F
+60 Z
+648 753(The)U
+765(paramete)S
+987(r)S
+1030(\256le)S
+1130(contains)S
+1354(information)S
+1662(which)S
+1832(controls)S
+2048(the)S
+2144(operation)S
+2394(of)S
+2466(the)S
+2562(LATS)S
+2734(I/O)S
+2836(library.)S
+3034(This)S
+3163(\256le)S
+3220 825(-)U
+648 897(c)U
+648 825(is)U
+710(divided)S
+913(into)S
+1029(four)S
+1151(tables:)S
+1331(variables,)S
+1586(vertical)S
+1790(dimension)S
+2062(types,)S
+2225(centers,)S
+2432(and)S
+2540(qc)S
+2618(marks.)S
+2801(Each)S
+2943(table)S
+3082(is)S
+3143(pre)S
+675 897(eded)U
+815(by)S
+901(a)S
+954(`)S
+4 F
+(#)R
+3 F
+(!)R
+1 F
+(')R
+1070(comment,)S
+1336(and)S
+1449(consists)S
+1665(of)S
+1741(single-line)S
+2022(entries)S
+2209(separated)S
+2463(by)S
+2549(`)S
+6 F
+(e)R
+1 F
+(')R
+2615(\(vertical)S
+2842(bar\).)S
+2979(Comments)S
+3225 969(,)U
+648 1041(l)U
+648 969(are)U
+742(preceded)S
+980(by)S
+1060(`)S
+4 F
+(#)R
+1 F
+(')R
+1150(\(pound)S
+1340(sign\).)S
+1495(The)S
+1609(tables)S
+1770(can)S
+1874(appear)S
+2055(in)S
+2122(any)S
+2229(order)S
+2376(in)S
+2443(the)S
+2537(paramete)S
+2759(r)S
+2799(\256le.)S
+2911(For)S
+3014(all)S
+3095(\256elds)S
+665 1041(eading)U
+846(and)S
+953(trailing)S
+1148(whitespace)S
+1436(charact)S
+1611(ers)S
+1701(are)S
+1795(ignored.)S
+3220 1185(-)U
+648 1257(p)U
+648 1185(See)U
+760(the)S
+859(GRIB)S
+1027(manual)S
+1230(\(for)S
+1345(example,)S
+1589(ftp://nic)S
+1781(.fb4.noaa.gov/pub/nws/nmc/)S
+2468(docs/gribed1\))S
+2823(for)S
+2917(a)S
+2968(more)S
+3116(com)S
+678 1257(lete)U
+786(description)S
+1074(of)S
+1144(the)S
+1238(GRIB-related)S
+1586(\256elds.)S
+3 F
+54 Z
+432 1356(VARIABLE)U
+744(TABLE)S
+1 F
+60 Z
+648 1428(The)U
+773(variable)S
+999(table)S
+1147(de\256nes)S
+1347(accept)S
+1502(able)S
+1633(variable)S
+1858(names,)S
+2057(and)S
+2174(information)S
+2489(associated)S
+2767(with)S
+2904(each)S
+3045(variable)S
+648 1500(name.)U
+814(The)S
+928(table)S
+1066(is)S
+1126(preceded)S
+1364(by)S
+1444(a)S
+1491(`)S
+4 F
+(#)R
+3 F
+(!variable)R
+1 F
+(')R
+1812(comment.)S
+2072(Each)S
+2213(line)S
+2324(has)S
+2424(the)S
+2518(form:)S
+2 F
+864 1599(name)U
+6 F
+1014(e)S
+2 F
+1034(id)S
+6 F
+1101(e)S
+2 F
+1121(title)S
+6 F
+1241(e)S
+2 F
+1261(units)S
+6 F
+1398(e)S
+2 F
+1418(datatype)S
+6 F
+1646(e)S
+2 F
+1666(level)S
+6 F
+(i)R
+2 F
+(t)R
+1828(ype)S
+6 F
+1937(e)S
+2 F
+1957(decimal)S
+6 F
+(i)R
+2 F
+(scale)R
+6 F
+2302(i)S
+2 F
+(factor)R
+6 F
+2496(e)S
+2 F
+2516(precision)S
+6 F
+2760(e)S
+2 F
+2780(comments)S
+6 F
+(i)R
+2 F
+(1)R
+6 F
+3100(e)S
+2 F
+3120(comments)S
+6 F
+(i)R
+2 F
+(2)R
+648 1797(n)U
+1 F
+648 1698(where)U
+2 F
+678 1797(ame)U
+1 F
+1098(is)S
+1158(the)S
+1252(variable)S
+1467(name.)S
+1861 1896(.)U
+2 F
+648 1995(t)U
+648 1896(id)U
+1 F
+1098(is)S
+1158(the)S
+1252(GRIB)S
+1415(paramete)S
+1637(r)S
+1677(number)S
+2 F
+665 1995(itle)U
+1 F
+1098(is)S
+1158(the)S
+1252(long)S
+1379(name,)S
+1545(or)S
+1615(description)S
+1903(of)S
+1973(the)S
+2067(variable.)S
+2 F
+648 2193(d)U
+648 2094(units)U
+1 F
+1098(is)S
+1158(the)S
+1252(units)S
+1389(of)S
+1459(the)S
+1553(variable.)S
+2 F
+678 2193(atatype)U
+1 F
+1098(is)S
+1158(the)S
+1252(datatype)S
+1477(of)S
+1547(the)S
+1641(variable,)S
+1871(either)S
+2029(`)S
+3 F
+(\257oat)R
+1 F
+(')R
+2202(for)S
+2292(\257oating)S
+2496(point,)S
+2655(or)S
+2725(`)S
+3 F
+(int)R
+1 F
+(')R
+2855(for)S
+2945(integer.)S
+3220 2292(r)U
+2 F
+648(level)S
+6 F
+(i)R
+2 F
+(t)R
+810(ype)S
+1 F
+1098(is)S
+1164(the)S
+1264(name)S
+1421(of)S
+1496(a)S
+1548(single\261level)S
+1865(vertical)S
+2072(dimension)S
+2348(type)S
+2477(\(see)S
+2599(below\),)S
+2806(or)S
+2881(blank)S
+3040(if)S
+3102(eithe)S
+1098 2364(the)U
+1192(variable)S
+1407(is)S
+1467(multi-le)S
+1659(vel)S
+1753(or)S
+1823(the)S
+1917(variable)S
+2132(has)S
+2232(no)S
+2312(associated)S
+2580(vertical)S
+2782(dimension.)S
+2 F
+648 2463(decimal)U
+6 F
+(i)R
+2 F
+(scale)R
+6 F
+993(i)S
+2 F
+(factor)R
+1 F
+1098 2535(is)U
+1159(the)S
+1254(GRIB)S
+1418(packing)S
+1629(decimal)S
+1841(scale)S
+1982(factor.)S
+2158(Specify)S
+2362(the)S
+2456(value)S
+2607(`-999')S
+2777(if)S
+2834(no)S
+2914(decimal)S
+3126(scal-)S
+3220 2607(f)U
+2 F
+1098 2679(p)U
+1 F
+1098 2607(ing)U
+1199(is)S
+1262(to)S
+1332(be)S
+1412(performed)S
+1686(for)S
+1779(GRIB)S
+1945(output.)S
+2137(If)S
+2200(speci\256ed,)S
+2452(this)S
+2562(\256eld)S
+2692(overrides)S
+2939(the)S
+3036(value)S
+3190(o)S
+2 F
+1128 2679(recision)U
+1 F
+(.)R
+1357(This)S
+1484(\256eld)S
+1611(is)S
+1671(ignored)S
+1875(for)S
+1965(netCDF)S
+2175(output.)S
+3210 2778(h)U
+2 F
+648(precision)S
+1 F
+1098(is)S
+1169(the)S
+1274(GRIB)S
+1448(packing)S
+1670(number)S
+1885(of)S
+1966(bits)S
+2084(of)S
+2164(precision.)S
+2430(Specify)S
+2644(`-999')S
+2824(if)S
+2891(the)S
+2995(bit)S
+3089(lengt)S
+1098 2850(should)U
+1280(be)S
+1359(determine)S
+1601(d)S
+1653(on)S
+1735(a)S
+1784(per-level)S
+2020(basis.)S
+2176(This)S
+2304(\256eld)S
+2432(is)S
+2493(ignored)S
+2698(for)S
+2789(netCDF)S
+3000(output,)S
+3190(or)S
+2 F
+648 3021(c)U
+1 F
+1098 2922(if)U
+1155(decimal)S
+1367(scaling)S
+1558(is)S
+1618(speci\256ed.)S
+2 F
+675 3021(omments)U
+6 F
+(i)R
+2 F
+(1)R
+1 F
+1098(is)S
+1158(a)S
+1205(comment)S
+1450(\256eld,)S
+1592(ignored)S
+1796(by)S
+1876(LATS)S
+1993 3120(S)U
+3 F
+54 Z
+432 3219(V)U
+2 F
+60 Z
+648 3120(comments)U
+6 F
+(i)R
+2 F
+(2)R
+1 F
+1098(is)S
+1158(a)S
+1205(comment)S
+1450(\256eld,)S
+1592(ignored)S
+1796(by)S
+1876(LAT)S
+3 F
+54 Z
+471 3219(ERTICAL)U
+735(DIMENSION)S
+1071(TYPE)S
+1233(TABLE)S
+1 F
+60 Z
+648 3291(T)U
+(he)R
+764(vertical)S
+968(dimension)S
+1241(type)S
+1367(table)S
+1507(de\256nes)S
+1699(the)S
+1795(categorie)S
+2017(s)S
+2062(of)S
+2133(vertical)S
+2336(dimensions)S
+2631(which)S
+2799(may)S
+2924(be)S
+3002(used)S
+3133(with)S
+648 3363(LATS.)U
+833(The)S
+947(table)S
+1085(is)S
+1145(preceded)S
+1383(by)S
+1463(a)S
+1510(`)S
+4 F
+(#)R
+3 F
+(!vert)R
+1 F
+(')R
+1724(comment.)S
+1984(Each)S
+2125(line)S
+2236(has)S
+2336(the)S
+2430(form:)S
+2 F
+864 3462(level)U
+6 F
+(i)R
+2 F
+(t)R
+1026(ype)S
+6 F
+1135(e)S
+2 F
+1155(description)S
+6 F
+1451(e)S
+2 F
+1471(units)S
+6 F
+1613(e)S
+2 F
+1633(verticali)S
+1835(ty)S
+6 F
+1904(e)S
+2 F
+1924(positive)S
+6 F
+2137(e)S
+2 F
+2157(GRIB)S
+6 F
+(i)R
+2 F
+(id)R
+6 F
+2396(e)S
+2 F
+2416(GRIB)S
+6 F
+(i)R
+2 F
+(p1)R
+6 F
+2668(e)S
+2 F
+2688(GRIB)S
+6 F
+(i)R
+2 F
+(p2)R
+6 F
+2940(e)S
+2 F
+2960(GRIB)S
+6 F
+(i)R
+2 F
+(p3)R
+648 3660(l)U
+1 F
+648 3561(where)U
+2 F
+665 3660(evel)U
+6 F
+(i)R
+2 F
+(ty)R
+837(pe)S
+1 F
+1098(is)S
+1158(the)S
+1252(name)S
+1403(of)S
+1473(the)S
+1567(vertical)S
+1769(dimension)S
+2040(type.)S
+2281 3759(.)U
+2 F
+648 3858(u)U
+648 3759(description)U
+1 F
+1098(is)S
+1158(the)S
+1252(description)S
+1540(of)S
+1610(the)S
+1704(vertical)S
+1906(dimension)S
+2177(type)S
+2 F
+678 3858(nits)U
+1 F
+1098(is)S
+1163(the)S
+1262(units)S
+1404(associated)S
+1677(with)S
+1808(the)S
+1906(vertical)S
+2112(dimension)S
+2387(type.)S
+2530(This)S
+2661(\256eld)S
+2792(may)S
+2920(be)S
+3001(left)S
+3106(blank)S
+2 F
+648 4029(v)U
+1 F
+1098 3930(for)U
+1188(single\261level)S
+1500(dimensions,)S
+1809(if)S
+1866(not)S
+1963(applicabl)S
+2185(e.)S
+2 F
+675 4029(erticalit)U
+867(y)S
+1 F
+1098(is)S
+1168(either)S
+1336(`)S
+3 F
+(single)R
+1 F
+(')R
+1552(for)S
+1651(single\261level)S
+1972(or)S
+2051(surface)S
+2254(dimension,)S
+2549(or)S
+2628(`)S
+3 F
+(multi)R
+1 F
+(')R
+2834(for)S
+2933(a)S
+2989(dimension)S
+2 F
+648 4200(p)U
+1 F
+1098 4101(type)U
+1222(which)S
+1389(can)S
+1493(have)S
+1627(more)S
+1771(than)S
+1895(one)S
+2002(value.)S
+2 F
+678 4200(ositive)U
+1 F
+1098(is)S
+1161(`)S
+3 F
+(up)R
+1 F
+(')R
+1290(if)S
+1349(increasing)S
+1619(values)S
+1795(of)S
+1867(the)S
+1963(dimension)S
+2236(are)S
+2332(oriented)S
+2552(upward)S
+2754(in)S
+2823(a)S
+2872(physical)S
+3095(sense,)S
+3225 4272(,)U
+432 4560(P)U
+1098 4272(`)U
+3 F
+(down)R
+1 F
+(')R
+1304(otherwise.)S
+1580(For)S
+1690(example,)S
+1937(pressure)S
+2164(levels)S
+2332(would)S
+2509(have)S
+2 F
+2649(positive)S
+1 F
+2863(value)S
+3020(`)S
+3 F
+(down)R
+1 F
+(')R
+465 4560(rinted:)U
+643(97.1.30)S
+1473(Last)S
+1597(change:)S
+1805(16)S
+1885(August)S
+2078(1996)S
+3210(1)S
+EP
+%%Page: ? 2
+BP
+1 F
+60 Z
+3220 222(\))U
+432(lats)S
+526(\()S
+556(5)S
+596(\))S
+1759(LLNL)S
+3056(lats)S
+3150(\()S
+3180(5)S
+1098 510(since)U
+1242(increasing)S
+1510(pressure)S
+1730(levels)S
+1891(correspond)S
+2178(to)S
+2245(decreasing)S
+2523(height.)S
+3032 609(.)U
+2 F
+648 708(G)U
+648 609(GRIB)U
+6 F
+(i)R
+2 F
+(id)R
+1 F
+1098(is)S
+1158(the)S
+1252(GRIB)S
+1415(level)S
+1553(type)S
+1677(indicator)S
+1912(\(PDS)S
+2061(octet)S
+2199(10\),)S
+2314(is)S
+2374(ignored)S
+2578(for)S
+2668(netCDF)S
+2878(output)S
+2 F
+691 708(RIB)U
+6 F
+(i)R
+2 F
+(p1)R
+1 F
+1098(is)S
+1170(the)S
+1276(GRIB)S
+1451(PDS)S
+1592(octet)S
+1742(11,)S
+1849(typicall)S
+2031(y)S
+2093(the)S
+2199(value)S
+2361(at)S
+2436(the)S
+2541(top)S
+2649(of)S
+2730(a)S
+2788(layer,)S
+2955(ignored)S
+3170(for)S
+2 F
+648 879(G)U
+1 F
+1098 780(netCDF)U
+1308(output.)S
+2 F
+691 879(RIB)U
+6 F
+(i)R
+2 F
+(p2)R
+1 F
+1098(is)S
+1164(the)S
+1264(GRIB)S
+1433(PDS)S
+1568(octet)S
+1712(12,)S
+1813(typicall)S
+1995(y)S
+2051(the)S
+2151(value)S
+2308(at)S
+2378(the)S
+2477(bottom)S
+2673(of)S
+2748(a)S
+2800(layer,)S
+2961(ignored)S
+3170(for)S
+2 F
+648 1050(G)U
+1 F
+1098 951(netCDF)U
+1308(output.)S
+2 F
+691 1050(RIB)U
+6 F
+(i)R
+2 F
+(p3)R
+1 F
+1098(is)S
+1162(the)S
+1260(GRIB)S
+1427(combined)S
+1689(PDS)S
+1822(octets)S
+1987(11,)S
+2086(12,)S
+2184(typicall)S
+2366(y)S
+2419(the)S
+2516(value)S
+2670(for)S
+2763(a)S
+2813(level)S
+2954(\(non-layer\).)S
+1098 1194(n)U
+1098 1122(If)U
+1168(speci\256ed,)S
+1427(this)S
+1544(value)S
+1705(overrides)S
+1959(GRIB)S
+6 F
+(i)R
+1 F
+(p1)R
+2222(and)S
+2339(GRIB)S
+6 F
+(i)R
+1 F
+(p2.)R
+2616(This)S
+2752(\256eld)S
+2888(is)S
+2957(ignored)S
+3170(for)S
+1128 1194(etCDF)U
+1308(output.)S
+3 F
+54 Z
+432 1293(CENTER)U
+675(TABLE)S
+1 F
+60 Z
+648 1365(The)U
+763(center)S
+932(table)S
+1071(associates)S
+1333(GRIB)S
+1497(numerical)S
+1760(identi\256ers)S
+2022(with)S
+2150(the)S
+2245(modeling)S
+2494(center.)S
+2678(This)S
+2805(table)S
+2943(is)S
+3003(only)S
+3130(used)S
+648 1437(for)U
+738(GRIB)S
+901(output.)S
+1090(The)S
+1204(table)S
+1342(is)S
+1402(preceded)S
+1640(by)S
+1720(a)S
+1767(`)S
+4 F
+(#)R
+3 F
+(!center)R
+1 F
+(')R
+2038(comment.)S
+2298(Each)S
+2439(table)S
+2577(entry)S
+2721(is)S
+2781(of)S
+2851(the)S
+2945(form:)S
+2 F
+864 1536(center)U
+6 F
+1040(e)S
+2 F
+1060(GRIB)S
+6 F
+(i)R
+2 F
+(process)R
+6 F
+1435(e)S
+2 F
+1455(GRIB)S
+6 F
+(i)R
+2 F
+(center)R
+6 F
+1798(e)S
+2 F
+1818(GRIB)S
+6 F
+(i)R
+2 F
+(subcenter)R
+648 1734(c)U
+1 F
+648 1635(where)U
+2 F
+675 1734(enter)U
+1 F
+1098(is)S
+1158(the)S
+1252(name)S
+1403(of)S
+1473(the)S
+1567(modeling)S
+1815(center.)S
+2285 1833(.)U
+2 F
+648 1932(G)U
+648 1833(GRIB)U
+6 F
+(i)R
+2 F
+(process)R
+1 F
+1098(is)S
+1158(the)S
+1252(GRIB)S
+1415(generating)S
+1690(process)S
+1890(ID,)S
+1988(PDS)S
+2117(octet)S
+2255(6)S
+2 F
+691 1932(RIB)U
+6 F
+(i)R
+2 F
+(cente)R
+943(r)S
+1 F
+1098(is)S
+1158(the)S
+1252(GRIB)S
+1415(center)S
+1583(ID,)S
+1681(PDS)S
+1810(octet)S
+1948(5)S
+2061 2031(6)U
+3 F
+54 Z
+432 2130(Q)U
+2 F
+60 Z
+648 2031(GRIB)U
+6 F
+(i)R
+2 F
+(subcenter)R
+1 F
+1098(is)S
+1158(the)S
+1252(GRIB)S
+1415(subcenter)S
+1666(ID,)S
+1764(PDS)S
+1893(octet)S
+2031(2)S
+3 F
+54 Z
+474 2130(UALITY)U
+702(CONTROL)S
+993(TABLE)S
+1 F
+60 Z
+648 2202(T)U
+(he)R
+765(quality)S
+955(control)S
+1148(table)S
+1288(de\256nes)S
+1480(the)S
+1576(values)S
+1752(used)S
+1884(by)S
+1966(the)S
+2062(LATS)S
+2234(quality)S
+2424(control)S
+2617(routine.)S
+2825(The)S
+2941(table)S
+3081(is)S
+3143(pre-)S
+648 2274(ceded)U
+809(by)S
+889(a)S
+936(`)S
+4 F
+(#)R
+3 F
+(!qc)R
+1 F
+(')R
+1106(comment.)S
+1366(Each)S
+1507(table)S
+1645(entry)S
+1789(has)S
+1889(the)S
+1983(form:)S
+2 F
+864 2373(variable)U
+6 F
+1090(e)S
+2 F
+1110(level)S
+6 F
+(i)R
+2 F
+(t)R
+1272(ype)S
+6 F
+1381(e)S
+2 F
+1401(level)S
+6 F
+1541(e)S
+2 F
+1561(mean)S
+6 F
+1716(e)S
+2 F
+1736(std)S
+6 F
+1831(e)S
+2 F
+1851(tolerance)S
+6 F
+2104(e)S
+2 F
+2124(range)S
+6 F
+2289(e)S
+2 F
+2309(rangetol)S
+648 2571(v)U
+1 F
+648 2472(where)U
+2 F
+675 2571(ariable)U
+1 F
+1098(is)S
+1158(the)S
+1252(variable)S
+1467(name.)S
+2 F
+648 2670(l)U
+(evel)R
+6 F
+(i)R
+2 F
+(t)R
+810(ype)S
+1 F
+1098(is)S
+1161(the)S
+1258(type)S
+1385(of)S
+1458(level,)S
+1614(as)S
+1687(de\256ned)S
+1886(in)S
+1955(the)S
+2051(vertical)S
+2255(dimension)S
+2528(types)S
+2677(table,)S
+2832(or)S
+2904(blank)S
+3060(if)S
+3119(there)S
+2 F
+648 2841(l)U
+1 F
+1098 2742(is)U
+1158(no)S
+1238(level)S
+1376(associated)S
+1644(with)S
+1771(the)S
+1865(variable.)S
+2 F
+665 2841(evel)U
+1 F
+1098(is)S
+1158(the)S
+1252(\257oating-point)S
+1600(level)S
+1738(value,)S
+1904(or)S
+1974(blank)S
+2128(if)S
+2185(the)S
+2279(`level)S
+6 F
+(i)R
+1 F
+(type)R
+2551(')S
+2591(\256eld)S
+2718(is)S
+2778(blank.)S
+2 F
+648 3039(s)U
+648 2940(mean)U
+1 F
+1098(is)S
+1158(the)S
+1252(observed)S
+1489(mean)S
+1640(at)S
+1704(the)S
+1798(speci\256ed)S
+2032(level.)S
+2 F
+671 3039(td)U
+1 F
+1098(is)S
+1158(the)S
+1252(observed)S
+1489(standard)S
+1713(deviation)S
+1958(at)S
+2022(the)S
+2116(speci\256ed)S
+2350(level.)S
+3220 3138(f)U
+2 F
+648(tolerance)S
+1 F
+1098(is)S
+1190(the)S
+1316(number)S
+1552(of)S
+1654(standard)S
+1909(deviations)S
+2208(about)S
+2393(the)S
+2518(mean.)S
+2715(In)S
+2816(other)S
+2991(words,)S
+3203(i)S
+1098 3210(abs\(calcul)U
+1343(ated)S
+6 F
+(i)R
+1 F
+(mea)R
+1575(n)S
+1625(-)S
+1665(mean\))S
+4 F
+1836(>)S
+1 F
+1889(\(std)S
+4 F
+1999(*)S
+1 F
+2049(tolerance)S
+2271(\),)S
+2326(generate)S
+2551(a)S
+2598(quality)S
+2786(control)S
+2977(exception.)S
+2 F
+648 3408(r)U
+648 3309(range)U
+1 F
+1098(is)S
+1158(the)S
+1252(observed)S
+1489(\(maximum)S
+1774(-)S
+1814(minimum\))S
+2 F
+671 3408(angetol)U
+1 F
+1098(is)S
+1159(the)S
+1254(range)S
+1409(tolerance)S
+1631(,)S
+1667(i.e.,)S
+1777(if)S
+1835(calcula)S
+2007(ted)S
+6 F
+(i)R
+1 F
+(range)R
+4 F
+2266(>)S
+1 F
+2320(\(rangetol)S
+4 F
+2559(*)S
+1 F
+2610(range\),)S
+2800(generate)S
+3025(a)S
+3072(quality)S
+3 F
+54 Z
+432 3579(EXAMPLE)U
+1 F
+60 Z
+1098 3480(control)U
+1289(exception.)S
+648 3651(Here)U
+785(is)S
+845(a)S
+892(sample,)S
+1098(albeit)S
+1253(rudimentary,)S
+1583(paramete)S
+1805(r)S
+1845(\256le:)S
+4 F
+864 3822(#)U
+864 3750(#)U
+3 F
+914(Sample)S
+1124(LATS)S
+1300(parameter)S
+1591(\256le)S
+894 3822(!variable)U
+864 3894(u)U
+(a)R
+6 F
+967(e)S
+3 F
+1007(33)S
+6 F
+1087(e)S
+3 F
+1107(u)S
+1160(wind)S
+6 F
+1306(e)S
+3 F
+1326(m/s)S
+6 F
+1436(e)S
+3 F
+1456(\257oat)S
+6 F
+1589(e)S
+1609(e)S
+3 F
+1629(1)S
+6 F
+1679(e)S
+3 F
+1699(-999)S
+6 F
+1829(e)S
+3 F
+1849(comment)S
+6 F
+2106(e)S
+3 F
+2126(comment)S
+6 F
+2383(e)S
+3 F
+864 4038(p)U
+864 3966(va)U
+6 F
+964(e)S
+3 F
+1004(34)S
+6 F
+1084(e)S
+3 F
+1104(v)S
+1154(wind)S
+6 F
+1300(e)S
+3 F
+1320(m/s)S
+6 F
+1430(e)S
+3 F
+1450(\257oat)S
+6 F
+1583(e)S
+1603(e)S
+3 F
+1623(1)S
+6 F
+1673(e)S
+3 F
+1693(-999)S
+6 F
+1823(e)S
+3 F
+1843(comment)S
+6 F
+2100(e)S
+3 F
+2120(comment)S
+6 F
+2377(e)S
+3 F
+897 4038(rc)U
+6 F
+971(e)S
+3 F
+991(144)S
+6 F
+1101(e)S
+3 F
+1121(Convective)S
+1425(precipitation)S
+1776(rate)S
+6 F
+1900(e)S
+3 F
+1920(kg/\(m)S
+5 F
+(\303)R
+3 F
+(2)R
+4 F
+(*)R
+3 F
+(s\))R
+6 F
+2213(e)S
+3 F
+2233(\257oat)S
+6 F
+2366(e)S
+3 F
+2386(sfc)S
+6 F
+2476(e)S
+3 F
+2496(2)S
+6 F
+2546(e)S
+3 F
+2566(-999)S
+6 F
+2696(e)S
+3 F
+2716(comment)S
+6 F
+2973(e)S
+3 F
+2993(comment)S
+6 F
+3250(e)S
+3 F
+864 4182(p)U
+4 F
+864 4110(#)U
+3 F
+(!vert)R
+897 4182(lev)U
+6 F
+991(e)S
+3 F
+1011(Pressure)S
+1255(level)S
+6 F
+1393(e)S
+3 F
+1413(hPa)S
+6 F
+1533(e)S
+3 F
+1553(multi)S
+6 F
+1710(e)S
+3 F
+1730(down)S
+6 F
+1889(e)S
+3 F
+1909(100)S
+6 F
+2019(e)S
+3 F
+2039(0)S
+6 F
+2089(e)S
+3 F
+2109(0)S
+6 F
+2159(e)S
+3 F
+2179(0)S
+1 F
+432 4542(P)U
+3 F
+864 4254(sfc)U
+6 F
+954(e)S
+3 F
+974(Earth)S
+1144(surface)S
+6 F
+1351(e)S
+1411(e)S
+3 F
+1431(single)S
+6 F
+1598(e)S
+3 F
+1618(up)S
+6 F
+1704(e)S
+3 F
+1724(1)S
+6 F
+1774(e)S
+3 F
+1794(0)S
+6 F
+1844(e)S
+3 F
+1864(0)S
+6 F
+1914(e)S
+3 F
+1934(0)S
+1 F
+465 4542(rinted:)U
+643(97.1.30)S
+1473(Last)S
+1597(change:)S
+1805(16)S
+1885(August)S
+2078(1996)S
+3210(2)S
+EP
+%%Page: ? 3
+BP
+1 F
+60 Z
+3220 222(\))U
+432(lats)S
+526(\()S
+556(5)S
+596(\))S
+1759(LLNL)S
+3056(lats)S
+3150(\()S
+3180(5)S
+4 F
+864 510(#)U
+3 F
+(!center)R
+864 582(p)U
+(cmdi)R
+6 F
+1044(e)S
+3 F
+1064(100)S
+6 F
+1174(e)S
+3 F
+1194(100)S
+6 F
+1304(e)S
+3 F
+1324(1)S
+864 726(u)U
+4 F
+864 654(#)U
+3 F
+(!qc)R
+897 726(a)U
+6 F
+947(e)S
+3 F
+967(plev)S
+6 F
+1094(e)S
+3 F
+1114(1000.0)S
+6 F
+1299(e)S
+3 F
+1319(1.0)S
+6 F
+1414(e)S
+3 F
+1434(2.0)S
+6 F
+1529(e)S
+3 F
+1549(3.0)S
+6 F
+1644(e)S
+3 F
+1664(4.0)S
+6 F
+1759(e)S
+3 F
+1779(5.0)S
+1824 798(0)U
+864 870(v)U
+864 798(ua)U
+6 F
+947(e)S
+3 F
+967(plev)S
+6 F
+1094(e)S
+3 F
+1114(925.0)S
+6 F
+1269(e)S
+3 F
+1289(6.0)S
+6 F
+1384(e)S
+3 F
+1404(7.0)S
+6 F
+1499(e)S
+3 F
+1519(8.0)S
+6 F
+1614(e)S
+3 F
+1634(9.0)S
+6 F
+1729(e)S
+3 F
+1749(10.)S
+894 870(a)U
+6 F
+944(e)S
+3 F
+964(plev)S
+6 F
+1091(e)S
+3 F
+1111(1000.0)S
+6 F
+1296(e)S
+3 F
+1316(1.0)S
+6 F
+1411(e)S
+3 F
+1431(2.0)S
+6 F
+1526(e)S
+3 F
+1546(3.0)S
+6 F
+1641(e)S
+3 F
+1661(4.0)S
+6 F
+1756(e)S
+3 F
+1776(5.0)S
+1821 942(0)U
+54 Z
+432 1041(E)U
+60 Z
+864 942(va)U
+6 F
+944(e)S
+3 F
+964(plev)S
+6 F
+1091(e)S
+3 F
+1111(925.0)S
+6 F
+1266(e)S
+3 F
+1286(6.0)S
+6 F
+1381(e)S
+3 F
+1401(7.0)S
+6 F
+1496(e)S
+3 F
+1516(8.0)S
+6 F
+1611(e)S
+3 F
+1631(9.0)S
+6 F
+1726(e)S
+3 F
+1746(10.)S
+54 Z
+468 1041(NVIRONMENT)U
+867(VARIABLES)S
+60 Z
+648 1113(L)U
+(ATS)R
+6 F
+(i)R
+3 F
+(PARMS)R
+1 F
+1248(Parameter)S
+1513(\256lename.)S
+1756(If)S
+1816(not)S
+1913(de\256ned,)S
+2125(LATS)S
+2295(uses)S
+2418(an)S
+2495(internal)S
+2700(table.)S
+3 F
+54 Z
+432 1212(SEE)U
+552(ALSO)S
+60 Z
+648 1284(lats)U
+1 F
+(\(3\),)R
+3 F
+843(netcdf)S
+1 F
+(\(3\))R
+3 F
+54 Z
+432 1455(N)U
+432 1383(BUGS)U
+471 1455(OTES)U
+1 F
+60 Z
+432 4326(P)U
+(rinted:)R
+643(97.1.30)S
+1473(Last)S
+1597(change:)S
+1805(16)S
+1885(August)S
+2078(1996)S
+3210(3)S
+EP
+%%Trailer
+pscatsave end restore
+%%Pages: 3

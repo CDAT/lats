@@ -8,9 +8,9 @@
  * Author:      Bob Drach, Lawrence Livermore National Laboratory
  *              drach@llnl.gov
  *
- * Generated:   97-10-7 22:10:40 (drach) from amip2.parms by genlatsparm.pl
+ * Generated:   97-9-26 22:55:50 (fiorino) from amip2.lats.table by genlatsparm.pl
  *
- * Version:     $Id$
+ * Version:     $Id: genlatsparm.pl,v 1.5 1996/10/22 19:04:59 fiorino Exp $
  */
 #ifndef _LATSPARM_H
 #define _LATSPARM_H
@@ -41,10 +41,10 @@ static latsParm latsDefaultParms[] = {
 {"mrfso","Total soil frozen water content","kg/m^2",137,-999,-999,"landt",1,0,LATS_FLOAT},
 {"mrro","Total runoff rate (including drainage)","kg/(m^2*s)",131,-999,-999,"lands",1,0,LATS_FLOAT},
 {"mrros","Surface runoff rate","kg/(m^2*s)",132,-999,-999,"lands",1,0,LATS_FLOAT},
-{"mrso","Total soil mositure","kg/m^2",86,0,-999,"landt",1,0,LATS_FLOAT},
-{"mrsofc","Total soil moisture at field capacity","kg/m^2",134,-999,-999,"landt",1,0,LATS_FLOAT},
-{"mrsofcs","Surface soil moisture (upper 0.1m) at field capacity","kg/m^2",133,0,-999,"lands",1,0,LATS_FLOAT},
-{"mrsos","Surface soil moisture (upper 0.1m)","kg/m^2",135,1,-999,"lands",1,0,LATS_FLOAT},
+{"mrso","Total soil water content","kg/m^2",86,0,-999,"landt",1,0,LATS_FLOAT},
+{"mrsofc","Soil moisture at field capacity","kg/m^2",134,-999,-999,"landt",1,0,LATS_FLOAT},
+{"mrsofcs","Surface soil moisture at field capacity","kg/m^2",133,0,-999,"lands",1,0,LATS_FLOAT},
+{"mrsos","Surface soil water content (upper 0.1m)","kg/m^2",135,1,-999,"lands",1,0,LATS_FLOAT},
 {"mrsotb","Soil moisture % field capacity","%",136,0,-999,"landt",1,0,LATS_FLOAT},
 {"orog","Model topography","m",8,0,-999,"sfc",1,0,LATS_FLOAT},
 {"pr","Total precipitation rate","kg/(m^2*s)",59,6,-999,"sfc",1,0,LATS_FLOAT},

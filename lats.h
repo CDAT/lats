@@ -8,48 +8,11 @@
  * Author:      Bob Drach, Lawrence Livermore National Laboratory
  *              drach@llnl.gov
  *
- * Version: $Id$
- * Version:     $Id$
+ * Version:     $Id: lats.h,v 1.11 1996/11/11 22:39:19 drach Exp $
  *
  * Revision History:
  *
- * $Log$
- * Revision 1.7  2010/02/16 23:01:31  mike_fiorino
- * mods for supporting yflip and better handling of forecast_hourly forecast_minutes
- *
- * Revision 1.6  2009/10/15 01:17:53  dasilva
- * ams: work in progress
- *
- * Revision 1.5  2009/10/14 22:19:05  dasilva
- * ams: work in progress
- *
- * Revision 1.4  2009/10/14 22:16:58  dasilva
- * ams: work in progress
- *
- * Revision 1.2  2009/10/10 06:34:15  mike_fiorino
- * mf 20091010 -- incorporate all my mods 1.10 lats into 2.0 lats extension
- *
- * Revision 1.5  2009/03/18 15:52:39  mike_fiorino
- * mf:lats bugs fix + minutes support; set z 1 last ; control of line properties of gxout grid
-
- * Revision 1.1  2009/10/05 13:44:26  dasilva
- * ams: porting LATS to grads v2; work in progress
- *
- * Revision 1.4  2007/08/25 02:39:13  dasilva
- * ams: mods for build with new supplibs; changed dods to dap, renamed dodstn.c to dapstn.c
- *
- * Revision 1.1.1.1  2002/06/27 19:44:13  cvsadmin
- * initial GrADS CVS import - release 1.8sl10
- *
- * Revision 1.1.1.1  2001/10/18 02:00:57  Administrator
- * Initial repository: v1.8SL8 plus slight MSDOS mods
- *
- * Revision 1.12  1997/10/15 17:53:14  drach
- * - remove name collisions with cdunif
- * - only one vertical dimension with GrADS/GRIB
- * - in sync with Mike's GrADS src170
- * - parameter table in sync with standard model output listing
- *
+ * $Log: lats.h,v $
  * Revision 1.11  1996/11/11 22:39:19  drach
  * - Added function to set the basetime (lats_basetime)
  *
@@ -58,7 +21,7 @@
  *
  * Revision 1.9  1996/10/10 23:15:43  drach
  * - lats_create filetype changed to convention, with options LATS_PCMDI,
- *   LATS_GRADS_GRIB, and LATS_NC3.
+ *   LATS_GRADS_GRIB, and LATS_COARDS.
  * - monthly data defaults to 16-bit compression
  * - LATS_MONTHLY_TABLE_COMP option added to override 16-bit compression
  * - AMIP II standard parameter file
@@ -145,12 +108,12 @@
 #define LATS_FIXED_COMPRESSION_NBITS 16	     /* Default bit length for compression of monthly mean data */
 
 typedef enum latsCloudLevels {LATS_LOW_LEVEL = 1, LATS_MEDIUM_LEVEL, LATS_HIGH_LEVEL} latsCloudLevels;
-typedef enum latsConvention {LATS_PCMDI = 1, LATS_GRIB_ONLY, LATS_GRADS_GRIB, LATS_NC3, LATS_NC4, LATS_HDF4} latsConvention;
-typedef enum latsFileType {LATS_NETCDF = 1, LATS_GRIB, LATS_HDF} latsFileType;
+typedef enum latsConvention {LATS_PCMDI = 1, LATS_GRIB_ONLY, LATS_GRADS_GRIB, LATS_COARDS} latsConvention;
+typedef enum latsFileType {LATS_NETCDF = 1, LATS_GRIB} latsFileType;
 typedef enum latsGridType {LATS_GAUSSIAN = 1, LATS_LINEAR, LATS_GENERIC} latsGridType;
 typedef enum latsMonotonicity {LATS_SINGLE = 1, LATS_INCREASING, LATS_DECREASING} latsMonotonicity;
 typedef enum latsPositive {LATS_UP = 1, LATS_DOWN} latsPositive;
-typedef enum latsTimeFreq {LATS_HOURLY = 1, LATS_DAILY, LATS_WEEKLY, LATS_MONTHLY, LATS_YEARLY, LATS_FIXED, LATS_MONTHLY_TABLE_COMP, LATS_FORECAST_HOURLY, LATS_MINUTES, LATS_FORECAST_MINUTES} latsTimeFreq;
+typedef enum latsTimeFreq {LATS_HOURLY = 1, LATS_DAILY, LATS_WEEKLY, LATS_MONTHLY, LATS_YEARLY, LATS_FIXED, LATS_MONTHLY_TABLE_COMP, LATS_FORECAST_HOURLY} latsTimeFreq;
 typedef enum latsTimeStat {LATS_AVERAGE = 1, LATS_INSTANT, LATS_ACCUM, LATS_OTHER_TIME_STAT} latsTimeStat;
 typedef enum latsType {LATS_FLOAT = 1, LATS_INT} latsType;
 typedef enum latsVerticality {LATS_SINGLE_LEVEL = 1, LATS_MULTI_LEVEL} latsVerticality;
@@ -179,7 +142,7 @@ typedef enum latsCalenType {
  * =================================================================
  */
 
-extern int lats_basetime(int fileid, int year, int month, int day, int hour, int min);
+extern int lats_basetime(int fileid, int year, int month, int day, int hour);
 extern int lats_close(int fileid);
 extern int lats_create(char* path, int filetype, int calendar, int frequency, int delta, char* center, char* model, char* comment);
 extern int lats_grid(char *name, int gridtype, int nlon, double lons[], int nlat, double lats[]);
@@ -188,7 +151,7 @@ extern int lats_miss_int(int fileid, int varid, int missing);
 extern int lats_var(int fileid, char* varname, int datatype, int timestat, int gridid, int levid, char* comments);
 extern int lats_parmtab(char* table_path);
 extern int lats_vert_dim(char* name, char* type, int nlev, double levs[]);
-extern int lats_write(int fileid, int varid, double lev, int year, int month, int day, int hour, int min, int fhour, int fmin, void* data);
+extern int lats_write(int fileid, int varid, double lev, int year, int month, int day, int hour, void* data);
 
 /*
  * =================================================================

@@ -1,0 +1,81 @@
+# LATS local (non-distribution) Makefile
+#
+# make -f Makefile.local [config]: make the (distribution) Makefile
+#
+# make -f Makefile.local distrib VERSION=<version> : make the distribution tarfiles, in the
+#   proper distribution directory
+#
+# make -f Makefile.local putdistrib: copy the source tarfile to other development hosts
+
+NCINC = /usr/local/netcdf-2.3.2/libsrc
+NCLIB = /usr/local/netcdf-2.3.2/libsrc
+MASTER = /pcmdi/gecko0/lats
+DISTDIR = /pcmdi/scratch/ftp/pub/lats
+LATSPS = lats.ps
+PARMPS = parmfile.ps
+SHELL = /bin/sh
+SRCTAR = lats.tar
+
+config:
+	./configure --with-ncinc=$(NCLIB) --with-nclib=$(NCLIB)
+
+distrib: $(LATSPS) $(PARMPS) sunos sgi sol hpux c90 alpha rs6000
+	cp $(LATSPS) $(PARMPS) $(DISTDIR)
+
+sunos:
+	makedistrib sunos4.1 /pcmdi/drach/devel/lats $(DISTDIR) $(VERSION)
+
+sgi:
+	makedistrib sgi-irix5.3 /pcmdi/gecko0/lats $(DISTDIR) $(VERSION)
+
+sol:
+	makedistrib sol5.4 /pcmdi/drach/install-sol/lats $(DISTDIR) $(VERSION)
+
+hpux:
+	makedistrib hpux9.0 $(AFS_HOME)/.lats/hp700_ux90 $(DISTDIR) $(VERSION)
+
+c90:
+	makedistrib c90-unicos8.0 $(AFS_HOME)/.lats/c90_uni80 $(DISTDIR) $(VERSION)
+
+alpha:
+	(cd /pcmdi/drach/install-dec/lats; getdistrib vapor.llnl.gov williams /u/williams/lats)
+	makedistrib alpha-osf1 /pcmdi/drach/install-dec/lats $(DISTDIR) $(VERSION)
+
+rs6000:
+	(cd /pcmdi/drach/install-ibm/lats; getdistrib ocfkms13.llnl.gov williams /u/williams/lats)
+	makedistrib aix-3.2 /pcmdi/drach/install-ibm/lats $(DISTDIR) $(VERSION)
+
+putdistrib: putsunos putsgi putsol puthpux putc90 putalpha putrs6000
+
+putsunos:
+	cp $(MASTER)/$(SRCTAR) /pcmdi/drach/devel/lats
+
+putsgi:
+	cp $(MASTER)/$(SRCTAR) /pcmdi/gecko0/install/lats
+
+putsol:
+	cp $(MASTER)/$(SRCTAR) /pcmdi/drach/install-sol/lats
+
+puthpux:
+	cp $(MASTER)/$(SRCTAR) $(AFS_HOME)/.lats/hp700_ux90
+
+putc90:
+	cp $(MASTER)/$(SRCTAR) $(AFS_HOME)/.lats/c90_uni80
+
+putalpha:
+	putdistrib vapor.llnl.gov williams /u/williams/lats $(MASTER)/$(SRCTAR)
+
+putrs6000:
+	putdistrib ocfkms13.llnl.gov williams /u/williams/lats $(MASTER)/$(SRCTAR)
+
+
+$(LATSPS):	$(MASTER)/lats.3
+		rm -f $(LATSPS)
+		ptroff -t -man lats.3 > $(LATSPS)
+		cp $(LATSPS) $(MASTER)/$(LATSPS)
+
+$(PARMPS):	$(MASTER)/lats.5
+		rm -f $(PARMPS)
+		ptroff -t -man lats.5 > $(PARMPS)
+		cp $(PARMPS) $(MASTER)/$(PARMPS) 
+

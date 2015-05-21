@@ -1,0 +1,163 @@
+#!variable
+blh      | 170 | Planetary boundary layer height | m          | float | pbltop  | -999 |   12 | |
+cl       | 150 | Cloud amount | %          | float |         |    0 | -999 | |
+clem     | 154 | Cloud emittance (cloud emissivity/layer depth) | 1/Pa       | float |         | -999 |   12 | |
+clexc    | 158 | Extinction coefficient (cloud optical thickness/layer depth) | 1/Pa       | float |         | -999 |   12 | |
+cli      |  58 | Cloud ice | kg/m^3     | float |         | -999 | -999 | |
+clivi    | 151 | Vertically integrated cloud ice | kg/m^2     | float | atm     | -999 | -999 | |
+clsatv   | 150 | Cloud amount (satellite view) | %          | float | toasat  |    0 | -999 | |
+clsfcv   | 150 | Cloud amount (surface view) | %          | float | sfc     |    0 | -999 | |
+clt      |  71 | Total cloud amount | %          | float | cltlay  |    0 | -999 | |
+cltopht  | 153 | Highest cloud top height | m          | float | cltmax  | -999 | -999 | |
+clw      |  76 | Cloud liquid water | kg/m^3     | float |         | -999 | -999 | |
+clwvi    | 154 | Vertically integrated cloud water (liquid and solid phase) | kg/m^2     | float | atm     | -999 | -999 | |
+enek     | 190 | Eddy kinetic energy | m^2/s^2    | float |         | -999 |   12 | |
+evspsbl  | 141 | Surface evaporation plus sublimation rate | kg/(m^2*s) | float | sfc     | -999 | -999 | |
+hfls     | 121 | Heat flux latent surface | W/m^2      | float | sfc     |    0 | -999 | |
+hfss     | 122 | Heat flux sensible surface | W/m^2      | float | sfc     |    0 | -999 | |
+hstdv    |   9 | Standard deviation of height | m          | float | sfc     |    0 | -999 | |
+hur      |  52 | Relative humidity | %          | float |         |    0 | -999 | |
+hus      |  51 | Specific humidity | kg/kg      | float |         |    4 | -999 | |
+huss     |  51 | Surface specific humidity (2m) | kg/kg      | float | sfc2m   |    4 | -999 | |
+mpuva    | 230 | Mean product of eastward and northward wind | m^2/s^2    | float |         | -999 |   16 | |
+mpvhusa  | 231 | Mean product of northward wind and specific humidity | m/s        | float |         | -999 |   16 | |
+mpvta    | 232 | Mean product of northward wind and temperature | m*K/s      | float |         | -999 |   16 | |
+mpwhusa  | 233 | Mean product of vertical motion and specific humidity | Pa/s       | float |         | -999 |   16 | |
+mrfso    | 137 | Total soil frozen water content | kg/m^2     | float | landt   | -999 | -999 | |
+mrro     | 131 | Total runoff rate (including drainage) | kg/(m^2*s) | float | lands   | -999 | -999 | |
+mrros    | 132 | Surface runoff rate | kg/(m^2*s) | float | lands   | -999 | -999 | |
+mrso     |  86 | Total soil water content | kg/m^2     | float | landt   |    0 | -999 | |
+mrsofc   | 134 | Soil moisture field capacity | kg/m^2     | float | landt   | -999 | -999 | |
+mrsofcs  | 133 | Surface soil moisture field capacity | %          | float | lands   |    0 | -999 | |
+mrsos    | 135 | Surface soil water content (upper 0.1m) | kg/m^2     | float | lands   |    1 | -999 | |
+mrsotb   | 136 | Soil moisture field capacity | %          | float | landt   |    0 | -999 | |
+orog     |   8 | Model topography | m          | float | sfc     |    0 | -999 | |
+pr       |  59 | Total precipitation rate | kg/(m^2*s) | float | sfc     |    2 | -999 | |
+prc      | 144 | Convective precipitation rate | kg/(m^2*s) | float | sfc     |    2 | -999 | |
+prsn     |  64 | Snowfall rate (water equivalent) | kg/(m^2/s) | float | sfc     |    6 | -999 | |
+prw      |  54 | Precipitable water | kg/m^2     | float | sfc     |    1 | -999 | |
+ps       |   1 | Surface pressure | Pa         | float | sfc     |    0 | -999 | |
+psbg     | 128 | Pressure surface below ground percentage | %          | float |         |    0 | -999 | |
+psl      |   2 | Mean sea-level pressure | Pa         | float | msl     |    0 | -999 | |
+rlds     | 205 | LW radiation downward surface | W/m^2      | float | sfc     |    1 | -999 | |
+rldscs   | 163 | LW radiation downward surface clear sky | W/m^2      | float | sfc     |    1 | -999 | |
+rls      | 112 | LW radiation net surface | W/m^2      | float | sfc     |    1 | -999 | |
+rlt      | 114 | LW radiation TOA (OLR) | W/m^2      | float | toa     |    1 | -999 | |
+rltcs    | 162 | LW radiation TOA clear sky | W/m^2      | float | toa     |    1 | -999 | |
+rlus     | 188 | LW radiation upward surface | W/m^2      | float | sfc     |    1 | -999 | |
+rluscs   | 162 | LW radiation upward surface clear sky | W/m^2      | float | sfc     |    1 | -999 | |
+rlutcs   | 162 | SW radiation upward TOA clear sky | W/m^2      | float | toa     |    1 | -999 | |
+rsds     | 204 | SW radiation incident at the surface | W/m^2      | float | sfc     |    1 | -999 | |
+rsdscs   | 184 | SW radiation downward clear sky surface | W/m^2      | float | sfc     |    1 | -999 | |
+rsdt     | 204 | SW radiation downward TOA | W/m^2      | float | toa     |    1 | -999 | |
+rss      | 111 | SW radiation net surface | W/m^2      | float | sfc     |    1 | -999 | |
+rst      | 113 | SW radiation net TOA | W/m^2      | float | toa     |    1 | -999 | |
+rsus     | 181 | SW radiaton upward (reflected) surface | W/m^2      | float | sfc     |    1 | -999 | |
+rsuscs   | 185 | SW radiation upward surface clear sky | W/m^2      | float | sfc     |    1 | -999 | |
+rsut     | 183 | SW radiation upward TOA | W/m^2      | float | toa     |    1 | -999 | |
+rsutcs   | 186 | SW radiation upward TOA clear sky | W/m^2      | float | toa     |    1 | -999 | |
+rtmt     | 180 | Net Radiation at Model Top | W/m^2      | float | modtop  |    1 | -999 | |
+sftgif   | 253 | Sfc type % glacier | %          | float | sfc     | -999 |    1 | |
+sftlf    | 252 | Sfc type % land | %          | float | sfc     |    0 | -999 | |
+sic      | 239 | Sea-ice concentration | %          | float | sfc     |    0 | -999 | |
+sicbcs   | 250 | AMIP II BCS Psuedo Sea-ice concentration | %          | float | sfc     |    0 | -999 | |
+sit      |  92 | Ice thickness | m          | float | sfc     |    0 | -999 | |
+snc      | 238 | Snow cover (percent area) | %          | float | sfc     |    0 | -999 | |
+snd      |  66 | Snow depth | m          | float | sfc     |    2 | -999 | |
+snw      |  65 | Snow depth (water equivalent) | kg/m^2     | float | sfc     |    0 | -999 | |
+sst      |  80 | Sea Surface Temperature | K          | float | sfc     |    2 | -999 | |
+sstbcs   | 251 | AMIP II BCS Psuedo Sea Surface Temperature | K          | float | sfc     |    2 | -999 | |
+ta       |  11 | Air Temperature | K          | float |         |    1 | -999 | |
+tas      |  11 | Surface (2m) air temperature | K          | float | sfc2m   |    1 | -999 | |
+tasmax   |  15 | Daily maximum surface (2m) temperature | K          | float | sfc2m   |    1 | -999 | |
+tasmin   |  16 | Daily minimum surface (2m) temperature | K          | float | sfc2m   |    1 | -999 | |
+tauu     | 124 | Eastward surface wind stress (positive for eastward wind) | N/m^2      | float | sfc     |    3 | -999 | |
+tauv     | 125 | Northward surface wind stress (positive for northward wind) | N/m^2      | float | sfc     |    3 | -999 | |
+tg       |  11 | Ground temperature | K          | float | sfc     |    1 |   12 | |
+tnmd     | 216 | Moisture tendency due to diabatic processes | (Kg/Kg)/s  | float |         | -999 |   12 | |
+tnt      | 210 | Total diabatic temperature tendency | K/s        | float |         |    7 | -999 | |
+tntdc    | 214 | Temperature tendency due to dry convective processes | K/s        | float |         |    7 | -999 | |
+tntlsp   | 215 | Temperature tendency due to large scale precipation | K/s        | float |         |    7 | -999 | |
+tntlw    | 212 | Temperature tendency due to LW radiation | K/s        | float |         |    7 | -999 | |
+tntmc    | 213 | Temperature tendency due to moist convective processes | K/s        | float |         |    7 | -999 | |
+tntsw    | 211 | Temperature tendency due to SW radiation | K/s        | float |         |    7 | -999 | |
+tro3     | 129 | Ozone Concentration | ppmv       | float |         | -999 |   12 | |
+ua       |  33 | Eastward wind | m/s        | float |         |    1 | -999 | |
+uas      |  33 | Surface (10m) eastward wind | m/s        | float | sfc10m  |    1 | -999 | |
+va       |  34 | Northward wind | m/s        | float |         |    1 | -999 | |
+vas      |  34 | Surface (10m) northward wind | m/s        | float | sfc10m  |    1 | -999 | |
+vorpot   | 220 | Potential vorticity (350, 380, 405K) | 1/(Pa*s)   | float |         | -999 | -999 | |
+wap      |  39 | Vertical motion (omega) | Pa/s       | float |         |    3 | -999 | |
+zg       |   7 | Geopotential height | m          | float |         |    0 | -999 | |
+pix      | 127 | Image data | -          | int   |         | -999 |   12 | |
+#!vert
+0degiso  | 0 deg isotherm                      | hPa        | single | up   |   4 |   0 |    0 |     0 
+atm      | Atmosphere (entire)                 |            | single | up   | 200 |   0 |    0 |     0 
+ocn      | Ocean (entire depth)                |            | single | up   | 201 |   0 |    0 |     0 
+ocnbot   | Ocean Bottom                        |            | single | up   | 202 |   0 |    0 |     0 
+clhbot   | High Cloud Bottom Level             | hPa        | single | up   | 232 |   0 |    0 |     0 
+clhlay   | High Cloud Top Layer                |            | single | up   | 234 |   0 |    0 |     0 
+clhtop   | High Cloud Top Level                | hPa        | single | up   | 233 |   0 |    0 |     0 
+cllbot   | Low Cloud Bottom Level              | hPa        | single | up   | 212 |   0 |    0 |     0 
+clllay   | Low Cloud Top Layer                 |            | single | up   | 214 |   0 |    0 |     0 
+clltop   | Low Cloud Top Level                 | hPa        | single | up   | 213 |   0 |    0 |     0 
+clmbot   | Mid Cloud Bottom Level              | hPa        | single | up   | 222 |   0 |    0 |     0 
+clmlay   | Mid Cloud Top Layer                 |            | single | up   | 224 |   0 |    0 |     0 
+clmtop   | Mid Cloud Top Level                 | hPa        | single | up   | 223 |   0 |    0 |     0 
+cltbot   | Cloud base level                    | hPa        | single | up   |   2 |   0 |    0 |     0 
+cltlay   | Total Cloud layer                   |            | single | up   |   3 |   0 |    0 |     0 
+cltmax   | Highest Cloud height                | m          | single | up   | 105 |   0 |    0 |   999 
+landd    | Below ground, 10 to 200 cm          |            | single | up   | 112 |  10 |  200 |     0 
+lands    | Below ground, 0 to 10 cm            |            | single | up   | 112 |   0 |   10 |     0 
+landt    | Below ground, 0  to 200 cm          |            | single | up   | 112 |   0 |  200 |     0 
+lcl      | Adiabatic cond level                | hPa        | single | up   |   5 |   0 |    0 |     0 
+maxwnd   | Maximum wind speed level            | hPa        | single | up   |   6 |   0 |    0 |     0 
+msl      | Mean Sea Level                      |            | single | up   | 102 |   0 |    0 |     0 
+ocnbot   | Ocean bottom                        |            | single | up   |   9 |   0 |    0 |     0 
+plev     | Pressure level                      | hPa        | multi  | down | 100 |   0 |    0 |     0 
+pbltop   | Top of PBL                          |            | single | up   |  21 |   0 |    0 |     0 
+sfc      | Earth surface                       |            | single | up   |   1 |   0 |    0 |     0 
+sfclo    | Sfc Layer Ocean                     |            | single | up   | 112 |   0 |  300 |     0 
+sfc10m   | 10 meters above earth surface       | m          | single | up   | 105 |   0 |    0 |    10 
+sfc2m    | 2 meters above earth surface        | m          | single | up   | 105 |   0 |    0 |     2 
+toa      | Top of atmosphere                   |            | single | up   |   8 |   0 |    0 |     0 
+modtop   | Top of Model                        |            | single | up   |  20 |   0 |    0 |     0 
+toasat   | TOA satellite                       |            | single | up   |  22 |   0 |    0 |     0 
+troplev  | Tropopause level                    | hPa        | single | up   |   7 |   0 |    0 |     0 
+theta    | Isentropic Level                    | K          | multi  | up   | 113 |   0 |    0 |     0 
+#!center
+bmrc         |   1 | 100 |   1 
+ccc          |   2 | 100 |   1 
+cnrm         |   3 | 100 |   1 
+cola         |   4 | 100 |   1 
+csiro        |   5 | 100 |   1 
+csu          |   6 | 100 |   1 
+dnm          |   7 | 100 |   1 
+ecmwf        |   8 | 100 |   1 
+gfdl         |   9 | 100 |   1 
+derf         |  10 | 100 |   1 
+giss         |  11 | 100 |   1 
+gla          |  12 | 100 |   1 
+gsfc         |  13 | 100 |   1 
+iap          |  14 | 100 |   1 
+jma          |  15 | 100 |   1 
+lmd          |  16 | 100 |   1 
+mgo          |  17 | 100 |   1 
+mpi          |  18 | 100 |   1 
+mri          |  19 | 100 |   1 
+ncar         |  20 | 100 |   1 
+ncep         |  21 | 100 |   1 
+nrl          |  22 | 100 |   1 
+rpn          |  23 | 100 |   1 
+sunya        |  24 | 100 |   1 
+sunya/ncar   |  25 | 100 |   1 
+ucla         |  26 | 100 |   1 
+ugamp        |  27 | 100 |   1 
+uiuc         |  28 | 100 |   1 
+ukmo         |  29 | 100 |   1 
+yonu         |  30 | 100 |   1 
+ccsr         |  31 | 100 |   1 
+llnl         |  32 | 100 |   1 
+ntu          |  33 | 100 |   1 
+pcmdi        | 100 | 58 | 22 
+

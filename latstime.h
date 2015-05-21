@@ -8,35 +8,11 @@
  * Author:      Bob Drach, Lawrence Livermore National Laboratory
  *              drach@llnl.gov
  *
- * Version:     $Id$
- * Version:     $Id$
+ * Version:     $Id: latstime.h,v 1.4 1996/10/22 19:05:14 fiorino Exp $
  *
  * Revision History:
  *
- * $Log$
- * Revision 1.2  2009/10/10 06:34:15  mike_fiorino
- * mf 20091010 -- incorporate all my mods 1.10 lats into 2.0 lats extension
- *
- * Revision 1.5  2009/03/18 15:52:39  mike_fiorino
- * mf:lats bugs fix + minutes support; set z 1 last ; control of line properties of gxout grid
- * Revision 1.1  2009/10/05 13:44:26  dasilva
- * ams: porting LATS to grads v2; work in progress
- *
- * Revision 1.4  2007/08/25 02:39:13  dasilva
- * ams: mods for build with new supplibs; changed dods to dap, renamed dodstn.c to dapstn.c
- *
- * Revision 1.1.1.1  2002/06/27 19:44:22  cvsadmin
- * initial GrADS CVS import - release 1.8sl10
- *
- * Revision 1.1.1.1  2001/10/18 02:00:58  Administrator
- * Initial repository: v1.8SL8 plus slight MSDOS mods
- *
- * Revision 1.5  1997/10/15 17:53:22  drach
- * - remove name collisions with cdunif
- * - only one vertical dimension with GrADS/GRIB
- * - in sync with Mike's GrADS src170
- * - parameter table in sync with standard model output listing
- *
+ * $Log: latstime.h,v $
  * Revision 1.4  1996/10/22  19:05:14  fiorino
  * latsgrib bug in .ctl creator
  *
@@ -85,7 +61,6 @@
 #define CD_MAX_TIME_DELTA 64		     /* Max characters in time delta */
 #define CD_NULL_DAY 1			     /* Null day value */
 #define CD_NULL_HOUR 0.0		     /* Null hour value */
-#define CD_NULL_MIN 0.0		     /* Null hour value */
 #define CD_NULL_MONTH 1			     /* Null month value */
 #define CD_NULL_YEAR 0			     /* Null year value, component time */
 
@@ -110,7 +85,6 @@ typedef struct {
 	short 		month;		     /* Numerical month (1..12) */
 	short 		day;		     /* Day of month (1..31) */
 	double 		hour;		     /* Hour and fractional hours */
-	double 		min;		     /* min and fractional min */
 } cdCompTime;
 
 /*
@@ -176,14 +150,12 @@ typedef enum CdTimeType {
 #define CdNullDay 1
 #define CdLastDay -1
 #define CdNullHour 0.0
-#define CdNullMin 0.0
 
 typedef struct {
 	long    		year;	     /* e.g., 1979 */
 	short			month;	     /* e.g., CdDec */
 	short			day;	     /* e.g., 30 */
 	double			hour;	     /* hour and fractional hour */
-	double			min;	     /* min and fractional min */
 	long			baseYear;    /* base year for relative, 1970 for CdChron */
 	CdTimeType		timeType;    /* e.g., CdChron */
 } CdTime;

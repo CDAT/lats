@@ -1,0 +1,61 @@
+# adapted from https://gist.github.com/octocat/9257657
+
+# LATS-specific exclusions, executables and other binaries
+##########################################################
+latsls
+wgrib
+newdtg
+nrl.*
+test.parmtable.close
+CVS
+LATS-1.8
+testlats
+testlats1
+test1
+test7
+test7.out.*
+latsout.*
+cvs_files
+
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.a
+*.pyc
+a.out
+ 
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+ 
+# Logs databases, backups, debugging #
+######################################
+*.log
+*.sql
+*.sqlite
+*~
+*.trace
+ 
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db 

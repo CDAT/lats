@@ -1,28 +1,61 @@
-LATS4D
-------
+The LATS library 
 
-LATS4D (LATS for Dummies) is a minimum fuss gs script for writing
-NetCDF, HDF-SDS or GRIB files from GrADS using the PCMDI LATS
-interface. This script can serve as a general purpose file conversion
-and subsetting utility. Any GrADS readable file (GrADS IEEE, GSFC
-Phoenix, GRIB, NetCDF or HDF-SDS) can be subset and converted to GRIB,
-NetCDF, HDF-SDS or binary using a single command line. By using one of
-the regridding functions available to GrADS the output file can also
-be converted to a different horizontal grid resolution.
+Bob Drach
+PCMDI/Lawrence Livermore National Laboratory
+drach@llnl.gov
 
-When invoked without arguments from within GrADS this script will
-create a COARDS compliant NetCDF or file named .grads.lats.nc,
-with all the contents of the default file (all variables, levels,
-times). The file name and several other attributes can be customized
-at the command line, see the OPTIONS section in the manual page.
+Introduction
+------------
 
-LATS4D is included in the OpenGrADS Bundle 2.0.a7.oga.3 and later, with
-no additional installation neccesary. For manual installation
-instructions in other versions of GrADS see file INSTALL.
+This directory contains the binary library, include files, and
+documentation for the LATS I/O library, which is used to format data
+for the PCMDI AMIP II experiment.
 
-SEE ALSO
+Documentation
+-------------
 
-  Wiki page:    http://opengrads.org/wiki/index.php?title=LATS4D
-  Manual page:  http://opengrads.org/doc/scripts/lats4d/
+The man page lats.3 documents the LATS application programming
+interface. The man page lats.5 documents the parameter file syntax.
+
+Platforms
+---------
+
+This release has been compiled under SunOS 4.1.3, SUN Solaris 5.4,
+SGI/Irix 5.3, HP/HPUX 9.0, Cray/Unicos 8.0. DEC Alpha/Digital Unix V3.2,
+and IBM RS6000/AIX V3.2.
+
+Installing LATS
+---------------
+
+To install the LATS library:
+
+   (1) Choose a root installation directory, <LATS>. The default is
+       /usr/local. Type "make prefix=<LATS> install". This installs:
+
+		   liblats.a in <LATS>/lib
+		   lats.h and lats.inc in <LATS>/include
+		   amip2.parms in <LATS>/lib/lats
+		   lats.3 in <LATS>/man/man3
+		   lats.5 in <LATS>/man/man5
+
+Notes
+-----
+
+  Cray
+  ----
+
+       netCDF versions 2.4.X and greater contain optimizations for the Cray
+       which can greatly enhance I/O performance, when using the
+       LATS_PCMDI or LATS_COARDS convention.
 
 
+  DEC Alpha/OSF
+  -------------
+
+       It is recommended that LATS be linked with netCDF version 2.4.X or
+       greater under Alpha/OSF, when using the LATS_PCMDI or LATS_COARDS
+       option. Prior to version 2.4, the typedef `nclong' was equated to
+       `long'; subsequently it is equated to `int' on 64-bit
+       platforms. Consequently, when linking with netCDF V2.4.X, LATS
+       integer data should be ints, but with earlier versions, integer data
+       should be longs.

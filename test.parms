@@ -1,0 +1,31 @@
+#---------------------------------------------------------------------------------------------------
+#
+# LATS test parameter file
+#
+#---------------------------------------------------------------------------------------------------
+#! variable
+
+var1	| 150 | Test variable 1                          | test       | float |     | -999 |   24 | 1    |    |
+var2	|  58 | Test variable 2                          | test       | float | sfc |    5 | -999 | 1    | g1 |
+var2	|  58 | Test variable 2                          | test       | float | sfc | -999 |   24 | 1    | g1 |
+var3	| 151 | Test variable 3				 | test       | int   | sfc | -999 |   24 | 2    |    |
+prc     | 144 | Total precipitation			 | mm/day     | float | sfc | -999 |   24 | 2    |    |
+var5	| 153 | Test variable 5				 | test       | float | sfc | -999 | -999 | 2    |    |
+
+#---------------------------------------------------------------------------------------------------
+#!  vert
+plev	 | Pressure level	     | hPa	| multi  | down |  100 | 0 |  0 | 0
+sfc      | Earth surface             |          | single |   up |    1 | 0 |  0 | 0
+
+#---------------------------------------------------------------------------------------------------
+#!	Center
+pcmdi	  | 100 | 100 | 1
+
+#---------------------------------------------------------------------------------------------------
+#!qc
+#
+# The format of each record is:
+#   variable | level_type | level | mean | std | tolerance | range | rangetol
+#
+prc | sfc | 0.0 | 2.715 | 0.001 | 1.0 | 36.2 | 1.0
+var5| sfc | 0.0 | 100.0 | 0.001 | 1.0 | 0.000| 1.0

@@ -1,0 +1,791 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The Library of AMIP Data Transmission Standards - LATS :  Guidelines for AMIP II users</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (X11; I; IRIX 5.3 IP22) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="white" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000" BACKGROUND="blue_paper.gif">
+
+<H1 ALIGN=CENTER><FONT COLOR="darkblue">
+The Library of AMIP Data Transmission Standards<B> (LATS)</B></font><br>
+<br>
+<font color="darkred"><i>General Description and Guidelines for AMIP II Users</i><br></font>
+</FONT></H1>
+
+<H1 ALIGN=CENTER><B>Version 1.0</B></H1>
+
+<H1 ALIGN=CENTER>
+<FONT SIZE=+0>
+http://www-pcmdi.llnl.gov/software/lats<br>
+lats@pcmdi.llnl.gov<br>
+<br>
+Mike Fiorino and Peter Gleckler<br>
+<br>
+Program for Climate Model Diagnosis and Intercomparison<br>
+Lawrence Livermore National Laboratory<br>
+University of California<br>
+P.O. Box 808 L-264<br>
+Livermore, CA 94551<br>
+510-423-8505 (voice) 510-422-7675(fax)<br>
+<br>
+<br>
+<b>21 March 1997</FONT></B></H1>
+
+<HR WIDTH="100%"><h2>Contents</h2>
+
+<UL>
+<LI><A HREF="#overview">Overview</A></LI>
+
+<LI><A HREF="#basics">Basic characteristics</A></LI>
+
+<LI><A HREF="#usage">Usage</A></LI>
+
+<LI><A HREF="#guidelines">Guidelines for AMIP users</A></LI>
+
+<LI><A HREF="#formatchoice">LATS format and convention options: the pros
+and cons </A></LI>
+
+<LI><A HREF="#details">Design constraints and resulting restrictions</A></LI>
+
+<LI><A HREF="#enhancements">Planned enhancements</A></LI>
+
+<LI><a href="lats.html">LATS man page</a></LI>
+
+<LI><a href="parmfile.html">LATS parameter file man page</a>
+</LI>
+
+<LI><A HREF="#ftp_lats">Obtaining the LATS distribution, including
+sample code</A></LI>
+
+<LI><a href="#web_resources">Web resources</a>
+</LI>
+
+</UL>
+
+<H1>
+<HR WIDTH="100%"></H1>
+
+<H2><A NAME="overview"></A>Overview</H2>
+
+<P>
+
+LATS is a library of software routines to output gridded data
+developed by PCMDI in support of AMIP II and other
+intercomparison projects.  The primary function of LATS is to
+establish and implement a convention/standard for gridded data
+and thus facilitate data handling and exchange.  The LATS
+Application Programmer Interface (API) is designed to be simple
+to understand and use. FORTRAN and C APIs are provided.
+
+</P>
+
+<P>
+
+LATS applications output data in either the WMO "GRIdded Binary"
+<A
+HREF="http://dao.gsfc.nasa.gov/data_stuff/formatPages/GRIB.html">(GRIB)</A>
+ format or in the <A
+HREF="http://unidata.ucar.edu/packages/netcdf/index.html">NetCDF</A>
+format under the <A
+HREF="http://ferret.wrc.noaa.gov/noaa_coop/coop_cdf_profile.html">COARDS</A>
+convention. <FONT COLOR="#000000">LATS-generated data written
+according to the GRIB or COARDS conventions is readily accessible
+by <A
+HREF="http://www-pcmdi.llnl.gov/williams/vcs/vcshome.html">VCS</A>,
+<A HREF="http://grads.iges.org/grads/">GrADS</A> or <a
+href="http://www-pcmdi.llnl.gov/ktaylor/ezget/ezget.html">EzGET</A>.
+&nbsp;A variety of other <a
+href="http://unidata.ucar.edu/packages/netcdf/software.html">
+software packages</a> recognize these conventions; and may also
+be able to access, visualize and manipulate LATS-generated
+data.</FONT>
+
+</P>
+
+<P>However, there are rather rigid constraints placed on the
+structure of the data written with LATS, and thus in its current
+form LATS should not considered as a general purpose gridded data
+output routine.  These constraints are a consequence of the
+following design criteria:
+</P>
+
+<UL>
+<LI>Simple to use</LI>
+
+<LI>Multi-platform</LI>
+
+<LI>Targeted for GCM output (currently limited to rectilinear data)</LI>
+
+<LI>Implement and establish conventions for data and metadata</LI>
+
+<LI>Use of two well-established and freqently used formats</LI>
+
+<LI><FONT COLOR="#000000">Software to be publicly available and free of charge</FONT></LI>
+</UL>
+
+<P>
+<HR ALIGN=LEFT WIDTH="100%"></P>
+
+<H2><A NAME="basics"></A>Basic Features of LATS</H2>
+
+<UL> <LI>LATS outputs rectilinear, gridded, spatio-temporal
+data. The fundamental unit of data written with a single function
+call is a horizontal longitude-latitude slice of a
+variable. However, derivative structures such as zonal
+mean-height cross sections (i.e., a sequence of single-longitude,
+multiple-latitude grids) are supported. </LI>
+
+<LI>LATS data written in either GRIB and/or netCDF are machine independent.
+</LI>
+
+<LI>LATS maintains an internal parameter table that prescribes
+variable names, description, units, datatype, basic structure
+(e.g., upper air or surface), and compression (GRIB options).
+These descriptors are inferred from the parameter name only.
+Thus, most of the metadata needed to write GRIB and/or netCDF
+data are located in the parameter table to simplify the API.</LI>
+
+<LI>An option is provided to override the internal table with an
+external parameter file. LATS <a href="parmfile.html">parameter
+tables</a> are designed to fit specific needs, such as those of
+AMIP and CMIP.</LI>
+
+<LI>More than one LATS file may be open simultaneously for output.</LI>
+
+<LI>For a given timepoint, multiple variables and variables at
+multiple levels may be written in any order.</LI>
+
+<LI>Data can only be written in increasing time sequence.</LI>
+
+<LI>All data are floating-point or integer. Only FORTRAN REALS (C floats)
+and INTEGERS (C ints) can be written</LI>
+</UL>
+
+<P><B><i>Restrictions:</i></B></P>
+
+<UL>
+<LI>All variables written to a given file must share a common frequency
+(e.g., hourly, daily, monthly, etc.).</LI>
+
+<LI>All fields must be rectilinear gridded data (e.g., Gaussian grid data
+is acceptable, but &quot;thinned&quot; Gaussian grid data - where the number
+of longitude grid points is a function of latitude - is not). </LI>
+
+<LI><font color="red"><b><i>All variables must be declared
+(including all their dimensions and attributes)&nbsp; before
+any numerical data is written</b></i></font> to a
+LATS&nbsp;file.
+
+<LI>All variables for a given time slice must be written before
+proceeding to the next time slice</LI> </UL>
+
+<H1>
+<HR WIDTH="100%"></H1>
+
+<H2><A NAME="usage"></A>Usage</H2>
+
+<P>The LATS API consists of eleven functions.  Detailed
+information on each of these functions is contained in the <a
+href="lats.html">man page</a>. An outline of a LATS program,
+including reference to several LATS functions, is given
+below:</P>
+
+<DT>1. Specify an external <a href="parmfile.html">parameter
+table file</a>, with <B>lats_parmtab</B>. <i><font
+color="red">While optional, setting the table file in the
+application will be required for AMIP II as updates to the tabel
+and QC marks become available.</i></font></DT>
+
+<DT>2. Define all grid(s), with <B>lats_grid</B>. </DT>
+
+<DT>3. Define all vertical dimensions (e.g., pressure level) with
+<B>lats_vert_dim</B>.  If a default surface dimension is defined
+for a variable, it does not have to be redefined with
+lats_vert_dim. Grids and vertical dimensions may be shared across
+variables and files. NOTE: At present, only one grid may be
+defined for a GrADS/GRIB file.</DT>
+
+<DT>4. Create a LATS file, with <B>lats_create</B>.</DT>
+
+<DT>5. For <font color="red"><i>each variable to be written to the file: Declare the variable
+with <B>lats_var</B></i></font>. (Note: this is required even if the variable has
+been declared for a different file)</DT>
+
+<DT>If there is a missing data flag, define it with <B>lats_miss_float</B>
+or <B>lats_miss_int</B>.</DT>
+
+<DT>6. For each time-point, in increasing time order: For each horizontal
+level of each variable: Write the data for this level, time-point, with
+<B>lats_write</B>.</DT>
+
+<DT>7. Close the file, with <B>lats_close</B>.</DT>
+
+<br> It is possible to write structures other than fully 2-D
+horizontal longitude-latitude grids.  For example, to write zonal
+mean vs. height cross sections, the grid must be defined as
+containing a single longtitude (a dummy value) in
+<b>lats_grid</b>.  One latitude grid (a 1-D array) at each level
+would be written with <b>lats_write</b>.
+<br>
+
+<p>
+
+The <a href="#ftp_lats">LATS distribution</a> comes with a sample
+<a href="testlats.f.html">FORTRAN code </a> and <a
+href="README.test.html">detailed instructions</a> on creating
+LATS applications.  This program is used to verify that LATS is
+working properly on your system.  Furthermore, the distribution
+is self contained, i.e., all materials needed for creating LATS
+application are included, ranging from the libraries and
+utilities to documentation on setup and application building.
+</p>
+
+
+<hr>
+
+<H2><A
+NAME="guidelines"></A>Guidelines for AMIP II Users</H2>
+
+<P>Although LATS was geared for AMIP II data, there are
+additional guidelines that need to be followed by AMIP II
+particpants.  These additional constraints will ensure even
+greater data processing efficiency and more rapid data
+distribution.</P>
+
+<UL> <LI>Use only the LATS_COARDS or LATS_GRADS_GRIB conventions.
+Data produced under conventions are guarenteed to be immediately
+accesible to VCS/GrADS and EZGET -- the primary data interfaces
+at PCMDI</LI>
+
+<LI>Data must be written in increasing time sequence.</LI>
+
+<LI>All data must be on the same grid (i.e., no staggered grid
+data). Modeling groups participating in AMIP II should
+interpolate all staggered grid variables to a single, common
+grid. </LI>
+
+<LI>For ALL data associated with intervals of time, such as
+6-hour accumulations and averages set the valid time in
+<b>lats_write</b> to the value at the beginning of the
+interval.</LI>
+
+<LI>Grid orientation: monotonically increasing in latitude and longitude,
+<B>no wrap-around points</B> (e.g., 72 points , 0 to 355 degrees). </LI>
+</UL>
+
+<P>Beyond the above requirements, we recommend that:</P>
+
+<UL>
+<LI>Grid orientation: start at Greenwich meridian and south pole. </LI>
+
+<LI>The time sequence of the simulation should be clearly
+identified in the file name.</LI> </UL> </UL>
+
+<P>
+<HR WIDTH="100%"></P>
+
+<H2><A NAME="formatchoice"></A>LATS convention and format options: the
+pros and cons</H2>
+
+<P>The two format options in LATS, <A
+HREF="http://laraine.unidata.ucar.edu/packages/netcdf/">netCDF</A>
+and <A
+HREF="http://dao.gsfc.nasa.gov/data_stuff/formatPages/GRIB.html">GRIB</A>,
+have distinctly different advantages.  AMIP II users are free to
+choose the LATS format which is most appropriate for their needs
+but are required to use either the LATS_COARDS or LATS_GRADS_GRIB
+conventions listed below.  The LATS <I>Convention</I> defines how
+the data and the metadata (data on the data) are structured as
+well as the the actual file format.  It is the standards on
+metadata and structure which makes LATS data accessible to a data
+intreface.  Some factors to consider when choosing LATS
+format/convention options are summarized below. Note that the
+data format is implied by the convention. </P>
+
+<P><B>Convention options: </B></P>
+
+<P><B>LATS_PCMDI (netCDF)</B>: Permits the use of calendars other
+than the standard Gregorian calendar. Other than the calendar
+options, this option is at present consistent with the COARDS
+conventions. Future releases may provide other extensions beyond
+the COARDS convention. Files created with this convention may be
+used with all netCDF utilities, except those that require the
+COARDS convention (e.g., GrADS).  As this is an evolving
+convention, its use in AMIP II is not supported.</P>
+
+<P><B>LATS_COORDS (netCDF): </B>Compliant with the <A
+HREF="http://ferret.wrc.noaa.gov/noaa_coop/coop_cdf_profile.html">COORDS
+metadata standard</A> . If this convention is chosen, the
+calendar must be specified to be Gregorian (LATS_STANDARD
+calendar). Internally, monthly data is represented in units of
+&quot;days since (basetime)&quot;. Climatology data is assumed if
+year = 2. Fixed fields (e.g., topography) is assigned the year
+1.</P>
+
+<P><B>LATS_GRADS_GRIB: </B>WMO GRIB format (GRIB), plus a GrADS
+control file and a GRIB map file. Variables must be defined on
+the same horizontal grid.  Supports, all calendar options except
+Julian and 360-day years.</P>
+
+<P><B>LATS_GRIB_ONLY: WMO GRIB only. </B>The delta may be
+zero. This convention is the most general, but may not be readily
+interfaced to VCS and GrADS.  Appropriate for straight data
+transmission with no need for direct data interface.  </P>
+
+<P><B>Data format pros and cons:</B></P>
+
+<P><B>netCDF - advantages: </B>There is a wide range of <a
+href="http://unidata.ucar.edu/packages/netcdf/software.html">tools</a>
+available for netCDF data, and it is used extensively in the
+atmospheric science reseach community, particularly among
+universities. The netCDF metadata model is general and
+flexible.</P>
+
+<P><B>netCDF - disadvantages:</B> Requires installation and use
+of the netCDF libraries. For some platforms, netCDF version 2.4
+or greater must be used for performance reasons.  At present,
+LATS does not support the COARDS data compression (offset plus
+scaling to 16-bit integers) option, but will do so in a future
+release.  Data writing and reading can be much slower than GRIB,
+particularly for large grids (e.g.,360x180 points).  An analysis
+of netCDF performance is underway, but preliminary results
+indicate writing is around 30% slower and reading (using the
+GrADS interface) up to 500% slower, depending on grid size.</P>
+
+<P><B>GRIB - advantages: </B>GRIB is a WMO standard and is widely
+used at most numerical weather prediction centers (e.g, ECMWF and
+NCEP).  GRIB features flexible compression options on a
+variable-by-variable basis and binary format is generally simple.
+For AMIP II high frequency (6-h) data, GRIB files will be on
+average 2.5 times smaller than netCDF format, i.e., a space
+savings of ~60%.</P>
+
+<P><B>GRIB - disadvantages: </B>GRIB is a primarily a physical
+format with metadata defined for each 2-D grid (i.e., a GRIB
+message) only.  Thus, GRIB data cannot be organized internally as
+higher dimensional data sets.  The higher dimensional structure
+achieved in the LATS_GRADS_GRIB convention is though a mapping
+function not part of the format.  Beyond, the GrADS interface,
+there is no standard programming interface and a variety of GRIB
+'flavors' (LATS uses WMO GRIB Edition 1 and the NCEP standard)
+have evolved complicating interface building.
+
+<P>Consult the LATS man pages for a detailed description of the
+LATS programming interface. </P>
+
+<H2>
+<HR WIDTH="100%"></H2>
+
+<H2><A NAME="details"></A>Design Constraints and Resulting
+Limitations</H2>
+
+<P>The LATS software library was designed with two overarching
+constraints -- simplicity and two-format output. Supporting
+output of both netCDF and GRIB from the same interface requires
+limitation to a common denominto.  netCDF is a self describing,
+data-set orientated (e.g., 4-D variables) format whereas GRIB is
+only designed to output 2-D lon/lat grids.  The GrADS interface
+allows GRIB data to be treated as if it where a data-set in the
+netCDF sense (i.e, the netCDF 4-D "data model").  Thus, to
+support the GrADS interface to GRIB and for consistency with
+netCDF <b><i>LATS 1.0 requires all variables to be declared
+(including all their dimensions and attributes), before any
+numerical data are written</b></i>.  While netCDF does in fact
+allow an application to define and write in any order, additional
+functions would have to be added to LATS making the system more
+complex.  Further, a relaxation of the define once, then write
+constraint would allow for a greater range of data structures
+(e.g, a set of time-series) and thus greater complexity in the
+processing at PCMDI.  However, we expect to ease the define
+once, write many restriction in future versions.
+
+<P>Although four conventions may seem complex, it is symptomatic
+of the great variation in existing data as conventions are often
+specific to an individual.  The purpose of a convention is to
+improve the efficiency of a group.  The lack of conventions for
+AMIP I was very costly to PCMDI in that we had to bring the
+disparate data sets (all 30 data sets were different) to some
+common standard.  Compared to AMIP I, four conventions will
+greatly improve the efficiency of PCMDI and our ability to
+support analysis of the AMIP II results.</P>
+
+<P>While the valid year of a climatology field may have no mean,
+it is generally required by data interfaces.  LATS internally
+sets a time convention for climatology and fixed fields.  Again,
+there are no obvious standards for descripting the valid time of
+climatology or fields such topography.  Thus, we have arbitraily
+set the valid year of a data written under the climatolgy
+calendars to the year 2 AD and fixed fields to 1 AD.
+
+<P>
+<HR WIDTH="100%"></P>
+
+<H2><A NAME="enhancements"></A>Planned enhancements</H2>
+
+<P>In addition to formatting data, LATS provides some basic data
+quality control facilities (not included in the table of the
+current release).  Note also that the current release of LATS
+requires the netCDF library, even for those users who only intend
+to use the LATS_GRADS_GRIB convention.  The current version is
+expected to be sufficient for use throughout AMIP II. Future
+software modifications/enhancements will be fully backwards
+compatible with the current version. Once the AMIP Panel has
+completed <A
+HREF="http://www-pcmdi.llnl.gov/amip2/temp/output/sampstudyprop.html">testing
+compression of AMIP&nbsp;model output</A>, the LATS_GRADS_GRIB
+compression will be determined for the high frequency (6 hourly)
+output. This will not require obtaining an update to the
+software, only the LATS parameter table. The current list of
+planned enhancements is:</P>
+
+<UL>
+<LI>Predefined quality control values for the AMIP II Standard Model Output.
+</LI>
+
+<LI>Improved treatment for storage of latitude-height (e.g., zonal means)
+fields. </LI>
+
+<LI>Support for a richer set of grid types (zonal fields, thin grids, preprojected
+grids, etc.).</LI>
+
+<LI>Support for forecast data (e.g., NWP).</LI>
+
+<LI>Port to MS-DOS / Win32 Operating Systems </LI>
+
+<LI>Support COARDS compression for netCDF data.</LI> </UL>
+
+<H2>
+<HR WIDTH="100%"></H2>
+
+<H2><A NAME="ftp_lats"></A>Obtaining LATS</H2>
+
+<P>The LATS 1.0 Distribution consists of the libraries (LATS and
+netCDF), include files, documentation, sample code, and utilities
+for reading LATS generated files.  The distribution is simply a
+compressed tar file and everything needed is contained
+inside.</p>
+
+
+<p>
+LATS 1.0 has been built on the following platforms:<br><br>
+
+<table border=1>
+
+<tr>
+<th width=100 align=center>
+Dist<br>
+Name
+</th>
+
+<th width=150 align=center>
+Machine
+</th>
+
+<th width=250 align=center>
+uname -a
+</th>
+
+<th width=250 align=center>
+Site where made
+</th>
+</tr>
+
+
+<tr>
+<td width=100 align=center>
+aix
+</td>
+<td width=150 align=left>
+IBM RS4000
+</td>
+<td width=250 align=left>
+AIX 2 3 000039577000
+</td>
+<td width=250 align=left>
+cumulus.gcn.ou.edu
+</td>
+</tr>
+
+<tr>
+<td width=100 align=center>
+alpha
+</td>
+<td width=150 align=left>
+DEC Alpha
+</td>
+<td width=250 align=left>
+OSF1 V3.2 41.64 alpha
+</td>
+<td width=250 align=left>
+cola.iges.org
+</td>
+</tr>
+
+<tr>
+<td width=100 align=center>
+c90
+</td>
+<td width=150 align=left>
+CRAY C90
+</td>
+<td width=250 align=left>
+sn4005  8.0.4 u31.20 CRAY C90
+</td>
+<td width=250 align=left>
+a.nersc.gov
+</td>
+</tr>
+
+<tr>
+<td width=100 align=center>
+hpux
+</td>
+<td width=150 align=left>
+HP
+</td>
+<td width=250 align=left>
+HP-UX A.09.01 A 9000/755
+</td>
+<td width=250 align=left>
+sas-hp.nersc.gov
+</td>
+</tr>
+
+<tr>
+<td width=100 align=center>
+irix4
+</td>
+<td width=150 align=left>
+SGI
+</td>
+<td width=250 align=left>
+IRIX 4.0.5 06151813 IP12
+</td>
+<td width=250 align=left>
+sgi39.wwb.noaa.gov
+</td>
+</tr>
+
+<tr>
+<td width=100 align=center>
+irix5
+</td>
+<td width=150 align=left>
+SGI
+</td>
+<td width=250 align=left>
+IRIX 5.3 11091812 IP22 mips 
+</td>
+<td width=250 align=left>
+tenki.llnl.gov
+</td>
+</tr>
+
+
+<tr>
+<td width=100 align=center>
+j90
+</td>
+<td width=150 align=left>
+CRAY J90
+</td>
+<td width=250 align=left>
+sn9550 9.0.2.2 car.6 CRAY J90
+</td>
+<td width=250 align=left>
+killeen.nersc.gov
+</td>
+</tr>
+
+<tr>
+<td width=100 align=center>
+linux
+</td>
+<td width=150 align=left>
+x86 PC
+</td>
+<td width=250 align=left>
+Linux 2.0.21 #5
+</td>
+<td width=250 align=left>
+rosmondt.nrlmry.navy.mil
+</td>
+</tr>
+
+<tr>
+<td width=100 align=center>
+sol2
+</td>
+<td width=150 align=left>
+SUN
+</td>
+<td width=250 align=left>
+SunOS 5.5.1 Generic_103640-03 sun4d
+</td>
+<td width=250 align=left>
+sas-sun.nersc.gov
+</td>
+</tr>
+
+<tr>
+<td width=100 align=center>
+sunos4
+</td>
+<td width=150 align=left>
+SUN
+</td>
+<td width=250 align=left>
+SunOS 4.1.3 1 sun4m
+</td>
+<td width=250 align=left>
+typhoon.llnl.gov
+</td>
+</tr>
+
+</table>
+
+</p>
+
+<A NAME="system_build">
+
+<p> If your system does not exactly match, try a version which is
+close.  The libraries will generally work <b>within</b> operating
+system major versions (e.g., 2 in version 2.5.1 of Solaris (now
+called 5.5.1, thanks Sun)) >= and even < the version of the OS on
+which it was built.  If you are unable to find a compatible
+version, then please contact us at lats@pcmdi.llnl.gov.  We can
+either do the port or arrange for access to the source.  </p>
+
+<p> There are two ways to obtain the distribution: 1) via the
+web; or 2) anonymous ftp.  We prefer you go through web because
+it involves a simple registration process that helps us keep
+track of who is using the library.  By registering, you will be
+put on a mialing list for announcements on updates and,
+inevitably, bugs. 
+
+<br> <br><a href="ftp.lats.html"><font size=+1><b>Click here to obtain
+LATS through the web</font></b></a>.
+
+
+</p>
+
+<p>
+
+However, you may use anonymous ftp by,<br>
+<br>
+<a href="ftp://sprite.llnl.gov/pub/lats">ftp://sprite.llnl.gov/pub/lats</a>
+<br>
+<br>
+
+Please see the <a href="README.home.html">README</a> file in the
+LATS root directory for instructions on setting up the
+distribution and where to go after that. </P>
+
+<hr>
+<H2><A NAME="web_resources"></A>Web resources</H2>
+
+<p>
+The following table gives a summary of web resources for LATS and
+related software.
+</p>
+
+<p>
+<table border=1>
+
+<tr>
+<th width=200 align=center>
+Resource
+</th>
+
+<th width=400 align=center>
+URL
+</th>
+</tr>
+
+<tr>
+<td width=200 align=center>
+PCMDI
+</td>
+<td width=400 align=left>
+<a href="http://www-pcmdi.llnl.gov">http://www-pcmdi.llnl.gov</a>
+</td>
+</tr>
+
+<tr>
+<td width=200 align=center>
+LATS
+</td>
+<td width=400 align=left>
+<a href="http://www-pcmdi.llnl.gov/software/lats">
+http://www-pcmdi.llnl.gov/software/lats</a>
+</td>
+</tr>
+
+<tr>
+<td width=200 align=center>
+GrADS
+</td>
+<td width=400 align=left>
+<a href="http://grads.iges.org/grads">http://grads.iges.org/grads</a>
+</td>
+</tr>
+
+<tr>
+<td width=200 align=center>
+VCS
+</td>
+<td width=400 align=left>
+<a href="http://www-pcmdi.llnl.gov/williams/vcs/vcshome.html">http://www-pcmdi.llnl.gov/williams/vcs/vcshome.html</a>
+</td>
+</tr>
+
+<tr>
+<td width=200 align=center>
+netCDF
+</td>
+<td width=400 align=left>
+<a href="http://www.unidata.ucar.edu/packages/netcdf">http://www.unidata.ucar.edu/packages/netcdf</a>
+</td>
+</tr>
+
+<tr>
+<td width=200 align=center>
+GRIB
+</td>
+<td width=400 align=left>
+<a href="ftp://ncardata.ucar.edu/docs/grib/guide.txt">ftp://ncardata.ucar.edu/docs/grib/guide.txt</a>
+</td>
+</tr>
+
+<tr>
+<td width=200 align=center>
+COARDS
+</td>
+<td width=400 align=left>
+<a href="http://ferret.wrc.noaa.gov/noaa_coop/coop_cdf_profile.html">http://ferret.wrc.noaa.gov/noaa_coop/coop_cdf_profile.html</a>
+</td>
+</tr>
+
+<tr>
+<td width=200 align=center>
+wgrib
+</td>
+<td width=400 align=left>
+<a href="http://wesley.wwb.noaa.gov/wgrib.html">http://wesley.wwb.noaa.gov/wgrib.html</a>
+</td>
+</tr>
+
+</table>
+
+<P><BR>
+
+<HR>Last update 24 March 1997. For further information, contact the AMIP Project
+Office (<A HREF="mailto:amip@pcmdi.llnl.gov">amip@pcmdi.llnl.gov</A>) or
+Mike Fiorino (<A HREF="mailto: lats@pcmdi.llnl.gov">lats@pcmdi.llnl.gov</A>).</P>
+
+<P><A HREF="http://www.llnl.gov/disclaimer.html">LLNL Disclaimers</A> </P>
+
+<P>UCRL-MI-125598 </P>
+
+</BODY>
+</HTML>

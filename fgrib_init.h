@@ -21,11 +21,7 @@ static user_var FGRIBAPI_vr = {
       0,  /* unsigned char mn;         */
 "test",   /*           char ti[12];    */
       1,  /*            int tv;        */
-#ifdef __GO32__  /* DJGPP: FLT_MAX is not a constant */
-3.40282e+38  /*  float undef;       */
-#else
-FLT_MAX      /*  float undef;       */
-#endif /* __GO32__ */
+FLT_MAX   /*  float undef;       */
 } ;
 
 static user_grid FGRIBAPI_gd  = {
@@ -396,3 +392,4 @@ static grib_es FGRIBAPI_es = {
            4,  /* unsigned char len ;  */
       "7777",  /*     char es[4] ; */
 } ; 
+

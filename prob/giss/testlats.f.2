@@ -1,0 +1,276 @@
+      program testlats
+C
+C
+      include "../include/lats.inc"
+C
+C         define the grid:
+C
+C         72 points in long (no wrap)
+C         46 points in lat (pole points)
+C         10 variables
+C
+      parameter(ni=72,nj=46,nv=10)
+
+      character*20 center
+      character*20 model
+      character*9 var
+
+      dimension var(nv),id_var(nv)
+      double precision rlon(ni),rlat(nj),slev
+      real vdata(72,46)
+C
+C         define the production center and the process (model)
+C
+      data center/'GISS_RUS'/
+      data model/'control'/
+C
+C         set the variable names (AMIP II convention)
+C
+C
+      data var/'evspsbl','hfns','pr','hfss','snc','snd','rss','rls',
+     1    'tauu','tauv'/
+C
+C         define the pressure levels (hPa)
+C
+
+C0000000000000000000000000000000000000000000000000
+C
+C         STEP #0  --  set the parameter table
+C
+C0000000000000000000000000000000000000000000000000
+
+      id_parmtab=latsparmtab("../table/amip2.lats.table.23.A20")
+      if(id_parmtab.eq.0) stop 'latsparmtab error'
+
+C1111111111111111111111111111111111111111111111111
+C
+C         STEP #1  -- create a LATS file defining
+C
+C         1) convention (e.g., GRIB with a standard calandar)
+C         2) time statistic (e.g., monthly)
+C         3) time increment (1 for 1 month)
+C         4) who or the center (e.g., PCMDI)
+C         5) what or the model (e.g., lats)
+C
+C1111111111111111111111111111111111111111111111111
+
+         do 1000 iconv=1,2
+
+        if(iconv.eq.1) latsconv=LATS_GRADS_GRIB
+        if(iconv.eq.2) latsconv=LATS_COARDS
+
+        if(latsconv.eq.LATS_GRADS_GRIB) then
+          id_fil = latscreate('control',
+     $         latsconv,
+     $         LATS_STANDARD,
+     $         LATS_YEARLY,20,center,
+     $         model,'GISS_RUS control')
+          print*,'LATS grib file id = ',id_fil
+        else if(latsconv.eq.LATS_COARDS) then
+          id_fil = latscreate('control',
+     $         LATS_COARDS,
+     $         LATS_STANDARD,
+     $         LATS_YEARLY,20,center,
+     $         model,'GISS_RUN control')
+          print*,'LATS netcdf file id = ',id_fil
+
+        else
+          go to 800
+        endif
+
+
+C222222222222222222222222222222222222222222222222222222
+C
+C         STEP #2  -- define the grid:
+C
+C         1) lons and lats and # points
+C         2) type (e.g., linear, gaussian or generic)
+C
+C         do this only once !!!
+C
+C222222222222222222222222222222222222222222222222222222
+
+        if(iconv.eq.1) then
+
+            dellon=360./float(ni)
+            rlon(1)=-177.5
+          do i=2,ni
+            rlon(i)=rlon(i-1)+dellon
+          end do
+
+            dellat=180./float(nj-1)
+            rlat(1)=-90.
+          do j=2,nj
+            rlat(j)=rlat(j-1)+dellat
+          end do
+
+          id_grd=latsgrid("giss_grid",LATS_LINEAR, ni, rlon, nj,
+     $         rlat)
+          if(id_grd.eq.0) stop 'latsgrid error'
+
+        endif
+
+
+C444444444444444444444444444444444444444444444444444444
+C
+C         STEP #4  -- define the variables
+C
+C         1) variable (from the table, e.g., "psl" for mean sea leve pre
+ssure)
+C         2) data type (typically LATS_FLOAT)
+C         3) time statistic type (e.g., LATS_AVERAGE)
+C         4) associated vertical dimension from step #3
+C
+C
+C444444444444444444444444444444444444444444444444444444
+
+        id_var(1)=latsvar(id_fil,var(1),
+     $       LATS_FLOAT,LATS_AVERAGE,id_grd,
+     $       0, 'evaporation')
+        if(id_var(1).eq.0) stop 'latsvar(1) error'
+
+        id_var(2)=latsvar(id_fil,var(2),
+     $       LATS_FLOAT,LATS_AVERAGE,id_grd,
+     $       0, 'net surface heating')
+        if(id_var(2).eq.0) stop 'latsvar(2) error'
+
+        id_var(3)=latsvar(id_fil,var(3),
+     $       LATS_FLOAT,LATS_AVERAGE,id_grd,
+     $       0, 'precipitation')
+        if(id_var(3).eq.0) stop 'latsvar(3) error'
+
+        id_var(4)=latsvar(id_fil,var(4),
+     $       LATS_FLOAT,LATS_AVERAGE,id_grd,
+     $       0, 'surface sensible heat flux')
+        if(id_var(4).eq.0) stop 'latsvar(4) error'
+
+        id_var(5)=latsvar(id_fil,var(5),
+     $       LATS_FLOAT,LATS_AVERAGE,id_grd,
+     $       0, 'snow cover')
+        if(id_var(5).eq.0) stop 'latsvar(5) error'
+
+        id_var(6)=latsvar(id_fil,var(6),
+     $       LATS_FLOAT,LATS_AVERAGE,id_grd,
+     $       0, 'snow depth')
+        if(id_var(6).eq.0) stop 'latsvar(6) error'
+
+        id_var(7)=latsvar(id_fil,var(7),
+     $       LATS_FLOAT,LATS_AVERAGE,id_grd,
+     $       0, 'short wave radiation at surface')
+        if(id_var(7).eq.0) stop 'latsvar(7) error'
+
+        id_var(8)=latsvar(id_fil,var(8),
+     $       LATS_FLOAT,LATS_AVERAGE,id_grd,
+     $       0, 'long wave radiation at surface')
+        if(id_var(8).eq.0) stop 'latsvar(8) error'
+
+        id_var(9)=latsvar(id_fil,var(9),
+     $       LATS_FLOAT,LATS_AVERAGE,id_grd,
+     $       0, 'u-wind stress')
+        if(id_var(9).eq.0) stop 'latsvar(9) error'
+
+        id_var(10)=latsvar(id_fil,var(10),
+     $       LATS_FLOAT,LATS_AVERAGE,id_grd,
+     $       0, 'v-wind stress')
+        if(id_var(10).eq.0) stop 'latsvar(10) error'
+c
+c     check long, lat
+      do 801 j=1,nj
+        write(46,9020)j,rlat(j)
+  801 continue
+      do 802 i=1,ni
+        write(46,9020)i,rlon(i)
+  802 continue
+ 9020 format(i3,f10.1)
+c
+c
+
+
+C555555555555555555555555555555555555555555555555555555
+C
+C         STEP #5 -- get and write the fields
+C
+C         1) define the valid time (beginning of the interval)
+C         2) read(generate) some data
+C         3) write it out
+C
+C555555555555555555555555555555555555555555555555555555
+
+C
+C
+          imo=1
+          ida=1
+          ihr=0
+        do 110 iyr=1,61,20
+C
+C         create sfc field and write
+C
+ccc     do 100 nn=1,10
+       nn=8
+       write(6,*)iyr,nn
+          call readda(nn,vdata)
+C     check if data being read in properly
+C
+ccc        if(iyr.eq.21.and.nn.eq.8)then
+ccc        do 777 j=16,20
+ccc        do 777 i=60,65
+ccc           write(6,*)iyr,nn,i,j,vdata(i,j)
+cc777     continue
+          write(45,9010)((vdata(i,j),i=1,ni),j=1,nj)
+ 9010 format(8e10.5)
+ccc       end if
+C
+C I know this is overkill, but if you don't do this the hp version
+C will core dump!
+C
+       slev=0.0D0
+          id_write1=latswrite(id_fil,id_var(nn),slev,
+     $         iyr,imo,ida,ihr,vdata)
+          if(id_write1.eq.0) stop 'latswrite error - sfc'
+  100  continue
+  110  continue
+C
+C666666666666666666666666666666666666666666666666666666
+C
+C         STEP #6 - close the file
+C
+C         1) for the GRIB, this creates the GrADS .ctl file for
+C         futher processing by cdunif, GrADS or VCS
+C
+C666666666666666666666666666666666666666666666666666666
+
+        id_close = latsclose(id_fil)
+        if(id_close.eq.0) stop 'latsclose error'
+C
+        do 1010 nn=10,19
+         rewind(nn)
+ 1010  continue
+ 1000   continue
+C
+C         normal exit
+C
+      go to 999
+
+C
+C         error conditions
+C
+ 800  continue
+      print*,'Error 800, undefined LATS output convention'
+      stop 800
+
+ 999  continue
+
+      stop
+      end
+
+      subroutine readda(nn,aij)
+C
+C     subroutine to read in data, the variables are listed
+C     in data var/' ',' ',/
+C
+      character*80 title
+      real aij(72,46)
+      read(nn+9)title,aij
+       write(*,*)title,nn+9
+      return
+      end

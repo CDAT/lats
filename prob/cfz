@@ -1,0 +1,1 @@
+f77 $1.f -L/usr/local/lib -lezget -lcdms -ldrs -lnetcdf -L/usr/local/HDF4.0r2/lib -lmfhdf -ldf -ljpeg -lz -L/usr/local/lats/lib -llats -o $1

@@ -1,0 +1,27 @@
+970225
+
+m -f Makefile.local tarport to create tar for porting out of $AFS_HOME/lats
+
+the man pages are now in the port dir $AFS_HOME/lats/man
+
+970514
+
+fix in latsgrib.c to properly set the GDS scan mode in lat
+
+
+970520
+
+put fclose in latsint.c for parameter table to allow multiply latsparmtab calls without exceeding number of open files on the operationg system
+
+changed latsgrib.c to correctly code 2000, 1900 etc. 
+
+was
+
+yr=0
+cent=20
+
+now is
+yr=100
+cent=19
+
+

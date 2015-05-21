@@ -1,0 +1,162 @@
+		   PCMDI Data Standards Tables
+
+			 Michael Fiorino
+
+		    fiorino@typhoon.llnl.gov
+
+     Program for Climate Model Diagnosis and Intercomparison
+	     Lawrence Livermore National Laboratory
+		    University of California
+		       P.O. Box 808 L-264
+		       Livermore, CA 94551
+	     510-423-8505 (voice) 510-422-7675(fax)
+
+		       27 September, 1996
+
+
+1.0	INTRODUCTION
+
+In an attempt to define data standards/policy for PCMDI, I have
+coordinated various variable parameters tables to establish a
+first-guess "master."
+
+The PCMDI data policy would require that ALL applications (e.g.,
+LATS) and documents needing variable description would come from
+the master.  Further, the master would be maintained by only one
+person (i.e., myself).
+
+The basic format is LATS-compatible and the tables contain more
+information and details than would normally be needed by most
+applications.  Additional fields and tables can be created as
+appropriate.
+
+To make the tables easier to use, I have created a few perl
+scripts, specifically,
+
+1)	sorting
+2)	printing
+3)	wgrib tables (the GRIB decoder/lister)
+4)	amip2 variables only
+
+and I will build other scripts as needed.
+
+
+2.0	THE TABLES
+
+Please see,
+
+/pcmdi/typhoon_d0/lats/tables/
+
+pcmdi.lats.parms.table.1.txt		PARAMETERS table
+pcmdi.lats.vertdim.table.1.txt		vertical dimension descriptors
+
+I use the term PARAMETER vice variable because, as defined in the
+table, a parameter is a VARIABLE (a physical quantity) + LEVEL
+descriptor.
+
+For example,
+
+ua	=	Atmospheric u component of the wind which may vary in the vertical
+uas	=	ua at the sfc (10 m)	
+
+The format for the parms table is:
+
+NNN      PPP    DDD                UUU   TTT     VVV     DSF    BPGP   AAAA    GRIB1 
+
+alb     |  84 | Albedo            | %   | float |       |  0   | -999 |      | g1 |
+
+where
+
+NNNN 	- 	PARAMETER name used in LATS
+PPP	-	GRIB parameter number describing the VARIABLE 
+DDD	-	Description
+UUU	-	Units
+TTT	-	Data type - int or float
+VVV	-	Vertical dimension type
+		  blank 	means the PARAMETER my vary in the vertical
+		  nonblank	the PARAMETER is a "sfc" or associated with a single level
+				e.g., sfc = surface of the earth the descriptor comes
+				from the pcmdi.lats.vertdim.table.1.txt
+
+DSF	-	GRIB decimal scale factor.  The GRIB coding process
+		in this case works as follows:
+
+		1)	subtract out the lowest value and store
+		2) 	multiply resulting deviation from the min by 10^DSF
+		3)	convert to integer by rounding (int(dev+0.5))
+		4)	calculate the bits/grid point to represent the result range
+		5)	code the integers (all positive) into the binary data section
+			of the GRIB message
+
+		In the case of alb the DSF is 0, or just convert the
+		input array to integers and code.  This implies a
+		numerical precision of +/- 0.5 %
+
+		The DSFs conform the NCEP standard and are
+		"aggressive" compression wise.  Most centers
+		(e.g., NCEP and FNMOC) use DSF because it saves
+		space and has constant precision.
+
+		-999 means the data will be coded using a fixed
+		number of bits per grid point 
+
+BPGP	-	GRIB coding using fixed width or bits/grid point.
+	
+		For example, 12 would mean 12 bits/grid point or
+		the data will be coded using integers 0 - 4095
+		(2^12 -1).  The precision will be +/- 0.5*(min-max)/4095
+		Thus, precision varies with the field and is not
+		fixed as when using a DSF.  For BPGP = 16
+		The precision would be (min-max)/65535 or about
+		4.5 decimal places of precision IN THE DEVIATION
+		FROM THE MIN VALUE which could be higher than the
+		full value of the field.  For a typical global
+		sea level pressure field, the min would be 960
+		hPa and the Max 1040 hPa or +/- 0.0006 hPa of
+		precision for BPGP = 16.  In contrast, for a DSF =
+		-1 as in the NCEP standard, the precision would be
+		+/- 5 Pa or +/- 0.05 hPa.
+	
+		-999 means decimal scaling will be used
+
+		If DSF and BPGP are -999, the DSF=-999 and BPGP =
+		16, which is the ECMWF standard.
+	
+AAAA	-	Optional field used in AMIP2 to indicate the table
+		Not used by LATS
+
+GRIB1	-	g1 in this field indicates a standard GRIB variable
+		(PPP <= 127).
+		Not used by LATS.
+		
+
+The format for the vertdim table is:
+
+NNN        DDD                         UUU        TTT     DIR     G1    G2  G3   G4
+
+plev	 | Pressure level	     | hPa	| multi  | down |  100 | 0 |  0 | 0
+pbltop	 | Top of PBL       	     |		| single |   up	|   21 | 0 |  0 | 0
+
+NNN	-	Name of the level
+	
+DDD	-	Description
+
+UUU	-	Units if appropriate
+
+TTT	-	single 	: 	a constant of "sfc" variable
+		multi 	:	may vary 
+
+DIR	-	Orientation relative to increasing index
+		down 	: 	decreases with increasing index (e.g., pressure)
+		up	: 	increases with increasing index (e.g., height)
+
+G1-4	-	GRIB parameters for representing the level.
+
+
+3.0	SUMMARY
+
+As always, your comments are welcome.  While I support
+flexibility in the standard, getting it right up front will make
+working our data consistent and easier.  Perhaps more
+importantly, I will be creating my observational data sets in
+strict conformance to this standard.

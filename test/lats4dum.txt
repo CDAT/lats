@@ -1,0 +1,530 @@
+			LATS for Dummies
+
+			   Version 1.0
+
+			  Mike Fiorino
+
+     Program for Climate Model Diagnosis and Intercomparison
+	     Lawrence Livermore National Laboratory
+		    University of California
+		       P.O. Box 808 L-264
+		       Livermore, CA 94551
+	     510-423-8505 (voice) 510-422-7675(fax)
+
+		    fiorino@typhoon.llnl.gov
+
+			23 October, 1996
+
+
+0.	CAVAETS
+
+As of the date above, LATS REQUIRES the netCDF library to work
+correctly for EITHER the netCDF of GRIB optiuons.  This
+restriction should be removed shortly...
+
+
+1.	INTRODUCTION
+
+You've just picked up your copy of the Library for AMIP
+Transmission Standards (LATS) and you're thinking, "now what do I
+do?"  While the standard distribution includes nice man pages and
+installation scripts, you're probably not a "super user" or a
+computer whiz with unix, C and C++.
+
+This document will give you a step-by-step recipe for getting
+LATS up and running and is essentially what I did to prove it
+worked when given the distribution library.
+
+However, I'll assume you have a basic understanding of unix.
+
+2.	WHAT YOU'LL NEED
+
+The first step is in getting (usually by ftp ) two compressed tar files:
+
+a)	lats-VVV-MMM-OS_tar.Z
+
+where
+	VVV is the version, e.g., 1_2
+	MMM is the machine, e.g., c90
+	OS is the operating system and version, e.g., unicos8_0
+
+and,
+
+b)	testlats.tar.Z
+
+3.	INSTALLATION AND SETUP RECIPE
+
+Here is a step-by-step recipe for creating your first LATS data
+set:
+
+
+STEP a)----	
+
+Make a directory to install the library (lats-VVV-MMM-OS_tar)
+and the test routine (testlats.tar).  For this recipe we'll use
+
+/myhome/lats
+
+STEP b)-----
+
+Put the files there:
+
+cd /myhome/lats
+ftp (or cp) lats-VVV-MMM-OS_tar.Z .
+ftp (or cp) latstest.tar.Z .
+
+STEP c)-----	
+
+Uncompress them:
+
+uncompress *Z
+
+STEP d)-----	untar them
+
+tar -xvf lats-VVV-MMM-OS_tar
+tar -xvf latstest.tar
+	
+STEP e)-----	do a ls -la.  You should find two new directories:
+
+/myhome/lats/lats-VVV 
+
+and
+
+/myhome/lats/test
+
+STEP f)-----	cd /myhome/lats/test and do a ls -la.  You should something like:
+
+-rwx------   1 u9508    xaw         1387 Oct  2 16:22 lats.sh*
+-rw-------   1 u9508    xaw         9829 Oct  2 16:16 lats4dum.txt
+-rw-------   1 u9508    xaw        32136 Oct  2 16:18 latsout.grb.orig
+-rw-------   1 u9508    xaw         7000 Oct  2 16:18 testlats.f
+-rw-------   1 u9508    xaw        50359 Oct  2 15:37 wgrib.c
+
+STEP g)----- 	cd /myhome/lats/lats-VVV and do a ls -la.  You
+		should find something like:
+
+-rw-r--r--  1 9508         5026 Oct 22 12:19 Makefile
+-rw-r--r--  1 9508         1704 Oct 22 12:19 README
+-rw-r--r--  1 9508        35498 Oct 22 12:19 amip2.parms
+-rw-r--r--  1 9508         4773 Oct 22 12:19 install-sh
+-rw-r--r--  1 9508        22900 Oct 22 12:19 lats.3
+-rw-r--r--  1 9508         6609 Oct 22 12:19 lats.5
+-rw-r--r--  1 9508         7199 Oct 22 12:19 lats.h
+-rw-r--r--  1 9508         5390 Oct 22 12:19 lats.inc
+-rw-r--r--  1 9508       674112 Oct 22 12:19 liblats.a
+
+The key files are the library (liblats.a) and the include file
+(lats.inc for fortran and lats.h for C)
+
+STEP h)----- 	cd /myhome/lats/test and edit the lats.sh file
+
+lats.sh is a bourne shell script which manages the test and sets
+the environment and compiler options.  It's real purpose is the
+define all the settings you'll need to get LATS going.
+
+Here are the environmental variables in lats.sh that have to be set:
+
+LATSVER="1.4"
+BDIR="/myhome/lats"
+NCLIB=""
+LATSLIB="$BDIR/lats-${LATSVER}"
+LATSINC="$BDIR/lats-${LATSVER}"
+WGRIB="$BDIR/lats/test"
+GRADS="...."
+CUDUMP=""
+F77="f77"
+CC="cc"
+
+Explanation:
+
+LATSVER	-	The version of LATS you downloaded
+BDIR	-	Base Directory or the root of LATS and the test
+LATSLIB -	The		
+
+
+
+STEP i)-----	EDIT THE testlats.f program
+
+
+
+STEP i) make the test application
+
+WARNING!  You may get this kind of error message when creating the application:
+
+ld: /afs/nersc.gov/u/xaw/u9508/lats/lats-1.4/liblats.a: warning: table of contents for archive is out of date; rerun ranlib(1)
+ld: Undefined symbol 
+   _lats_miss_int 
+   _lats_close 
+   _lats_vert_dim 
+   _lats_erropt 
+   _lats_write 
+   _lats_qcopt 
+   _lats_var 
+   _lats_miss_float 
+   _lats_parmtab 
+   _lats_grid 
+   _lats_create 
+
+All you have to do is "ranlib" the library, if you have ranlib on your system, i.e.,
+
+ranlib /myhome/lats/lats-VVV/liblats.a
+
+and you should be OK...
+
+
+
+
+I have written a fortran program to verify that LATS is working
+properly and produces data which can be viewed and/or processed
+by cdunif/GrADS/VCS.
+
+Please see:
+
+/scratch/staff/fiorino/lats/test/
+
+lats.sh		-	managment shell script
+testlats.f 	-	the code
+testlast.doc	-	this document
+amip2.parms	-	the amip II parameter table
+
+output from the system:
+
+testlats	-	the executable
+latsout.nc	-	the netCDF version of the test data
+latsout.grb	-	the GRIB version
+latsout.ctl	-	the GrADS .ctl file (needed by cdunif/VCS) 
+latsout.gmp	-	the GrADS gribmap file (needed by cdunif/VCS)
+latsout.gs	-	GrADS script to display
+
+
+2.	THE PROBLEM
+
+Create monthly mean output for jan 1979 consisting of a single
+level field (mean sea level pressure) and a multi-level field
+(temperature).  The data are loaded using a "read_data"
+subroutine that a real application the user would have to write.
+In this test, read_data analytically generates meteorologically
+sensible (but not realistic) fields.
+
+3.	THE CODE
+
+testlatstest.f is fairly well documented, but there are some gotchas,
+specifically the include file:
+
+.
+.
+.
+
+
+C
+C!!!      WARNING !!! --- machine dependent include works on sunos
+
+      include "/usr/local/include/lats.inc"
+
+.
+.
+.
+
+There are no standards for this in fortran, but this works under
+sunos.
+
+
+4. 	RUNNING THE TEST UNDER SUNOS
+
+I have not tried this on the sgi's yet and will update this doc
+with system dependent information.
+
+Here's the recipe where CCC: means to type in these commands
+
+
+STEP 1 ---  CREATE A DIRECTORY TO HOLD THE TEST AND SET THE ENVIRONMENT
+
+CCC: mkdir /tmp/lats
+CCC: mkdir /tmp/lats/test
+CCC: cd /tmp/lats/test
+CCC: cp /scratch/staff/fiorino/lats/test/* .
+CCC: setenv LATS_PARMS amip2.parms
+
+STEP 2 --- VIEW/EDIT THE lats.sh FILE
+
+Here are the system/local variables in lats.sh of significance:
+.
+.
+. 
+
+NCLIB="/usr/local/netcdf-2.3.2/libsrc"
+LATSLIB="/usr/local/lib"
+LATSINC="/usr/local/include"
+WGRIB="/usr/local/grads/bin"
+GRIBMAP="/usr/local/grads/bin"
+GRADS="/usr/local/grads/bin/"
+CUDUMP="/usr/local/PCMDI/bin"
+
+ofile="latsout"
+format="netcdf"
+format="grib"
+
+.
+.
+. 
+
+these variables tell lats.sh where the libraries and utilities
+are located and will have to updated at each installation.  The
+default format is grib in lats.sh and testlats.f
+
+STEP 3 --- MAKE (compile/load) THE TEST
+
+CCC: lats.sh c
+
+This creates the executable testlats
+
+STEP 4 --- RUN IT
+
+CCC: lats.sh run
+
+the output should be:
+
+testlats
+grib file id =   1
+
+this means it worked, but did it?
+
+STEP 5 --- SEE WHAT WE GOT; RUN wgrib 
+
+CCC: ls -la *.grb
+ 
+the output should be:
+
+-rw-r--r--  1 fiorino     16068 Jul 17 12:40 latsout.grb
+
+this is good, we have SOMETHING in the file...
+
+wgrib is the NCEP utility to scan/filter/output from GRIB files.
+For documentation
+
+CCC: /usr/local/grads/bin/wgrib
+
+To run wgrib on our data:
+
+CCC: lats.sh wgrib
+
+yields:
+
+1:0:d=79010100:PRMSL:kpds5=2:kpds6=102:kpds7=0:TR=0:P1=0:P2=0:TimeU=3:MSL:anl:NAve=0
+2:4224:d=79010100:TMP:kpds5=11:kpds6=100:kpds7=850:TR=0:P1=0:P2=0:TimeU=3:850 mb:anl:NAve=0
+3:8448:d=79010100:TMP:kpds5=11:kpds6=100:kpds7=500:TR=0:P1=0:P2=0:TimeU=3:500 mb:anl:NAve=0
+4:12258:d=79010100:TMP:kpds5=11:kpds6=100:kpds7=250:TR=0:P1=0:P2=0:TimeU=3:250 mb:anl:NAve=0
+
+this shows we have four fields...
+
+For a detailed listing from wgrib:
+
+CCC: /usr/local/grads/bin/wgrib -V latsout.grb
+
+yields,
+
+rec 1:0:date 79010100 PRMSL kpds5=2 kpds6=102 kpds7=0 levels=(0,0) grid=255 MSL anl:
+  timerange 0 P1 0 P2 0  nx 72 ny 46 GDS grid 0 num_in_ave 0 missing 0
+  center 100 subcenter 2 process 100
+  latlon: lat  -90.000000 to 90.000000 by 4.000000  nxny 3312
+          long 0.000000 to 355.000000 by 5.000000, (72 x 46) scan 0 bdsgrid 1
+
+  min/max data 95000 101210  num bits 10  BDS_Ref 9500  DecScale -1 BinScale 0
+
+rec 2:4224:date 79010100 TMP kpds5=11 kpds6=100 kpds7=850 levels=(3,82) grid=255 850 mb anl:
+  timerange 0 P1 0 P2 0  nx 72 ny 46 GDS grid 0 num_in_ave 0 missing 0
+  center 100 subcenter 2 process 100
+  latlon: lat  -90.000000 to 90.000000 by 4.000000  nxny 3312
+          long 0.000000 to 355.000000 by 5.000000, (72 x 46) scan 0 bdsgrid 1
+
+  min/max data 226.892 287.192  num bits 10  BDS_Ref 2268.92  DecScale 1 BinScale 0
+
+rec 3:8448:date 79010100 TMP kpds5=11 kpds6=100 kpds7=500 levels=(1,244) grid=255 500 mb anl:
+  timerange 0 P1 0 P2 0  nx 72 ny 46 GDS grid 0 num_in_ave 0 missing 0
+  center 100 subcenter 2 process 100
+  latlon: lat  -90.000000 to 90.000000 by 4.000000  nxny 3312
+          long 0.000000 to 355.000000 by 5.000000, (72 x 46) scan 0 bdsgrid 1
+
+  min/max data 227.636 270.236  num bits 9  BDS_Ref 2276.36  DecScale 1 BinScale 0
+
+rec 4:12258:date 79010100 TMP kpds5=11 kpds6=100 kpds7=250 levels=(0,250) grid=255 250 mb anl:
+  timerange 0 P1 0 P2 0  nx 72 ny 46 GDS grid 0 num_in_ave 0 missing 0
+  center 100 subcenter 2 process 100
+  latlon: lat  -90.000000 to 90.000000 by 4.000000  nxny 3312
+          long 0.000000 to 355.000000 by 5.000000, (72 x 46) scan 0 bdsgrid 1
+
+  min/max data 209.892 244.792  num bits 9  BDS_Ref 2098.92  DecScale 1 BinScale 0
+
+this tells you about the grid and technical details about the
+GRIB field (e.g., num bits 9 means packing using 9 bits/grid
+point).
+
+STEP 6 --- MAKE THE GRIB FILE USEFUL BY RUNNING THE gribmap UTILITY
+
+CCC: lats.sh gribmap
+
+yields:
+
+gribmap v1.2 for GrADS v1.5.1.14
+mf 950913 -e punchout at end of file
+Scanning binary GRIB file(s):
+ latsout.grb
+!!!!! MATCH:    1       4224  255  1  0   2  102 0     btim: 1979010100:00 tau:      0 dtim: 1979010100:00 
+!!!!! MATCH:    2       8448  255  1  0  11  100 850   btim: 1979010100:00 tau:      0 dtim: 1979010100:00 
+!!!!! MATCH:    3      12258  255  1  0  11  100 500   btim: 1979010100:00 tau:      0 dtim: 1979010100:00 
+!!!!! MATCH:    4      16068  255  1  0  11  100 250   btim: 1979010100:00 tau:      0 dtim: 1979010100:00 
+Reached EOF
+
+which shows we have successfully done the map
+
+STEP 7 --- CHECK IF cdunif (VCS) CAN READ IT; RUN THE cudump UTILITY
+
+CCC: lats.sh cudump
+
+yields:
+
+typhoon:/tmp/lats/test 87 > lats.sh cudump
+//cudump: latsout.ctl
+{
+
+dimensions:
+   t = 1;
+   z = 3;
+   y = 46;
+   x = 72;
+
+variables:
+   float ta(t, z, y, x);
+   float psl(t, y, x);
+      // variable attributes
+   ta:title     = "Temperature [degK]";
+   psl:title    = "Pressure reduced to MSL [Pa]";
+      // global attributes
+   :format      = "GRADS";
+}
+
+so the file can now be read to VCS, etc.
+
+STEP 8 --- CREATE a netCDF VERSION OF THE DATA
+
+we'll have to modify both the lats.sh and testlats.f
+
+---------- lats.sh
+
+delete the
+
+format="grib"
+
+line so the local variable section looks like:
+
+
+ofile="latsout"
+format="netcdf"
+
+-------- testlats.f
+
+change the
+
+      data grib/.true./
+
+to
+      data grib/.false./
+
+ 
+Now repeat STEPS 3 and 4
+
+CCC: lats.sh c
+CCC: lats.sh run
+
+yields:
+
+netcdf file id =   1
+
+Repeat STEP 7
+
+CCC: lats.sh cudump
+
+yields:
+
+//cudump: latsout.nc
+{
+
+dimensions:
+   time = 1;
+   mean_sea_level = 1;
+   longitude = 72;
+   latitude = 46;
+   pressure = 3;
+
+variables:
+   double time(time);
+   float mean_sea_level(mean_sea_level);
+   float longitude(longitude);
+   float latitude(latitude);
+   float psl(time, mean_sea_level, latitude, longitude);
+   float pressure(pressure);
+   float ta(time, pressure, latitude, longitude);
+      // variable attributes
+   time:units	= "months since 1979-1-1 0";
+   mean_sea_level:units	= "";
+   mean_sea_level:description	= "Mean Sea Level";
+   mean_sea_level:type	= "msl";
+   mean_sea_level:long_name	= "Level";
+   mean_sea_level:positive	= "up";
+   longitude:units	= "degrees_east";
+   longitude:long_name	= "Longitude";
+   latitude:units	= "degrees_north";
+   latitude:long_name	= "Latitude";
+   psl:comments	= "sfc variable";
+   psl:long_name	= "Pressure reduced to MSL";
+   psl:units	= "Pa";
+   psl:grid_name	= "u54";
+   psl:grid_type	= "linear";
+   psl:time_statistic	= "average";
+   pressure:units	= "hPa";
+   pressure:description	= "Pressure level";
+   pressure:type	= "plev";
+   pressure:long_name	= "Level";
+   pressure:positive	= "down";
+   ta:comments	= "ua variable";
+   ta:long_name	= "Temperature";
+   ta:units	= "degK";
+   ta:grid_name	= "u54";
+   ta:grid_type	= "linear";
+   ta:time_statistic	= "average";
+      // global attributes
+   :Conventions	= "COARDS";
+   :comments	= "LATS test";
+   :model	= "lats";
+   :center	= "PCMDI";
+}
+
+
+STEP 9 --- VIEW IT!
+
+If you are set up for GrADS try
+
+CCC: lats.sh grads
+
+For VCS, open latsout.ctl and/or latsout.nc.  They are NOT the
+same, but see if you can find out how different they are....
+
+In the new version of GrADS (/usr/local/grads/bin/ngrads), you
+can open the netCDF file by,
+
+sdfopen latsout.nc
+
+
+5.	COMMENTS AND SUGGESTIONS
+
+After setting up the environment and figuring out how to do the
+compile, I found LATS to be quite straightforward.  When things
+didn't work, LATS produced farily understandable diagnostics, so
+I expect you will be up and running quickly.  I even found some
+minor bugs in my GRIB routines and some missing parameters in the
+tables.  
+
+Please contact me should you have any problems; your comments are
+needed.
+
+

@@ -1,0 +1,621 @@
+head	1.3;
+access;
+symbols;
+locks
+	fiorino:1.3; strict;
+comment	@# @;
+
+
+1.3
+date	96.11.26.20.38.32;	author fiorino;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	96.07.17.22.42.08;	author fiorino;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	96.06.25.15.29.42;	author fiorino;	state Exp;
+branches;
+next	;
+
+
+desc
+@initial version lats parm table
+@
+
+
+1.3
+log
+@before updates
+@
+text
+@alb     |  84 | Albedo                                   | %          | float |        |  0   | -999 |      | g1 |
+cdcon   |  72 | Convective cloud cover                   | %          | float |        |  0   | -999 |      | g1 |
+cice    |  58 | Cloud Ice                                | kg/m^2     | float |        |  1   | -999 |      | g1 |
+clt     |  71 | Total cloud cover                        | %          | float | cltlay |  0   | -999 | 2,4  | g1 |
+cl      | 150 | Cloud amount                             | %          | float |        |  0   | -999 | 1    |    |
+clh     |  75 | High level cloud cover                   | %          | float |        |  0   | -999 |      | g1 |
+cli     |  58 | Cloud ice                                | kg/m^3     | float |        | -999 | -999 | 1    | g1 |
+clivi   | 151 | Vertically integrated cloud ice          | kg/m^2     | float | atm    | -999 | -999 | 2    |    |
+cll     |  73 | Low level cloud cover                    | %          | float | clllay |  0   | -999 |      | g1 |
+clm     |  74 | Mid level cloud cover                    | %          | float | clmlay |  0   | -999 |      | g1 |
+clsv    | 152 | Cloud fraction (satellite view)          | %          | float |        |  0   | -999 | 1    |    |
+cltopht | 153 | Highest cloud top height                 | m          | float | cltmax | -999 | -999 | 2    |    |
+clw     |  76 | Cloud water                              | kg/m^3     | float |        | -999 | -999 | 1    | g1 |
+clwvi   | 154 | Vertically integrated cloud water        | kg/m^2     | float | atm    | -999 | -999 | 2    |    |
+cvuhusa | 192 | Covariance of ua and hus                 | m/s        | float |        | -999 |   16 | 1    |    |
+cvuta   | 197 | Covariance of ua and ta                  | m*degK/s   | float |        | -999 |   16 | 1    |    |
+cvuva   | 196 | Covariance of ua and va                  | m^2/s^2    | float |        | -999 |   16 | 1    |    |
+cvvhusa | 193 | Covariance of va and hus                 | m/s        | float |        | -999 |   16 | 1    |    |
+cvvta   | 198 | Covariance of va and ta                  | m*degK/s   | float |        | -999 |   16 | 1    |    |
+cvwhusa | 195 | Covariance of wap and hus                | Pa/s       | float |        | -999 |   16 | 1    |    |
+cvwta   | 194 | Covariance of wap and ta                 | degK*Pa/s  | float |        | -999 |   16 | 1    |    |
+cvwua   | 190 | Covariance of wap and ua                 | m*Pa/s^2   | float |        | -999 |   16 | 1    |    |
+cvwva   | 191 | Covariance of wap and va                 | m*Pa/s^2   | float |        | -999 |   16 | 1    |    |
+cwat    |  76 | Cloud water                              | kg/m^2     | float |        |  1   | -999 |      | g1 |
+den     |  89 | Density                                  | kg/m^2     | float |        |  4   | -999 |      | g1 |
+dira    |  31 | Wind direction                           | deg        | float |        |  0   | -999 |      | g1 |
+dirid   |  93 | Direction of ice drift                   | deg        | float |        | -999 |   12 |      | g1 |
+dirpw   | 107 | Primary wave direction                   | deg        | float |        |  0   | -999 |      | g1 |
+dirsw   | 109 | Secondary wave direction                 | deg        | float |        |  0   | -999 |      | g1 |
+diruos  |  47 | Direction of current                     | deg        | float |        |  0   | -999 |      | g1 |
+div     |  42 | Absolute divergence                      | /s         | float |        |  6   | -999 |      | g1 |
+divr    |  44 | Relative divergence                      | /s         | float |        |  6   | -999 |      | g1 |
+dslm    |  82 | Deviation of sea level from mean         | m          | float |        | -999 |   12 |      | g1 |
+dtdz    |  19 | Lapse rate                               | K/m        | float |        |  4   | -999 |      | g1 |
+dudz    |  45 | Vertical u shear                         | /s         | float |        |  4   | -999 |      | g1 |
+dvdz    |  46 | Vertical v shear                         | /s         | float |        |  4   | -999 |      | g1 |
+dzdt    |  40 | Geometric vertical velocity              | m/s        | float |        |  4   | -999 |      | g1 |
+epot    |  14 | Pseudo-adiabatic potential temperature   | degK       | float |        |  1   | -999 |      | g1 |
+evs     | 140 | Evaporation                              | kg/(m^2*s) | float | sfc    | -999 | -999 | 2    |    |
+evspsbl | 141 | Sfc evap + sublimation rate              | kg/(m^2*s) | float | sfc    | -999 | -999 | 2    |    |
+gp      |   6 | Geopotential                             | m^2/s^2    | float |        | -1   | -999 |      | g1 |
+hfbld   | 123 | Boundary layer dissipation               | W/m^2      | float |        |  0   | -999 |      | g1 |
+hfls    | 121 | Heat flux latent sfc                     | W/m^2      | float | sfc    |  0   | -999 | 2,4  | g1 |
+hfns    | 170 | Heat flux net sfc                        | W/m^2      | float | sfc    | -999 | -999 | 2    |    |
+hfss    | 122 | Heat flux sensible sfc                   | W/m^2      | float | sfc    |  0   | -999 | 2,4  | g1 |
+hstdv   |   9 | Standard deviation of height             | m          | float | sfc    |  0   | -999 | 1    | g1 |
+htr     | 240 | Heating rate total                       | degK/s     | float |        | -999 |   16 | 1    |    |
+htrl    | 241 | Heating rate latent                      | degK/s     | float |        | -999 |   16 | 1    |    |
+htrlw   | 242 | Heating rate net LW radiation            | degK/s     | float |        | -999 |   16 | 1    |    |
+htrc    | 243 | Heating rate convective                  | degK/s     | float |        | -999 |   16 | 1    |    |
+htrls   | 244 | Heating rate large scale precip          | degK/s     | float |        | -999 |   16 | 1    |    |
+htrsw   | 245 | Heating rate net SW radiation            | degK/s     | float |        | -999 |   16 | 1    |    |
+htsgw   | 100 | Sig height of wind waves and swell       | m          | float |        | -999 |   12 |      | g1 |
+hum     |  53 | Humidity mixing ratio                    | kg/kg      | float |        |  4   | -999 |      | g1 |
+hur     |  52 | Relative humidity                        | %          | float |        |  0   | -999 | 1    | g1 |
+hus     |  51 | Specific humidity                        | kg/kg      | float |        |  4   | -999 | 1,3  | g1 |
+huss    |  51 | Sfc specific humidity (2m)               | kg/kg      | float | sfc2m  |  4   | -999 | 2    | g1 |
+huv     |  55 | Vapor pressure                           | Pa         | float |        | -1   | -999 |      | g1 |
+hvar    |  10 | Variance of height                       | m^2        | float |        | -999 |   16 |      | g1 |
+idv     |  98 | Ice divergence                           | /s         | float | sfc    | -999 | -999 |      | g1 |
+igr     |  97 | Ice growth                               | m          | float | sfc    | -999 | -999 |      | g1 |
+mixht   |  67 | Mixed layer depth                        | m          | float |        | -999 |   12 |      | g1 |
+mrro    | 131 | Runoff rate total                        | kg/(m^2*s) | float | lands  | -999 | -999 | 2    |    |
+mrroa   |  90 | Runoff accum (mm)                        | kg/m^2     | float | landt  |  1   | -999 |      | g1 |
+mrros   | 132 | Runoff rate sfc                          | kg/(m^2*s) | float | lands  | -999 | -999 | 2    |    |
+mrsob   | 133 | Soil moisture sfc beta (%FC)             | %          | float | lands  |  0   | -999 | 2    |    |
+mrso    |  86 | Soil moisture total                      | kg/m^2     | float | landt  |  0   | -999 | 2    | g1 |
+mrsocap | 134 | Soil moisture field capacity             | kg/m^2     | float | landt  | -999 | -999 | 2    |    |
+mrsos   | 135 | Soil moisture sfc                        | kg/m^2     | float | lands  |  1   | -999 | 2    |    |
+mrsotb  | 136 | Soil moisture total beta (%FC)           | %          | float | landt  |  0   | -999 | 2    |    |
+mrtotvi | 137 | Column liquid/frozen water               | kg/m^2     | float | landt  | -999 | -999 | 2    |    |
+mtha    |  70 | Main thermocline anomaly                 | m          | float | sfc    | -999 |   12 |      | g1 |
+mthd    |  69 | Main thermocline depth                   | m          | float | sfc    | -999 |   12 |      | g1 |
+orog    |   8 | Model orography                          | m          | float | sfc    |  0   | -999 | 6    | g1 |
+p       |   1 | Pressure                                 | Pa         | float |        | -1   | -999 |      | g1 |
+panom   |  26 | Pressure anomaly                         | Pa         | float |        | -1   | -999 |      | g1 |
+perpsag | 200 | Percent of time sfc. pres above ground   | %          | float |        | -999 | -999 | 2    |    |
+perpw   | 108 | Primary wave mean period                 | s          | float |        | -999 |   12 |      | g1 |
+persw   | 110 | Secondary wave mean period               | s          | float |        | -999 |   12 |      | g1 |
+pix     | 127 | Image data                               | -          | int   |        | -999 |   12 |      | g1 |
+pot     |  13 | Potential temperature                    | degK       | float |        |  1   | -999 |      | g1 |
+pr      |  59 | Total precipitation rate                 | kg/(m^2*s) | float | sfc    |  2   | -999 |      | g1 |
+pra     |  61 | Total precipitation                      | kg/m^2     | float | sfc    |  1   | -999 |      | g1 |
+prc     | 144 | Convective precipitation rate            | kg/(m^2*s) | float | sfc    |  2   | -999 | 2    |    |
+prla    |  62 | Large scale precipitation                | kg/m^2     | float | sfc    |  1   | -999 |      | g1 |
+prca    |  63 | Convective precipitation                 | kg/m^2     | float | sfc    |  1   | -999 |      | g1 |
+prsc    |  78 | Convective snow                          | kg/m^2     | float | sfc    |  1   | -999 |      | g1 |
+prsl    |  79 | Large scale snow                         | kg/m^2     | float | sfc    |  1   | -999 |      | g1 |
+prsn    |  64 | Snowfall rate water equivalent           | kg/(m^2/s) | float | sfc    |  6   | -999 | 2    | g1 |
+prw     |  54 | Precipitable water                       | kg/m^2     | float | sfc    |  1   | -999 | 2,4  | g1 |
+ps      |   1 | Sfc pressure                             | Pa         | float | sfc    |  0   | -999 | 2,4  | g1 |
+psl     |   2 | Pressure reduced to MSL                  | Pa         | float | msl    |  0   | -999 | 2,4  | g1 |
+ptend   |   3 | Pressure tendency                        | Pa/s       | float | sfc    | -5   | -999 |      | g1 |
+rl      | 115 | LW radiation                             | W/m^2      | float |        |  0   | -999 |      | g1 |
+rlds    | 205 | LW radiation downward sfc                | W/m^2      | float | sfc    |  0   | -999 |      | g1 |
+rldscs  | 163 | LW radiation downward sfc clear sky      | W/m^2      | float | sfc    |  0   | -999 | 2    |    |
+rls     | 112 | LW radiation sfc net                     | W/m^2      | float | sfc    |  0   | -999 | 2    | g1 |
+rlt     | 114 | LW radiation TOA (OLR)                   | W/m^2      | float | toa    |  0   | -999 | 2,4  | g1 |
+rltcs   | 162 | LW radiation TOA clear sky               | W/m^2      | float | toa    |  0   | -999 | 2    |    |
+rlus    | 188 | LW radiation upward sfc                  | W/m^2      | float | sfc    |  0   | -999 | 2    |    |
+rluscs  | 162 | LW radiation upward sfc clear sky        | W/m^2      | float | sfc    |  0   | -999 | 2    |    |
+rlutcs  | 162 | SW radiation upward TOA clear sky        | W/m^2      | float | toa    |  0   | -999 | 2    |    |
+rs      | 116 | SW radiation                             | W/m^2      | float |        |  0   | -999 |      | g1 |
+rsds    | 204 | SW radiation downward sfc                | W/m^2      | float | sfc    |  0   | -999 | 2    |    |
+rsdscs  | 184 | SW radiation downward clear sky sfc      | W/m^2      | float | sfc    |  0   | -999 | 2    |    |
+rsdt    | 204 | SW radiation downward TOA                | W/m^2      | float | toa    |  0   | -999 | 2    |    |
+rss     | 111 | SW radiation net sfc                     | W/m^2      | float | sfc    |  0   | -999 | 2    | g1 |
+rst     | 113 | SW radiation net TOA                     | W/m^2      | float | toa    |  0   | -999 | 2,4  | g1 |
+rsus    | 181 | SW radiation upward sfc                  | W/m^2      | float | sfc    |  0   | -999 | 2,4  |    |
+rsuscs  | 185 | SW radiation upward sfc clear sky        | W/m^2      | float | sfc    |  0   | -999 | 2    |    |
+rsut    | 183 | SW radiation upward TOA                  | W/m^2      | float | toa    |  0   | -999 | 2    |    |
+rsutcs  | 186 | SW radiation upward TOA clear sky        | W/m^2      | float | toa    |  0   | -999 | 2    |    |
+rsg     | 117 | Radiation global                         | W/m^2      | float | toa    |  0   | -999 |      | g1 |
+salty   |  88 | Salinity                                 | kg/kg      | float |        | -999 |   12 |      | g1 |
+satd    |  56 | Saturation deficit                       | Pa         | float |        | -1   | -999 |      | g1 |
+sfcr    |  83 | Sfc roughness                            | m          | float | sfc    |  5   | -999 |      |    |
+sftl    |  81 | Sfc type (0=100% ocean, 1=100% land/ice) | -          | float | sfc    | -999 |    1 | 6    | g1 |
+sftgi   | 201 | Glacier-ice no-ice mask (1=ice; 0=no)    | -          | float | sfc    | -999 |    1 | 6    |    |
+sftsi   | 202 | Sea-ice no-ice mask (1=ice; 0=no)        | -          | float | sfc    | -999 |    1 | 6    |    |
+sic     |  91 | Sea-ice concentration                    | fraction   | float | sfc    |  2   | -999 | 2    | g1 |
+sit     |  92 | Ice thickness                            | m          | float | sfc    |  0   | -999 | 2    | g1 |
+snc     | 238 | Snow cover % area                        | %          | float | sfc    |  0   | -999 | 2    |    |
+snd     |  66 | Snow depth                               | m          | float | sfc    |  2   | -999 | 2    | g1 |
+snw     |  65 | Snow depth water equivalent              | kg/m^2     | float | sfc    |  0   | -999 | 2    | g1 |
+snm     |  99 | Snow melt                                | kg/m^2     | float | sfc    |  1   | -999 |      | g1 |
+spda    |  32 | Wind speed                               | m/s        | float |        |  1   | -999 |      | g1 |
+spdid   |  94 | Speed of ice drift                       | m/s        | float |        | -999 | -999 |      | g1 |
+spduos  |  48 | Speed of current                         | m/s        | float |        |  2   | -999 |      | g1 |
+sst     |  80 | Water temperature                        | degK       | float |        |  1   | -999 | 6    | g1 |
+stfm    |  37 | Montgomery stream function               | m^2/s^2    | float |        | -1   | -999 |      | g1 |
+strf    |  35 | Stream function                          | m^2/s      | float |        | -4   | -999 |      | g1 |
+swdir   | 104 | Direction of swell waves                 | deg        | float |        |  0   | -999 |      | g1 |
+swell   | 105 | Significant height of swell waves        | m          | float |        | -999 |   12 |      | g1 |
+swper   | 106 | Mean period of swell waves               | s          | float |        | -999 |   12 |      | g1 |
+ta      |  11 | Temperature                              | degK       | float |        |  1   | -999 | 1,3  | g1 |
+tanom   |  25 | Temperature anomaly                      | degK       | float |        |  1   | -999 |      | g1 |
+tas     |  11 | Sfc (2m) air temperature                 | degK       | float | sfc2m  |  1   | -999 | 2    | g1 |
+tasmax  |  15 | Daily maximum surface (2m) temperature   | degK       | float | sfc2m  |  1   | -999 | 2    | g1 |
+tasmin  |  16 | Daily minimum surface (2m) temperature   | degK       | float | sfc2m  |  1   | -999 | 2    | g1 |
+tauu    | 124 | Eastward wind stress on surface          | N/m^2      | float | sfc    |  3   | -999 | 2,4  | g1 |
+tauv    | 125 | Northward wind stress on surface         | N/m^2      | float | sfc    |  3   | -999 | 2,4  | g1 |
+tav     |  12 | Virtual temperature                      | degK       | float |        |  1   | -999 |      | g1 |
+td      |  17 | Dew point temperature                    | degK       | float |        |  1   | -999 |      | g1 |
+tdd     |  18 | Dew point depression                     | degK       | float |        |  1   | -999 |      | g1 |
+tg      |  11 | Sfc (ground) temperature                 | degK       | float | sfc    |  1   |   12 | 2    | g1 |
+tsd     | 140 | Deep layer soil temperature              | degK       | float | landd  |  1   | -999 |      |    |
+tsoil   |  85 | Soil temperature                         | degK       | float | landt  |  1   | -999 |      |    |
+tss     | 139 | Sfc layer soil temperature               | degK       | float | landt  |  1   | -999 |      |    |
+tst     | 141 | Lower boundary soil temperature          | degK       | float | landd  |  1   | -999 |      |    |
+tstm    |  60 | Thunderstorm probability                 | %          | float |        |  0   | -999 |      |    |
+tthdp   |  68 | Transient thermocline depth              | m          | float |        | -999 | -999 |      |    |
+ua      |  33 | u wind                                   | m/s        | float |        |  1   | -999 | 1,3  | g1 |
+uas     |  33 | Sfc (10m) eastward wind                  | m/s        | float | sfc10m | -999 | -999 | 2,4  | g1 |
+ui      |  95 | u of ice drift                           | m/s        | float |        | -999 | -999 |      | g1 |
+uos     |  49 | u of current                             | m/s        | float | sfc    |  2   | -999 |      | g1 |
+va      |  34 | v wind                                   | m/s        | float |        |  1   | -999 | 1,3  | g1 |
+vas     |  24 | Sfc (10m) northward wind                 | m/s        | float | sfc10m |  1   | -999 | 2,4  | g1 |
+varhus  | 210 | Variance of specific humidity            | kg/kg      | float |        | -999 |   16 | 1    |    |
+varspda | 211 | Variance of horizontal wind speed        | m^2/s^2    | float |        | -999 |   16 | 1    |    |
+varta   | 212 | Variance of air temperature              | degK^2     | float |        | -999 |   16 | 1    |    |
+varua   | 213 | Variance of eastward wind                | m^2/s^2    | float |        | -999 |   16 | 1    |    |
+varva   | 214 | Variance of northward wind               | (m/s)^2    | float |        | -999 |   16 | 1    |    |
+varwap  | 215 | Variance of vertical motion              | (Pa/s)^2   | float |        | -999 |   16 | 1    |    |
+varzg   | 216 | Variance of geopotential height          | m^2        | float |        | -999 |   16 | 1    |    |
+veg     |  87 | Vegetation                               | %          | float | sfc    |  0   | -999 |      | g1 |
+vi      |  96 | v of ice drift                           | m/s        | float | sfc    | -999 | -999 |      | g1 |
+vis     |  20 | Visibility                               | m          | float |        |  0   | -999 |      | g1 |
+vorpot  | 220 | Potential vorticity                      | 1/(Pa*s)   | float |        | -999 | -999 | 3    |    |
+vos     |  50 | v of current                             | m/s        | float |        |  2   | -999 |      | g1 |
+vpot    |  36 | Velocity potential                       | m^2/s      | float |        | -4   | -999 |      | g1 |
+vrt     |  43 | Relative vorticity                       | /s         | float |        |  6   | -999 |      | g1 |
+vrta    |  41 | Absolute vorticity                       | /s         | float |        |  6   | -999 |      | g1 |
+wap     |  39 | Pressure vertical velocity               | Pa/s       | float |        |  3   | -999 | 1,3  | g1 |
+was     |  38 | Sigma coord. vertical velocity           | /s         | float |        |  8   | -999 |      | g1 |
+weasd   |  65 | Water equiv. of accum. snow depth        | kg/m^2     | float | sfc    |  0   | -999 |      | g1 |
+wmixe   | 126 | Wind mixing energy                       | J          | float |        | -999 | -999 |      | g1 |
+wvdir   | 101 | Direction of wind waves                  | deg        | float |        |  0   | -999 |      | g1 |
+wvhgt   | 102 | Significant height of wind waves         | m          | float |        | -999 | -999 |      | g1 |
+wvper   | 103 | Mean period of wind waves                | s          | float |        | -999 | -999 |      | g1 |
+zg      |   7 | Geopotential height                      | m          | float |        |  0   | -999 | 1,3  | g1 |
+zga     |  27 | Geopotential height anomaly              | gpm        | float |        |  0   | -999 |      | g1 |
+zt      |   8 | Geometric height                         | m          | float |        |  0   | -999 |      | g1 |
+@
+
+
+1.2
+log
+@before change in multi/single field
+@
+text
+@d1 182
+a182 183
+alb     |  84 | Albedo                                   | %          | float | multi  |  0   | -999 |      | g1 |
+cdcon   |  72 | Convective cloud cover                   | %          | float | multi  |  0   | -999 |      | g1 |
+cice    |  58 | Cloud Ice                                | kg/m^2     | float | multi  |  1   | -999 |      | g1 |
+clt     |  71 | Total cloud cover                        | %          | float | single |  0   | -999 | 2,4  | g1 |
+cl      | 150 | Cloud amount                             | %          | float | multi  |  0   | -999 | 1    |    |
+clh     |  75 | High level cloud cover                   | %          | float | multi  |  0   | -999 |      | g1 |
+cli     |  58 | Cloud ice                                | kg/m^3     | float | multi  | -999 | -999 | 1    | g1 |
+clivi   | 151 | Vertically integrated cloud ice          | kg/m^2     | float | single | -999 | -999 | 2    |    |
+cll     |  73 | Low level cloud cover                    | %          | float | single |  0   | -999 |      | g1 |
+clm     |  74 | Mid level cloud cover                    | %          | float | single |  0   | -999 |      | g1 |
+clsv    | 152 | Cloud fraction (satellite view)          | %          | float | multi  |  0   | -999 | 1    |    |
+cltopht | 153 | Highest cloud top height                 | m          | float | single | -999 | -999 | 2    |    |
+clw     |  76 | Cloud water                              | kg/m^3     | float | multi  | -999 | -999 | 1    | g1 |
+clwvi   | 154 | Vertically integrated cloud water        | kg/m^2     | float | single | -999 | -999 | 2    |    |
+cvuhusa | 192 | Covariance of ua and hus                 | m/s        | float | multi  | -999 |   16 | 1    |    |
+cvuta   | 197 | Covariance of ua and ta                  | m*degK/s   | float | multi  | -999 |   16 | 1    |    |
+cvuva   | 196 | Covariance of ua and va                  | m^2/s^2    | float | multi  | -999 |   16 | 1    |    |
+cvvhusa | 193 | Covariance of va and hus                 | m/s        | float | multi  | -999 |   16 | 1    |    |
+cvvta   | 198 | Covariance of va and ta                  | m*degK/s   | float | multi  | -999 |   16 | 1    |    |
+cvwhusa | 195 | Covariance of wap and hus                | Pa/s       | float | multi  | -999 |   16 | 1    |    |
+cvwta   | 194 | Covariance of wap and ta                 | degK*Pa/s  | float | multi  | -999 |   16 | 1    |    |
+cvwua   | 190 | Covariance of wap and ua                 | m*Pa/s^2   | float | multi  | -999 |   16 | 1    |    |
+cvwva   | 191 | Covariance of wap and va                 | m*Pa/s^2   | float | multi  | -999 |   16 | 1    |    |
+cwat    |  76 | Cloud water                              | kg/m^2     | float | multi  |  1   | -999 |      | g1 |
+den     |  89 | Density                                  | kg/m^2     | float | multi  |  4   | -999 |      | g1 |
+dira    |  31 | Wind direction                           | deg        | float | multi  |  0   | -999 |      | g1 |
+dirid   |  93 | Direction of ice drift                   | deg        | float | multi  | -999 |   12 |      | g1 |
+dirpw   | 107 | Primary wave direction                   | deg        | float | multi  |  0   | -999 |      | g1 |
+dirsw   | 109 | Secondary wave direction                 | deg        | float | multi  |  0   | -999 |      | g1 |
+diruos  |  47 | Direction of current                     | deg        | float | multi  |  0   | -999 |      | g1 |
+div     |  42 | Absolute divergence                      | /s         | float | multi  |  6   | -999 |      | g1 |
+divr    |  44 | Relative divergence                      | /s         | float | multi  |  6   | -999 |      | g1 |
+dslm    |  82 | Deviation of sea level from mean         | m          | float | multi  | -999 |   12 |      | g1 |
+dtdz    |  19 | Lapse rate                               | K/m        | float | multi  |  4   | -999 |      | g1 |
+dudz    |  45 | Vertical u shear                         | /s         | float | multi  |  4   | -999 |      | g1 |
+dvdz    |  46 | Vertical v shear                         | /s         | float | multi  |  4   | -999 |      | g1 |
+dzdt    |  40 | Geometric vertical velocity              | m/s        | float | multi  |  4   | -999 |      | g1 |
+epot    |  14 | Pseudo-adiabatic potential temperature   | degK       | float | multi  |  1   | -999 |      | g1 |
+evs     | 140 | Evaporation                              | kg/(m^2*s) | float | single | -999 | -999 | 2    |    |
+evspsbl | 141 | Sfc evap + sublimation rate              | kg/(m^2*s) | float | single | -999 | -999 | 2    |    |
+gp      |   6 | Geopotential                             | m^2/s^2    | float | multi  | -1   | -999 |      | g1 |
+hfbld   | 123 | Boundary layer dissipation               | W/m^2      | float | multi  |  0   | -999 |      | g1 |
+hfls    | 121 | Heat flux latent sfc                     | W/m^2      | float | single |  0   | -999 | 2,4  | g1 |
+hfns    | 170 | Heat flux net sfc                        | W/m^2      | float | single | -999 | -999 | 2    |    |
+hfss    | 122 | Heat flux sensible sfc                   | W/m^2      | float | multi  |  0   | -999 | 2,4  | g1 |
+hstdv   |   9 | Standard deviation of height             | m          | float | multi  |  0   | -999 | 1    | g1 |
+htr     | 240 | Heating rate total                       | degK/s     | float | multi  | -999 |   16 | 1    |    |
+htrl    | 241 | Heating rate latent                      | degK/s     | float | multi  | -999 |   16 | 1    |    |
+htrlw   | 242 | Heating rate net LW radiation            | degK/s     | float | multi  | -999 |   16 | 1    |    |
+htrc    | 243 | Heating rate convective                  | degK/s     | float | multi  | -999 |   16 | 1    |    |
+htrls   | 244 | Heating rate large scale precip          | degK/s     | float | multi  | -999 |   16 | 1    |    |
+htrsw   | 245 | Heating rate net SW radiation            | degK/s     | float | multi  | -999 |   16 | 1    |    |
+htsgw   | 100 | Sig height of wind waves and swell       | m          | float | multi  | -999 |   12 |      | g1 |
+hum     |  53 | Humidity mixing ratio                    | kg/kg      | float | multi  |  4   | -999 |      | g1 |
+hur     |  52 | Relative humidity                        | %          | float | multi  |  0   | -999 | 1    | g1 |
+hus     |  51 | Specific humidity                        | kg/kg      | float | multi  |  4   | -999 | 1,3  | g1 |
+huss    |  51 | Sfc specific humidity (2m)               | kg/kg      | float | single |  4   | -999 | 2    | g1 |
+huv     |  55 | Vapor pressure                           | Pa         | float | multi  | -1   | -999 |      | g1 |
+hvar    |  10 | Variance of height                       | m^2        | float | multi  | -999 |   16 |      | g1 |
+idv     |  98 | Ice divergence                           | /s         | float | single | -999 | -999 |      | g1 |
+igr     |  97 | Ice growth                               | m          | float | single | -999 | -999 |      | g1 |
+mixht   |  67 | Mixed layer depth                        | m          | float | multi  | -999 |   12 |      | g1 |
+mrro    | 131 | Runoff rate total                        | kg/(m^2*s) | float | single | -999 | -999 | 2    |    |
+mrroa   |  90 | Runoff accum (mm)                        | kg/m^2     | float | multi  |  1   | -999 |      | g1 |
+mrros   | 132 | Runoff rate sfc                          | kg/(m^2*s) | float | single | -999 | -999 | 2    |    |
+mrsob   | 133 | Soil moisture sfc beta (%FC)             | %          | float | single |  0   | -999 | 2    |    |
+mrso    |  86 | Soil moisture total                      | kg/m^2     | float | single |  0   | -999 | 2    | g1 |
+mrsocap | 134 | Soil moisture field capacity             | kg/m^2     | float | single | -999 | -999 | 2    |    |
+mrsos   | 135 | Soil moisture sfc                        | kg/m^2     | float | single |  1   | -999 | 2    |    |
+mrsotb  | 136 | Soil moisture total beta (%FC)           | %          | float | single |  0   | -999 | 2    |    |
+mrtotvi | 137 | Column liquid/frozen water               | kg/m^2     | float | single | -999 | -999 | 2    |    |
+mtha    |  70 | Main thermocline anomaly                 | m          | float | multi  | -999 |   12 |      | g1 |
+mthd    |  69 | Main thermocline depth                   | m          | float | multi  | -999 |   12 |      | g1 |
+orog    |   8 | Model orography                          | m          | float | single |  0   | -999 | 6    | g1 |
+p       |   1 | Pressure                                 | Pa         | float | multi  | -1   | -999 |      | g1 |
+panom   |  26 | Pressure anomaly                         | Pa         | float | multi  | -1   | -999 |      | g1 |
+perpsag | 200 | Percent of time sfc. pres above ground   | %          | float | multi  | -999 | -999 | 2    |    |
+perpw   | 108 | Primary wave mean period                 | s          | float | multi  | -999 |   12 |      | g1 |
+persw   | 110 | Secondary wave mean period               | s          | float | multi  | -999 |   12 |      | g1 |
+pix     | 127 | Image data                               | -          | int   | multi  | -999 |   12 |      | g1 |
+pot     |  13 | Potential temperature                    | degK       | float | multi  |  1   | -999 |      | g1 |
+pr      |  59 | Total precipitation rate                 | kg/(m^2*s) | float | single |  2   | -999 |      | g1 |
+pra     |  61 | Total precipitation                      | kg/m^2     | float | single |  1   | -999 |      | g1 |
+prc     | 144 | Convective precipitation rate            | kg/(m^2*s) | float | single |  2   | -999 | 2    |    |
+prla    |  62 | Large scale precipitation                | kg/m^2     | float | single |  1   | -999 |      | g1 |
+prca    |  63 | Convective precipitation                 | kg/m^2     | float | single |  1   | -999 |      | g1 |
+prsc    |  78 | Convective snow                          | kg/m^2     | float | single |  1   | -999 |      | g1 |
+prsl    |  79 | Large scale snow                         | kg/m^2     | float | single |  1   | -999 |      | g1 |
+prsn    |  64 | Snowfall rate water equivalent           | kg/(m^2/s) | float | single |  6   | -999 | 2    | g1 |
+prw     |  54 | Precipitable water                       | kg/m^2     | float | single |  1   | -999 | 2,4  | g1 |
+ps      |   1 | Sfc pressure                             | Pa         | float | single |  0   | -999 | 2,4  | g1 |
+psl     |   2 | Pressure reduced to MSL                  | Pa         | float | single | -1   | -999 | 2,4  | g1 |
+ptend   |   3 | Pressure tendency                        | Pa/s       | float | single | -5   | -999 |      | g1 |
+rl      | 115 | LW radiation                             | W/m^2      | float | multi  |  0   | -999 |      | g1 |
+rlds    | 205 | LW radiation downward sfc                | W/m^2      | float | single |  0   | -999 |      | g1 |
+rldscs  | 163 | LW radiation downward sfc clear sky      | W/m^2      | float | single |  0   | -999 | 2    |    |
+rls     | 112 | LW radiation sfc net                     | W/m^2      | float | single |  0   | -999 | 2    | g1 |
+rlt     | 114 | LW radiation TOA (OLR)                   | W/m^2      | float | single |  0   | -999 | 2,4  | g1 |
+rltcs   | 162 | LW radiation TOA clear sky               | W/m^2      | float | single |  0   | -999 | 2    |    |
+rlus    | 188 | LW radiation upward sfc                  | W/m^2      | float | single |  0   | -999 | 2    |    |
+rluscs  | 162 | LW radiation upward sfc clear sky        | W/m^2      | float | single |  0   | -999 | 2    |    |
+rlutcs  | 162 | SW radiation upward TOA clear sky        | W/m^2      | float | single |  0   | -999 | 2    |    |
+rs      | 116 | SW radiation                             | W/m^2      | float | multi  |  0   | -999 |      | g1 |
+rsds    | 204 | SW radiation downward sfc                | W/m^2      | float | single |  0   | -999 | 2    |    |
+rsdscs  | 184 | SW radiation downward clear sky          | W/m^2      | float | single |  0   | -999 | 2    |    |
+rsdt    | 204 | SW radiation downward TOA                | W/m^2      | float | single |  0   | -999 | 2    |    |
+rss     | 111 | SW radiation net sfc                     | W/m^2      | float | single |  0   | -999 | 2    | g1 |
+rst     | 113 | SW radiation net TOA                     | W/m^2      | float | single |  0   | -999 | 2,4  | g1 |
+rsus    | 181 | SW radiation upward sfc                  | W/m^2      | float | single |  0   | -999 | 2,4  |    |
+rsuscs  | 185 | SW radiation upward sfc clear sky        | W/m^2      | float | single |  0   | -999 | 2    |    |
+rsut    | 183 | SW radiation upward TOA                  | W/m^2      | float | single |  0   | -999 | 2    |    |
+rsutcs  | 186 | SW radiation upward TOA clear sky        | W/m^2      | float | single |  0   | -999 | 2    |    |
+rsg     | 117 | Radition global                          | W/m^2      | float | single |  0   | -999 |      | g1 |
+salty   |  88 | Salinity                                 | kg/kg      | float | multi  | -999 |   12 |      | g1 |
+satd    |  56 | Saturation deficit                       | Pa         | float | multi  | -1   | -999 |      | g1 |
+sfcr    |  83 | Sfc roughness                            | m          | float | single |  5   | -999 |      |    |
+sftl    |  81 | Sfc type (0=100% ocean, 1=100% land/ice) | -          | float | single | -999 |    1 | 6    | g1 |
+sftgi   | 201 | Glacier-ice no-ice mask (1=ice; 0=no)    | -          | int   | single |  0   |    1 | 6    |    |
+sftsi   | 202 | Sea-ice no-ice mask (1=ice; 0=no)        | int        | int   | single |  0   |    1 |      |    |
+sic     |  91 | Sea-ice concentration                    | fraction   | float | single |  2   | -999 | 2    | g1 |
+sit     |  92 | Ice thickness                            | m          | float | single |  0   | -999 | 2    | g1 |
+snc     | 238 | Snow cover % area                        | %          | float | single |  0   | -999 | 2    |    |
+snd     |  66 | Snow depth                               | m          | float | single |  2   | -999 | 2    | g1 |
+snw     |  65 | Snow depth water equivalent              | kg/m^2     | float | single |  0   | -999 | 2    | g1 |
+snm     |  99 | Snow melt                                | kg/m^2     | float | single |  1   | -999 |      | g1 |
+spda    |  32 | Wind speed                               | m/s        | float | multi  |  1   | -999 |      | g1 |
+spdid   |  94 | Speed of ice drift                       | m/s        | float | multi  | -999 | -999 |      | g1 |
+spduos  |  48 | Speed of current                         | m/s        | float | multi  |  2   | -999 |      | g1 |
+sst     |  80 | Water temperature                        | degK       | float | multi  |  1   | -999 |      | g1 |
+stfm    |  37 | Montgomery stream function               | m^2/s^2    | float | multi  | -1   | -999 |      | g1 |
+strf    |  35 | Stream function                          | m^2/s      | float | multi  | -4   | -999 |      | g1 |
+swdir   | 104 | Direction of swell waves                 | deg        | float | multi  |  0   | -999 |      | g1 |
+swell   | 105 | Significant height of swell waves        | m          | float | multi  | -999 |   12 |      | g1 |
+swper   | 106 | Mean period of swell waves               | s          | float | multi  | -999 |   12 |      | g1 |
+ta      |  11 | Temperature                              | degK       | float | multi  |  1   | -999 | 1,3  | g1 |
+tanom   |  25 | Temperature anomaly                      | degK       | float | multi  |  1   | -999 |      | g1 |
+tas     |  11 | Sfc (2m) air temperature                 | degK       | float | single |  1   | -999 | 2    | g1 |
+tasmax  |  15 | Daily maximum surface (2m) temperature   | degK       | float | single |  1   | -999 | 2    | g1 |
+tasmin  |  16 | Daily minimum surface (2m) temperature   | degK       | float | single |  1   | -999 | 2    | g1 |
+tauu    | 124 | Eastward wind stress on surface          | N/m^2      | float | single |  3   | -999 | 2,4  | g1 |
+tauv    | 125 | Northward wind stress on surface         | N/m^2      | float | single |  3   | -999 | 2,4  | g1 |
+tav     |  12 | Virtual temperature                      | degK       | float | multi  |  1   | -999 |      | g1 |
+td      |  17 | Dew point temperature                    | degK       | float | multi  |  1   | -999 |      | g1 |
+tdd     |  18 | Dew point depression                     | degK       | float | multi  |  1   | -999 |      | g1 |
+tg      |  11 | Sfc (ground) temperature                 | degK       | float | single |  1   |   12 | 2    | g1 |
+tsd     | 140 | Deep layer soil temperature              | degK       | float | single |  1   | -999 |      |    |
+tsoil   |  85 | Soil temperature                         | degK       | float | multi  |  1   | -999 |      |    |
+tss     | 139 | Sfc layer soil temperature               | degK       | float | single |  1   | -999 |      |    |
+tst     | 141 | Lower boundary soil temperature          | degK       | float | single |  1   | -999 |      |    |
+tstm    |  60 | Thunderstorm probability                 | %          | float | multi  |  0   | -999 |      |    |
+tthdp   |  68 | Transient thermocline depth              | m          | float | multi  | -999 | -999 |      |    |
+ua      |  33 | u wind                                   | m/s        | float | multi  |  1   | -999 | 1,3  | g1 |
+uas     |  33 | Sfc (10m) eastward wind                  | m/s        | float | single | -999 | -999 | 2,4  | g1 |
+ui      |  95 | u of ice drift                           | m/s        | float | multi  | -999 | -999 |      | g1 |
+uos     |  49 | u of current                             | m/s        | float | multi  |  2   | -999 |      | g1 |
+va      |  34 | v wind                                   | m/s        | float | multi  |  1   | -999 | 1,3  | g1 |
+vas     |  24 | Sfc (10m) northward wind                 | m/s        | float | single |  1   | -999 | 2,4  | g1 |
+varhus  | 210 | Variance of specific humidity            | kg/kg      | float | multi  | -999 |   16 | 1    |    |
+varspda | 211 | Variance of horizontal wind speed        | m^2/s^2    | float | multi  | -999 |   16 | 1    |    |
+varta   | 212 | Variance of air temperature              | degK^2     | float | multi  | -999 |   16 | 1    |    |
+varua   | 213 | Variance of eastward wind                | m^2/s^2    | float | multi  | -999 |   16 | 1    |    |
+varva   | 214 | Variance of northward wind               | (m/s)^2    | float | multi  | -999 |   16 | 1    |    |
+varwap  | 215 | Variance of vertical motion              | (Pa/s)^2   | float | multi  | -999 |   16 | 1    |    |
+varzg   | 216 | Variance of geopotential height          | m^2        | float | multi  | -999 |   16 | 1    |    |
+veg     |  87 | Vegetation                               | %          | float | multi  |  0   | -999 |      | g1 |
+vi      |  96 | v of ice drift                           | m/s        | float | multi  | -999 | -999 |      | g1 |
+vis     |  20 | Visibility                               | m          | float | multi  |  0   | -999 |      | g1 |
+vorpot  | 220 | Potential vorticity                      | 1/(Pa*s)   | float | multi  | -999 | -999 | 3    |    |
+vos     |  50 | v of current                             | m/s        | float | multi  |  2   | -999 |      | g1 |
+vpot    |  36 | Velocity potential                       | m^2/s      | float | multi  | -4   | -999 |      | g1 |
+vrt     |  43 | Relative vorticity                       | /s         | float | multi  |  6   | -999 |      | g1 |
+vrta    |  41 | Absolute vorticity                       | /s         | float | multi  |  6   | -999 |      | g1 |
+wap     |  39 | Pressure vertical velocity               | Pa/s       | float | multi  |  3   | -999 | 1,3  | g1 |
+was     |  38 | Sigma coord. vertical velocity           | /s         | float | multi  |  8   | -999 |      | g1 |
+weasd   |  65 | Water equiv. of accum. snow depth        | kg/m^2     | float | multi  |  0   | -999 |      | g1 |
+wmixe   | 126 | Wind mixing energy                       | J          | float | multi  | -999 | -999 |      | g1 |
+wvdir   | 101 | Direction of wind waves                  | deg        | float | multi  |  0   | -999 |      | g1 |
+wvhgt   | 102 | Significant height of wind waves         | m          | float | multi  | -999 | -999 |      | g1 |
+wvper   | 103 | Mean period of wind waves                | s          | float | multi  | -999 | -999 |      | g1 |
+zg      |   7 | Geopotential height                      | m          | float | multi  |  0   | -999 | 1,3  | g1 |
+zga     |  27 | Geopotential height anomaly              | gpm        | float | multi  |  0   | -999 |      | g1 |
+zt      |   8 | Geometric height                         | m          | float | multi  |  0   | -999 |      | g1 |
+
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 183
+a183 201
+alb      |  84 | Albedo                                             | %          | float | multi  |  0   | -999 |
+cdcon    |  72 | Convective cloud cover                             | %          | float | multi  |  0   | -999 |
+cice     |  58 | Cloud Ice                                          | kg/m^2     | float | multi  |  1   | -999 |
+cl       |  71 | Total cloud cover                                  | %          | float | multi  |  0   | -999 |
+clh      |  75 | High level cloud cover                             | %          | float | multi  |  0   | -999 |
+cli      |  58 | Cloud ice                                          | kg/m^2     | float | multi  | -999 | -999 |
+clivi    |     | Vertically integrated cloud ice                    | kg/m^2     | float | single | -999 | -999 |
+cll      |  73 | Low level cloud cover                              | %          | float | multi  |  0   | -999 |
+clm      |  74 | Mid level cloud cover                              | %          | float | multi  |  0   | -999 |
+clsv     |     | Cloud fraction (satellite view)                    | %          | float | multi  | -999 | -999 |
+cltopht  |     | Highest cloud top height                           | m          | float | single | -999 | -999 |
+clw      |  76 | Cloud water                                        | kg/m^2     | float | multi  | -999 | -999 |
+clwvi    |     | Vertically integrated cloud water                  | kg/m^2     | float | single | -999 | -999 |
+cvuhusa  | 211 | Covariance of u and spec. hum.                     | m/s        | float | multi  | -999 |   16 |
+cvuta    | 206 | Covariance of u and T                              | m*degK/s   | float | multi  | -999 |   16 |
+cvuva    | 208 | Covariance of u and v wind                         | m^2/s^2    | float | multi  | -999 |   16 |
+cvvhusa  | 212 | Covariance of v wwind and spec. humid              | m/s        | float | multi  | -999 |   16 |
+cvvta    | 207 | Covariance of v and T                              | m*degK/s   | float | multi  | -999 |   16 |
+cvwhusa  | 210 | Covariance of vert. vel and spec. hum.             | Pa/s       | float | multi  | -999 | -999 |
+cvwq     | 214 | Covariance of w and q                              | kg/kg*Pa/s | float | multi  | -999 |   16 |
+cvwta    | 213 | Covariance of w and t                              | degK*Pa/s  | float | multi  | -999 |   16 |
+cvwua    | 209 | Covariance of w and u                              | m*Pa/s^2   | float | multi  | -999 |   16 |
+cvwva    | 210 | Covariance of w and v                              | m*Pa/s^2   | float | multi  | -999 |   16 |
+cwat     |  76 | Cloud water                                        | kg/m^2     | float | multi  |  1   | -999 |
+den      |  89 | Density                                            | kg/m^2     | float | multi  |  4   | -999 |
+dira     |  31 | Wind direction                                     | deg        | float | multi  |  0   | -999 |
+dirid    |  93 | Direction of ice drift                             | deg        | float | multi  | -999 |   12 |
+dirpw    | 107 | Primary wave direction                             | deg        | float | multi  |  0   | -999 |
+dirsw    | 109 | Secondary wave direction                           | deg        | float | multi  |  0   | -999 |
+diruos   |  47 | Direction of current                               | deg        | float | multi  |  0   | -999 |
+div      |  42 | Absolute divergence                                | /s         | float | multi  |  6   | -999 |
+divr     |  44 | Relative divergence                                | /s         | float | multi  |  6   | -999 |
+dslm     |  82 | Deviation of sea level from mean                   | m          | float | multi  | -999 |   12 |
+dtdz     |  19 | Lapse rate                                         | K/m        | float | multi  |  4   | -999 |
+dudz     |  45 | Vertical u shear                                   | /s         | float | multi  |  4   | -999 |
+dvdz     |  46 | Vertical v shear                                   | /s         | float | multi  |  4   | -999 |
+dzdt     |  40 | Geometric vertical velocity                        | m/s        | float | multi  |  4   | -999 |
+epot     |  14 | Pseudo-adiabatic potential temperature             | degK       | float | multi  |  1   | -999 |
+evs      |     | Evaporation                                        | kg/(m^2*s) | float | single | -999 | -999 |
+evspsbl  |     | Sfc evap + sublimation rate                        | kg/(m^2*s) | float | single | -999 | -999 |
+gp       |   6 | Geopotential                                       | m^2/s^2    | float | multi  | -1   | -999 |
+hfbld    | 123 | Boundary layer dissipation                         | W/m^2      | float | multi  |  0   | -999 |
+hfls     | 121 | Heat flux latent sfc                               | W/m^2      | float | single |  0   | -999 |
+hfns     |     | Heat flux net sfc                                  | W/m^2      | float | single | -999 | -999 |
+hfss     | 122 | Heat flux sensible sfc                             | W/m^2      | float | multi  |  0   | -999 |
+hstdv    |   9 | Standard deviation of height                       | m          | float | multi  |  0   | -999 |
+htr      |     | Heating rate total                                 | degK/s     | float | multi  | -999 | -999 |
+htrhfl   |     | Heating rate latent                                | degK/s     | float | multi  | -999 | -999 |
+htrlw    |     | Heating rate net LW radiation                      | degK/s     | float | multi  | -999 | -999 |
+htrprc   |     | Heating rate convective                            | degK/s     | float | multi  | -999 | -999 |
+htrprl   |     | Heating rate large scale precip                    | degK/s     | float | multi  | -999 | -999 |
+htrsw    |     | Heating rate net SW radiation                      | degK/s     | float | multi  | -999 | -999 |
+htsgw    | 100 | Sig height of wind waves and swell                 | m          | float | multi  | -999 |   12 |
+hum      |  53 | Humidity mixing ratio                              | kg/kg      | float | multi  |  4   | -999 |
+hur      |  52 | Relative humidity                                  | %          | float | multi  |  0   | -999 |
+hus      |  51 | Specific humidity                                  | kg/kg      | float | multi  |  4   | -999 |
+huss     |  51 | Sfc specific humidity (2m)                         | kg/kg      | float | single | -999 | -999 |
+huv      |  55 | Vapor pressure                                     | Pa         | float | multi  | -1   | -999 |
+hvar     |  10 | Variance of height                                 | m^2        | float | multi  | -999 |   16 |
+idv      |  98 | Ice divergence                                     | /s         | float | multi  | -999 | -999 |
+igr      |  97 | Ice growth                                         | m          | float | multi  | -999 | -999 |
+land     |  81 | Land-sea mask (1=land; 0=sea)                      | int        | int   | single |  0   | -999 |
+mixht    |  67 | Mixed layer depth                                  | m          | float | multi  | -999 |   12 |
+mrro     | 138 | Runoff rate total                                  | kg/(m^2*s) | float | single | -999 | -999 |
+mrroa    |  90 | Runoff accum (mm)                                  | kg/m^2     | float | multi  |  1   | -999 |
+mrros    | 137 | Runoff rate sfc                                    | kg/(m^2*s) | float | single | -999 | -999 |
+mrsob    | 135 | Soil moisture sfc beta (%FC)                       | %          | float | single |  0   | -999 |
+mrsot    |  86 | Soil moisture total                                | kg/m^2     | float | single |  0   | -999 |
+mrsocap  |     | Soil moisture field capacity                       | kg/m^2     | float | single | -999 | -999 |
+mrsos    | 133 | Soil moisture sfc                                  | kg/m^2     | float | single |  1   | -999 |
+mrsotb   | 136 | Soil moisture total beta (%FC)                     | %          | float | single |  0   | -999 |
+mrtotvi  |     | Column liquid/frozen water                         | kg/m^2     | float | single | -999 | -999 |
+mtha     |  70 | Main thermocline anomaly                           | m          | float | multi  | -999 |   12 |
+mthd     |  69 | Main thermocline depth                             | m          | float | multi  | -999 |   12 |
+orog     | 216 | Model orography                                    | m          | float | single |  0   | -999 |
+p        |   1 | Pressure                                           | Pa         | float | multi  | -1   | -999 |
+panom    |  26 | Pressure anomaly                                   | Pa         | float | multi  | -1   | -999 |
+perpsag  |     | Percent of time sfc. pres above ground             | %          | float | multi  | -999 | -999 |
+perpw    | 108 | Primary wave mean period                           | s          | float | multi  | -999 |   12 |
+persw    | 110 | Secondary wave mean period                         | s          | float | multi  | -999 |   12 |
+pix      | 127 | Image data                                         | -          | int   | multi  | -999 |   12 |
+pot      |  13 | Potential temperature                              | degK       | float | multi  |  1   | -999 |
+pr       |  59 | Total precipitation rate                           | kg/(m^2*s) | float | single |  2   | -999 |
+pra      |  61 | Total precipitation                                | kg/m^2     | float | multi  |  1   | -999 |
+prc      | 144 | Convective precipitation rate                      | kg/(m^2*s) | float | single | -999 | -999 |
+prim1    |     | Total precip rate amp (im) 1st harm diurnal        | kg/(m^2*s) | float | single | -999 | -999 |
+prim2    |     | Total precip rate amp (im) 1st harm diurnal        | kg/(m^2*s) | float | single | -999 | -999 |
+prla     |  62 | Large scale precipitation                          | kg/m^2     | float | multi  |  1   | -999 |
+prla     |  63 | Convective precipitation                           | kg/m^2     | float | multi  |  1   | -999 |
+prr      |  59 | Precipitation rate                                 | kg/m^2/s   | float | multi  |  6   | -999 |
+prre1    |     | Total precip rate amp 1st (re) harm diurnal        | kg/(m^2*s) | float | single | -999 | -999 |
+prre2    |     | Total precip rate amp 2nd (re) harm diurnal        | kg/(m^2*s) | float | single | -999 | -999 |
+prsc     |  78 | Convective snow                                    | kg/m^2     | float | multi  |  1   | -999 |
+prsl     |  79 | Large scale snow                                   | kg/m^2     | float | multi  |  1   | -999 |
+prsn     |     | Snowfall rate (water equivalent)                   | kg/(m^2*s) | float | single | -999 | -999 |
+prw      |  54 | Precipitable water                                 | kg/m^2     | float | single |  1   | -999 |
+ps       | 130 | Sfc pressure                                       | Pa         | float | single |  0   | -999 |
+psim1    |     | Sfc pres amp (im) 1st harm diurnal                 | Pa         | float | single | -999 | -999 |
+psim2    |     | Sfc pres amp (im) 2nd harm diurnal                 | Pa         | float | single | -999 | -999 |
+psl      |   2 | Pressure reduced to MSL                            | Pa         | float | single | -1   | -999 |
+psre1    |     | Sfc pres amp (re) 1st harm diurnal                 | Pa         | float | single | -999 | -999 |
+psre2    |     | Sfc pres amp (re) 2nd harm diurnal                 | Pa         | float | single | -999 | -999 |
+ptend    |   3 | Pressure tendency                                  | Pa/s       | float | multi  | -5   | -999 |
+rl       | 115 | LW radiation                                       | W/m^2      | float | multi  |  0   | -999 |
+rlds     | 187 | LW radiation downward sfc                          | W/m^2      | float | single |  0   | -999 |
+rldscs   | 189 | LW radiation downward sfc clear sky                | W/m^2      | float | single |  0   | -999 |
+rls      | 112 | LW radiation sfc net                               | W/m^2      | float | multi  |  0   | -999 |
+rlt      | 114 | LW radiation TOA (OLR)                             | W/m^2      | float | multi  |  0   | -999 |
+rltcs    |     | LW radiation TOA clear-sky                         | W/m^2      | float | single | -999 | -999 |
+rltim1   |     | OLR amp (im) 1st harm diurnal                      | W/m^2      | float | single | -999 | -999 |
+rltim2   |     | OLR amp (im) 2nd harm diurnal                      | W/m^2      | float | single | -999 | -999 |
+rltre1   |     | OLR amp (re) 1st harm diurnal                      | W/m^2      | float | single | -999 | -999 |
+rltre2   |     | OLR amp (re) 2nd harm diurnal                      | W/m^2      | float | single | -999 | -999 |
+rlus     | 188 | LW radiation upward sfc                            | W/m^2      | float | single |  0   | -999 |
+rluscs   | 190 | LW radiation upward sfc clear sky                  | W/m^2      | float | single |  0   | -999 |
+rlutcs   | 191 | TOA Clear sky SW radiation upward                  | W/m^2      | float | single |  0   | -999 |
+rs       | 116 | SW radiation                                       | W/m^2      | float | multi  |  0   | -999 |
+rsds     | 180 | SW radiation downward sfc                          | W/m^2      | float | single |  0   | -999 |
+rsdscs   | 184 | SW radiation downward clear sky                    | W/m^2      | float | single |  0   | -999 |
+rsdt     | 182 | SW radiation downward TOA                          | W/m^2      | float | single |  0   | -999 |
+rss      | 111 | SW radiation net sfc                               | W/m^2      | float | multi  |  0   | -999 |
+rst      | 113 | SW radiation net TOA                               | W/m^2      | float | multi  |  0   | -999 |
+rsus     | 181 | SW radiation upward sfc                            | W/m^2      | float | single |  0   | -999 |
+rsuscs   | 185 | SW radiation upward sfc clear sky                  | W/m^2      | float | single |  0   | -999 |
+rsut     | 183 | SW radiation upward TOA                            | W/m^2      | float | single |  0   | -999 |
+rsutcs   | 186 | SW radiation upward TOA clear sky                  | W/m^2      | float | single |  0   | -999 |
+rsg      | 117 | Radition global                                    | W/m^2      | float | single |  0   | -999 |
+salty    |  88 | Salinity                                           | kg/kg      | float | multi  | -999 |   12 |
+satd     |  56 | Saturation deficit                                 | Pa         | float | multi  | -1   | -999 |
+sfcr     |  83 | Sfc roughness                                      | m          | float | multi  |  5   | -999 |
+sft      |  81 | Sfc type (0=100% ocean, 1=100% land/ice)           | -          | float | single | -999 |    1 |
+sftli    |     | Fixed glacier ice (0 no ice 100=%ice)              | -          | float | single | -999 |    1 |
+sic      |  91 | Sea-ice concentration                              | fraction   | float | single | -999 | -999 |
+sicp     | 131 | Sea-ice concentration                              | %          | float | single |  0   | -999 |
+sim      |     | Sea-ice mask (ice=1; no ice=0)                     | -          | float | multi  | -999 |    1 |
+sit      |  92 | Ice thickness                                      | m          | float | multi  |  0   | -999 |
+snc      | 143 | Snow cover % area                                  | %          | float | single |  0   | -999 |
+snd      |  66 | Snow depth                                         | m          | float | multi  |  2   | -999 |
+sndp     |  65 | Snow depth water equivalent                        | kg/m^2     | float | single |  0   | -999 |
+snm      |  99 | Snow melt                                          | kg/m^2     | float | multi  |  1   | -999 |
+spda     |  32 | Wind speed                                         | m/s        | float | multi  |  1   | -999 |
+spdid    |  94 | Speed of ice drift                                 | m/s        | float | multi  | -999 | -999 |
+spduos   |  48 | Speed of current                                   | m/s        | float | multi  |  2   | -999 |
+srweq    |  64 | Snowfall rate water equivalent                     | kg/m^2/s   | float | multi  |  6   | -999 |
+sst      |  80 | Water temperature                                  | degK       | float | multi  |  1   | -999 |
+stfm     |  37 | Montgomery stream function                         | m^2/s^2    | float | multi  | -1   | -999 |
+strf     |  35 | Stream function                                    | m^2/s      | float | multi  | -4   | -999 |
+swdir    | 104 | Direction of swell waves                           | deg        | float | multi  |  0   | -999 |
+swell    | 105 | Significant height of swell waves                  | m          | float | multi  | -999 |   12 |
+swper    | 106 | Mean period of swell waves                         | s          | float | multi  | -999 |   12 |
+ta       |  11 | Temperature                                        | degK       | float | multi  |  1   | -999 |
+tanom    |  25 | Temperature anomaly                                | degK       | float | multi  |  1   | -999 |
+tas      |     | Sfc (2m) air temperature                           | degK       | float | single | -999 | -999 |
+tasmax   |     | Daily maximum surface (2m) temperature             | degK       | float | single | -999 | -999 |
+tasmin   |     | Daily minimum surface (2m) temperature             | degK       | float | single | -999 | -999 |
+tauu     | 124 | Eastward wind stress on surface                    | N/m^2      | float | single |  3   | -999 |
+tauv     | 125 | Meridional component of momentum flux              | N/m^2      | float | multi  |  3   | -999 |
+tauv     | 125 | Northward wind stress on surface                   | N/m^2      | float | single |  3   | -999 |
+tav      |  12 | Virtual temperature                                | degK       | float | multi  |  1   | -999 |
+td       |  17 | Dew point temperature                              | degK       | float | multi  |  1   | -999 |
+tdd      |  18 | Dew point depression                               | degK       | float | multi  |  1   | -999 |
+tg       | 128 | Sfc (ground) temperature                           | degK       | float | single |  1   |   12 |
+tmax     |  15 | Maximum temperature                                | degK       | float | multi  |  1   | -999 |
+tmin     |  16 | Minimum temperature                                | degK       | float | multi  |  1   | -999 |
+tsd      | 140 | Deep layer soil temperature                        | degK       | float | single |  1   | -999 |
+tsoil    |  85 | Soil temperature                                   | degK       | float | multi  |  1   | -999 |
+tss      | 139 | Sfc layer soil temperature                         | degK       | float | single |  1   | -999 |
+tst      | 141 | Lower boundary soil temperature                    | degK       | float | single |  1   | -999 |
+tstm     |  60 | Thunderstorm probability                           | %          | float | multi  |  0   | -999 |
+tthdp    |  68 | Transient thermocline depth                        | m          | float | multi  | -999 |   12 |
+ua       |  33 | u wind                                             | m/s        | float | multi  |  1   | -999 |
+uas      |     | Sfc (10m) eastward wind                            | m/s        | float | single | -999 | -999 |
+ui       |  95 | u of ice drift                                     | m/s        | float | multi  | -999 | -999 |
+uos      |  49 | u of current                                       | m/s        | float | multi  |  2   | -999 |
+va       |  34 | v wind                                             | m/s        | float | multi  |  1   | -999 |
+varhus   | 205 | Variance of specific humidity                      | kg/kg      | float | multi  | -999 |   16 |
+varspda  |     | Variance of horizontal wind speed                  | m^2/s^2    | float | multi  | -999 |   16 |
+varta    | 204 | Variance of air temperature                        | degK^2     | float | multi  | -999 | -999 |
+varua    | 201 | Variance of eastward wind                          | m^2/s^2    | float | multi  | -999 |   16 |
+varva    | 202 | Variance of northward wind                         | (m/s)^2    | float | multi  | -999 |   16 |
+varwap   | 203 | Variance of vertical motion                        | (Pa/s)^2   | float | multi  | -999 |   16 |
+varzg    | 200 | Variance of geopotential height                    | m          | float | multi  | -999 |   16 |
+vas      |     | Sfc (10m) northward wind                           | m/s        | float | single | -999 | -999 |
+veg      |  87 | Vegetation                                         | %          | float | multi  |  0   | -999 |
+vi       |  96 | v of ice drift                                     | m/s        | float | multi  | -999 | -999 |
+vis      |  20 | Visibility                                         | m          | float | multi  |  0   | -999 |
+vorpot   |     | Potential vorticity                                | 1/(Pa*s)   | float | multi  | -999 | -999 |
+vos      |  50 | v of current                                       | m/s        | float | multi  |  2   | -999 |
+vpot     |  36 | Velocity potential                                 | m^2/s      | float | multi  | -4   | -999 |
+vrt      |  43 | Relative vorticity                                 | /s         | float | multi  |  6   | -999 |
+vrta     |  41 | Absolute vorticity                                 | /s         | float | multi  |  6   | -999 |
+wap      |  39 | Pressure vertical velocity                         | Pa/s       | float | multi  |  3   | -999 |
+was      |  38 | Sigma coord. vertical velocity                     | /s         | float | multi  |  8   | -999 |
+weasd    |  65 | Water equiv. of accum. snow depth                  | kg/m^2     | float | multi  |  0   | -999 |
+wmixe    | 126 | Wind mixing energy                                 | J          | float | multi  | -999 |   12 |
+wvdir    | 101 | Direction of wind waves                            | deg        | float | multi  |  0   | -999 |
+wvhgt    | 102 | Significant height of wind waves                   | m          | float | multi  | -999 |   12 |
+wvper    | 103 | Mean period of wind waves                          | s          | float | multi  | -999 |   12 |
+zg       |   7 | Geopotential height                                | m          | float | multi  |  0   | -999 |
+zga      |  27 | Geopotential height anomaly                        | gpm        | float | multi  |  0   | -999 |
+zt       |   8 | Geometric height                                   | m          | float | multi  |  0   | -999 |
+@

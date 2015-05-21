@@ -1,0 +1,251 @@
+#
+#
+# This config.os file is included in the Makefile.
+# It handle the platform dependent compiler options.
+#
+#
+# Programmer:
+#
+#       Pedro Tsai
+#
+# -------------------------------------------------------------------
+#
+# Suffix rules
+#
+# .SUFFIXES: .f .o .F .H .h
+
+# -------------------------------------------------------------------
+#
+# General Macros
+
+MAKE = make
+MAKE = make -f Makefile.newdtg
+
+SHELL=/bin/sh
+
+RM = rm -f
+
+RM_CMD = $(RM) *.l *.BAK *.bak *.o *.i core errs ,* *~ *.a .emacs_* \
+tags TAGS make.log MakeOut
+
+# ------------------------------------------------------------------
+# Prompt the user for os type
+#
+
+default:
+	@echo "To make your target files type one of the following:"
+	@echo "   make sgi			Standard"
+	@echo "   make sgi_g			Debug mode (with -g flag)"
+	@echo "   make cray			Generic Cray"
+	@echo "   make cray_g			Debug mode (with -g flag)"
+	@echo "   make alpha			Standard"
+	@echo "   make alpha_g			Debug mode (with -g flag)"
+	@echo "   make hp			Standard"
+	@echo "   make hp_g			Debug mode (with -g flag)"
+	@echo "   make sol2			Standard"
+	@echo "   make sol2_g			Debug mode (with -g flag)"
+	@echo "   make sunos4			Standard"
+	@echo "   make sunos4_g			Debug mode (with -g flag)"
+	@echo "   make clean				"
+
+#-------------------------------------------------------------------------
+# 
+# D. OS specific compiler and loader options
+#
+#
+# MACROS      DESCRIPTIONS:
+#
+# FC:	      Fortran compiler.
+# CC:	      C compiler
+# C++:	      C++ compiler
+# CPP:	      C Preprocessor 
+# FFLAGS:     Fortran compilation flag.
+# CFLAGS:     C/C++ compilation flags.
+# LD:         Loader
+# LDFLAGS:    Loader flag
+# INCS:	      Include files directories
+# LIBS:       Additional local libraries
+#
+#
+# -------------------------------------------------------
+
+# --------------- CRAY OS 8.0 ---------------------------
+
+cray:
+	${MAKE} target \
+	"FC=cf77" \
+	"CC=cc " \
+	"C++=CC " \
+	"FFLAGS=-DCRAY" \
+	"CFLAGS=-DCRAY" \
+	"LD=cf77" \
+	"LDFLAGS= " \
+	"LIBS= " \
+	"INCS= " \
+	"AR=ar rv"
+
+cray_g:
+	${MAKE} target \
+	"FC=cf77" \
+	"CC=cc " \
+	"C++=CC " \
+	"FFLAGS=-DCRAY -g " \
+	"CFLAGS=-DCRAY -g " \
+	"LD=cf77" \
+	"LDFLAGS= " \
+	"LIBS= " \
+	"INCS= " \
+	"AR=ar rv"
+
+
+# ---------------- END CRAY OS 8.0 -------------------------
+
+# ---------------- SGI IRIX 6.2 -----------------------------
+#
+
+sgi:
+	${MAKE} target \
+	"FC=f77" \
+	"CC=cc " \
+	"C++=DCC " \
+	"FFLAGS=-DSGI -32 " \
+	"CFLAGS=-DSGI -32 " \
+	"C++FLAGS=-DSGI -32 " \
+	"AR=ar rv"
+
+sgi_g:
+	${MAKE} target \
+	"FC=f77" \
+	"CC=cc " \
+	"C++=DCC " \
+	"FFLAGS=-DSGI -32 -g " \
+	"CFLAGS=-DSGI -32 -g " \
+	"C++FLAGS=-DSGI -32 -g " \
+	"AR=ar rv"
+
+
+# ----------------- END IRIX 6.2 -----------------------------
+
+# ----------------- DEC ALPHA OSF1 -----------------------------
+#
+
+alpha:
+	${MAKE} target \
+	"FC=f77" \
+	"CC=cc " \
+	"C++=CC " \
+	"FFLAGS=-DDEC_ALPHA -convert big_endian " \
+	"CFLAGS=-DDEC_ALPHA  " \
+	"LD=f77" \
+	"LDFLAGS= " \
+	"LIBS= " \
+	"INCS= " \
+	"AR=ar rv"
+
+alpha_g:
+	${MAKE} target \
+	"FC=f77" \
+	"CC=cc " \
+	"C++=CC " \
+	"FFLAGS=-DDEC_ALPHA " \
+	"CFLAGS=-DDEC_ALPHA " \
+	"LD=f77" \
+	"LDFLAGS= " \
+	"LIBS= " \
+	"INCS= " \
+	"AR=ar rv"
+
+
+# ----------------- END ALPHA OSF1 -----------------------------
+#
+# ----------------- HP-UX -----------------------------
+#
+#  CFLAGS:  -Aa <Use ANSI-C compiler>
+hp:
+	${MAKE} target \
+	"FC=f77" \
+	"CC=cc " \
+	"C++=CC " \
+	"FFLAGS=-DHP " \
+	"CFLAGS=-DHP -D_INCLUDE_POSIX_SOURCE -Aa " \
+	"C++FLAGS=-DHP " \
+	"LDFLAGS= " \
+	"LIBS= " \
+	"INCS= " \
+	"AR=ar rv"
+
+hp_g:
+	${MAKE} target \
+	"FC=f77" \
+	"CC=cc " \
+	"C++=CC " \
+	"FFLAGS=-DHP -g " \
+	"CFLAGS=-DHP -D_INCLUDE_POSIX_SOURCE -Aa -g " \
+	"C++FLAGS=-DHP " \
+	"LDFLAGS= " \
+	"LIBS= " \
+	"INCS= " \
+	"AR=ar rv"
+# ---------------- END HP-UX B.10.00 -------------------------
+
+# ----------------- Solaris 2 -----------------------------
+#
+#  CFLAGS:  -Aa <Use ANSI-C compiler>
+sol2:
+	${MAKE} target \
+	"FC=f77" \
+	"CC=cc " \
+	"C++=CC " \
+	"FFLAGS=-DSOLARIS " \
+	"CFLAGS=-DSOLARIS " \
+	"C++FLAGS=-DSOLARIS " \
+	"LDFLAGS= " \
+	"LIBS= " \
+	"INCS= " \
+	"AR=ar rv"
+
+sol2_g:
+	${MAKE} target \
+	"FC=f77" \
+	"CC=cc " \
+	"C++=CC " \
+	"FFLAGS=-DSOLARIS -g " \
+	"CFLAGS=-DSOLARIS -g " \
+	"C++FLAGS=-DSOLARIS " \
+	"LDFLAGS= " \
+	"LIBS= " \
+	"INCS= " \
+	"AR=ar rv"
+# ---------------- END Solaris 2 -------------------------
+
+# ----------------- SunOS 4.1.* -----------------------------
+#
+#  CFLAGS:   <Use ANSI-C compiler>
+sunos4:
+	${MAKE} target \
+	"FC=f77" \
+	"CC=acc " \
+	"C++=CC " \
+	"FFLAGS=-DSUNOS " \
+	"CFLAGS=-DSUNOS " \
+	"C++FLAGS=-DSUNOS " \
+	"LDFLAGS= " \
+	"LIBS= " \
+	"INCS= " \
+	"AR=ar rv "
+
+sunos4_g:
+	${MAKE} target \
+	"FC=f77" \
+	"CC=acc " \
+	"C++=CC " \
+	"FFLAGS=-DSUNOS -g " \
+	"CFLAGS=-DSUNOS -g " \
+	"C++FLAGS=-DSUNOS " \
+	"LDFLAGS= " \
+	"LIBS= " \
+	"INCS= " \
+	"AR=ar rv"
+# ---------------- END SunOS 4.1.* -------------------------
+
+

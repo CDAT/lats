@@ -1,0 +1,19 @@
+#---------------------------------------------------------------------------------------------------
+#!qc
+# Quality control marks
+#   (no limit on number of entries)
+#
+# The format of each record is:
+#   variable | level_type | level | mean | std | tolerance | range | rangetol
+#
+# variable = variable name
+# level_type = type of level, as defined in the leveltypes section, or blank if no associated level
+# level = level value, or blank if no specified level
+# mean = observed mean at specified level
+# std = observed standard deviation at specified level
+# tolerance = number of standard deviations about mean
+#     (if abs(calculated_mean - mean) > (std * tolerance), flag the value as 'mean out of range')
+# range = observed (maximum - minimum)
+# rangetol = range tolerance:
+#     (if calculated_range > (rangetol * range), flag as 'range is too large')
+

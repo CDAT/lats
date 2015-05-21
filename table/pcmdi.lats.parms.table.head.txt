@@ -1,0 +1,43 @@
+#---------------------------------------------------------------------------------------------------
+#
+# A parameter file is divided into sections, indicated by '#!' comments. The sections may appear
+# in any order. The 'center' section is only required for GRIB output.
+#
+# #!variable
+#
+#   Variable table: defines variable-specific parameters
+#
+# #!vert
+#
+#   Vertical dimension type table: defines categories of vertical dimensions
+#
+# #!center
+#
+#   Center table: defines GRIB parameters which identify the originating process, center, and subcenter.
+#
+# #!qc
+#
+#   Quality control marks table: defines the values controlling the quality control routines.
+# 
+#---------------------------------------------------------------------------------------------------
+#!variable
+#
+# Variables
+#   (max number of entries = LATS_MAX_PARMS in lats.h)
+#
+# The format of each record is:
+#   name | id | title | units | datatype | surface | decimal_scale_factor | precision | comments_1 | comments_2
+#
+# name = variable name (no blanks)
+# id = GRIB parameter number (>127 => AMIP-2 specific)
+# title = long name (description)
+# units = variable units
+# datatype = 'float' or 'int'
+# level_type = level_type in vertical dimension table, or blank if values must be defined via lats_vert_dim
+# decimal_scale_factor = GRIB decimal scale factor, or -999 if no decimal scaling
+# precision = number of bits of precision if stored in GRIB,
+#             or -999 for level-dependent bit length (ignored if decimal_scale_factor is set)
+# comments_1 = comments, ignored by LATS
+# comments_2 = comments, ignored by LATS
+#
+

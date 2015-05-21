@@ -1,0 +1,54 @@
+
+#---------------------------------------------------------------------------------------------------
+#!	Center
+# Modeling centers (GRIB only)
+#   (max number of entries = LATS_MAX_CENTERS in lats.h)
+#
+# The format of each record is:
+#   center | GRIB_id | GRIB_center | GRIB_subcenter
+#
+# center = mnemonic for the center
+# GRIB_id = GRIB generating process id (PDS octet 6)
+# GRIB_center = the id of center managing the data (for AMIP II this is PCMDI) - see GRIB Table 0
+# GRIB_subcenter = the id of the subcenter
+# 
+#
+#  Acronym           AMIP Group                                                    Location
+#  -------           ----------                                                    --------
+#
+#  bmrc              Bureau of Meteorology Research Centre                         Melbourne, Australia
+#  ccc               Canadian Centre for Climate Modelling and Analysis            Victoria, Canada
+#  ccsr              Center for Climate System Research                            Tokyo, Japan
+#  cnrm              Centre National de Recherches Meteorologiques                 Toulouse, France
+#  cola              Center for Ocean-Land-Atmosphere Studies                      Calverton, Maryland
+#  csiro             Commonwealth Scientific & Industrial Research Organization    Mordialloc, Australia
+#  csu               Colorado State University                                     Fort Collins, Colorado
+#  derf              Dynamical Extended Range Forecasting (at GFDL)                Princeton, New Jersey
+#  dnm               Department of Numerical Mathematics                           Moscow, Russia
+#  ecmwf             European Centre for Medium-Range Weather Forecasts            Reading, England
+#  gfdl              Geophysical Fluid Dynamics Laboratory                         Princeton, New Jersey
+#  giss              Goddard Institute for Space Studies                           New York, New York
+#  gla               Goddard Laboratory for Atmospheres                            Greenbelt, Maryland
+#  gsfc              Goddard Space Flight Center                                   Greenbelt, Maryland
+#  iap               Institute of Atmospheric Physics                              Beijing, China
+#  jma               Japan Meteorological Agency                                   Tokyo, Japan
+#  llnl              Lawrence Livermore National Laboratory                        Livermore, California
+#  lmd               Laboratoire de Meteorologie Dynamique                         Paris, France
+#  mgo               Main Geophysical Observatory                                  St. Petersburg, Russia
+#  mpi               Max-Planck-Institut fur Meteorologie                          Hamburg, Germany
+#  mri               Meteorological Research Institute                             Ibaraki-ken, Japan
+#  ncar              National Center for Atmospheric Research                      Boulder, Colorado
+#  nmc               National Meteorological Center                                Suitland, Maryland
+#  nrl               Naval Research Laboratory                                     Monterey, California
+#  ntu               National Taiwan University                                    Taipei, Taiwan
+#  pcmdi             Program for Climate Model Diagnosis and Intercomparison, LLNL Livermore, California
+#  rpn               Recherche en Privision Numerique                              Dorval, Canada
+#  sunya             State University of New York at Albany                        Albany, New York
+#  sunya/ncar        State University of New York at Albany/NCAR                   Albany, New York/Boulder, Colorado
+#  ucla              University of California at Los Angeles                       Los Angeles, California
+#  ugamp             The UK Universities' Global Atmospheric Modelling Programme   Reading, England
+#  uiuc              University of Illinois at Urbana-Champaign                    Urbana, Illinois
+#  ukmo              United Kingdom Meteorological Office                          Bracknell, UK
+#  yonu              Yonsei University                                             Seoul, Korea
+#
+

@@ -1,0 +1,19 @@
+
+#---------------------------------------------------------------------------------------------------
+#!  vert
+# Vertical dimension types
+#   (max number of entries = LATS_MAX_VERT_TYPES in lats.h)
+#
+# The format of each record is:
+#   level_type | description | units | verticality | positive | default | GRIB_id | GRIB_p1 | GRIB_p2 | GRIB_p3
+#
+# level_type = level type
+# description = level description
+# units = units for this level type
+# verticality = 'single' (single surface) or 'multi' (variable can have multiple levels of this type)
+# positive = 'up' (increasing values point up) or 'down' (increasing values point down)
+# GRIB_id = GRIB level type indicator (PDS octet 10)
+# GRIB_p1 = GRIB PDS octet 11
+# GRIB_p2 = GRIB PDS octet 12
+# GRIB_p3 = combined GRIB octets 11, 12 - overrides values of GRIB_p1, GRIB_p2 if specified
+

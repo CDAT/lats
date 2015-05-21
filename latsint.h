@@ -8,42 +8,11 @@
  * Author:      Bob Drach, Lawrence Livermore National Laboratory
  *              drach@llnl.gov
  *
- * Version:     $Id$
- * Version:     $Id$
+ * Version:     $Id: latsint.h,v 1.1 1997/02/14 20:10:10 fiorino Exp fiorino $
  *
  * Revision History:
  *
- * $Log$
- * Revision 1.5  2010/02/16 23:01:31  mike_fiorino
- * mods for supporting yflip and better handling of forecast_hourly forecast_minutes
- *
- * Revision 1.4  2009/10/15 01:17:53  dasilva
- * ams: work in progress
- *
- * Revision 1.3  2009/10/15 00:25:37  dasilva
- * ams: work in progress
- *
- * Revision 1.2  2009/10/10 06:34:15  mike_fiorino
- * mf 20091010 -- incorporate all my mods 1.10 lats into 2.0 lats extension
- *
- * Revision 1.1  2009/10/05 13:44:26  dasilva
- * ams: porting LATS to grads v2; work in progress
- *
- * Revision 1.4  2007/08/25 02:39:13  dasilva
- * ams: mods for build with new supplibs; changed dods to dap, renamed dodstn.c to dapstn.c
- *
- * Revision 1.1.1.1  2002/06/27 19:44:17  cvsadmin
- * initial GrADS CVS import - release 1.8sl10
- *
- * Revision 1.1.1.1  2001/10/18 02:00:57  Administrator
- * Initial repository: v1.8SL8 plus slight MSDOS mods
- *
- * Revision 1.15  1997/10/15 17:53:18  drach
- * - remove name collisions with cdunif
- * - only one vertical dimension with GrADS/GRIB
- * - in sync with Mike's GrADS src170
- * - parameter table in sync with standard model output listing
- *
+ * $Log: latsint.h,v $
  * Revision 1.1  1997/02/14 20:10:10  fiorino
  * Initial revision
  *
@@ -55,7 +24,7 @@
  *
  * Revision 1.12  1996/10/10 23:15:46  drach
  * - lats_create filetype changed to convention, with options LATS_PCMDI,
- *   LATS_GRADS_GRIB, and LATS_NC3.
+ *   LATS_GRADS_GRIB, and LATS_COARDS.
  * - monthly data defaults to 16-bit compression
  * - LATS_MONTHLY_TABLE_COMP option added to override 16-bit compression
  * - AMIP II standard parameter file
@@ -169,7 +138,6 @@ typedef struct {
 	short 		month;		     /* Numerical month (1..12) */
 	short 		day;		     /* Day of month (1..31) */
 	double 		hour;		     /* Hour and fractional hours */
-	double 		min;		     /* Min and fractional mins */
 } latsCompTime;
 
 /* Vertical dimension type
@@ -336,7 +304,6 @@ typedef struct latsfile{
   int nvertdim;				     /* Number of vertical dimensions defined*/
   int latsmode;				     /*mf --- 970214  Define or data mode for consistency with netcdf*/
   int fhour;                                /*mf --- 970517  Current forecast hour for LATS_FORECAST_HOURLY */
-  int fmin;                                /*mf --- 970517  Current forecast hour for LATS_FORECAST_HOURLY */
   latsCompTime btime;                        /*mf --- 970517  Store base time from lats_basetime for use in GRIB and incrementing for LATS_FORECAST_HOURLY */
   latsCalenType calendar;		     /* Calendar type (LATS_STANDARD, LATS_JULIAN, etc.) */
   latsCompressionType compressiontype;	     /* Tabled compression (LATS_TABLE_COMP) or fixed number of bits (LATS_FIXED_COMP) */
@@ -362,23 +329,15 @@ extern int lats_create_grib(latsFile *file);
 extern int lats_grid_grib(latsFile *file, latsGrid *grid);
 extern int lats_var_grib(latsFile *file, latsVar *var, latsGrid *grid, latsVertDim *vertdim);
 extern int lats_vert_dim_grib(latsFile *file, latsVertDim *vertdim);
-extern int lats_write_grib(latsFile *file, latsVar *var, int levindex, int timeindex, latsCompTime time, int fhour, int fmin, void *data);
+extern int lats_write_grib(latsFile *file, latsVar *var, int levindex, int timeindex, latsCompTime time, void *data);
 
 extern int lats_close_nc(latsFile *file);
 extern int lats_create_nc(latsFile *file);
 extern int lats_grid_nc(latsFile *file, latsGrid *grid);
 extern int lats_var_nc(latsFile *file, latsVar *var, latsGrid *grid, latsVertDim *vertdim);
 extern int lats_vert_dim_nc(latsFile *file, latsVertDim *vertdim);
-extern int lats_write_nc(latsFile *file, latsVar *var, int levindex, int timeindex, latsCompTime time, int fhour, int fmin, void *data);
+extern int lats_write_nc(latsFile *file, latsVar *var, int levindex, int timeindex, latsCompTime time, void *data);
 extern int lats_stub_nc(void);
-
-extern int lats_close_sd(latsFile *file);
-extern int lats_create_sd(latsFile *file);
-extern int lats_grid_sd(latsFile *file, latsGrid *grid);
-extern int lats_var_sd(latsFile *file, latsVar *var, latsGrid *grid, latsVertDim *vertdim);
-extern int lats_vert_dim_sd(latsFile *file, latsVertDim *vertdim);
-extern int lats_write_sd(latsFile *file, latsVar *var, int levindex, int timeindex, latsCompTime time, int fhour, int fmin, void *data);
-extern int lats_stub_sd(void);
 
 extern latsFile* latsFileLookup(int id);
 extern int latsFileDeleteEntry(int id);
