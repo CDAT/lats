@@ -1,16 +1,8 @@
-
-/* 
- * Include ./configure's header file
- */
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
-#include <stdio.h>
-
 #define _POSIX_SOURCE 1
+#include <stdio.h>
 #include <math.h>
 #include <float.h>
+#include <malloc.h>
 #include <string.h>
 #include "fgrib.h"
 #include "grads.h"
@@ -52,7 +44,6 @@ int bds_set(float *fpin, grib_pds *pds,
 
   unsigned int *intout;
   unsigned int *mask;
-  unsigned int iu1;
 
   int len,bnum,flg;
   float ref;
@@ -223,7 +214,7 @@ int bds_set(float *fpin, grib_pds *pds,
   ref=ibm2flt(ibmfloat); 
   if(VERB) printf("amin = %e ref = %e rc=%d \n",amin,ref,rc);
 
-  strncpy((char *) &bds->bds[6],(char *) ibmfloat,4);
+  strncpy(&bds->bds[6],ibmfloat,4);
 
   bds->nb=nbits;
   bds->bds[10]=bds->nb;
@@ -236,18 +227,7 @@ int bds_set(float *fpin, grib_pds *pds,
   if(VERB) printf("ddddddddddddddddddddddd %f %f %f \n",dfac,ref,bfac);
   for ( i=0 ; i<nij ; i++ ) {
     if(*(mask+i)) {
-
-/*mf 970826 - feature of  OSF! mriim1.mri-jma.go.jp V3.0 358.78 alpha
-
-  *(intout+cnt)=(unsigned int)(( (*(fpin+i)*dfac) - ref )*bfac+0.5);
-  fails,  does the assignment BEFORE the calc
-
-mf*/
-      iu1=(unsigned int)(( (*(fpin+i)*dfac) - ref )*bfac+0.5);
-      *(intout+cnt)=iu1;
-/*
-printf("QQQ %d %d %d %d \n",i,cnt,*(intout+cnt),(unsigned int)((*(fpin+i)*dfac-ref)*bfac+0.5));
-*/
+      *(intout+cnt)=(unsigned int)((*(fpin+i)*dfac-ref)*bfac+0.5);
       cnt++;
     }
   }
@@ -292,3 +272,9 @@ printf("QQQ %d %d %d %d \n",i,cnt,*(intout+cnt),(unsigned int)((*(fpin+i)*dfac-r
   return(0);
   
 }
+
+
+
+
+
+

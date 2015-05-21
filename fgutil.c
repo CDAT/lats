@@ -1,11 +1,3 @@
-
-/* 
- * Include ./configure's header file
- */
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #define _POSIX_SOURCE 1
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,7 +19,6 @@ void set_int2(unsigned char *string, unsigned int n) {
     string[0] = (n >>  8) & 255;
     string[1] =  n        & 255;
 }
-
 
 /* (c) 1996 Wesley Ebisuzaki
  *

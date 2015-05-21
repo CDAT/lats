@@ -1,11 +1,3 @@
-
-/* 
- * Include ./configure's header file
- */
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 /* -*-Mode: C;-*-
  * Module:      LATS GRIB functions
  *
@@ -19,64 +11,11 @@
  *              Mike Fiorino, Lawrence Livermore National Laboratory
  *              fiorino@pcmdi.llnl.gov
  *
- * Revision 1.7  2009/03/18 15:52:39  mike_fiorino
- * mf:lats bugs fix + minutes support; set z 1 last ; control of line properties of gxout grid
- * Version:     $Id$
+ * Version:     $Id: latsgrib.c,v 1.21 1996/12/18 22:06:22 fiorino Exp $
  *
  * Revision History:
-
- * Revision 1.7  2009/03/18 15:52:39  mike_fiorino
- * mf:lats bugs fix + minutes support; set z 1 last ; control of line properties of gxout grid
  *
- * $Log$
- * Revision 1.6  2011/10/09 20:20:49  dasilva
- * ams: minor mods for mac os x snow leopard
- *
- * Revision 1.5  2010/02/16 23:01:31  mike_fiorino
- * mods for supporting yflip and better handling of forecast_hourly forecast_minutes
- *
- * Revision 1.4  2009/10/15 01:17:53  dasilva
- * ams: work in progress
- *
- * Revision 1.3  2009/10/10 06:34:15  mike_fiorino
- * mf 20091010 -- incorporate all my mods 1.10 lats into 2.0 lats extension
- *
- * Revision 1.2  2009/10/09 21:01:58  dasilva
- * ams: provisional gribmap fix
- *
- * Revision 1.1  2009/10/05 13:44:26  dasilva
- * ams: porting LATS to grads v2; work in progress
- *
- * Revision 1.6  2008/01/19 19:24:47  pertusus
- * Use the pkgconfig result unless dap root was set.
- * change <config.h> to "config.h".
- *
- * Revision 1.5  2007/11/16 04:49:31  dasilva
- * ams: declared mons[] as static to cope what appears to be a bug in gcc 4 on darwin/intel
- *
- * Revision 1.4  2007/08/25 02:39:13  dasilva
- * ams: mods for build with new supplibs; changed dods to dap, renamed dodstn.c to dapstn.c
- *
- * Revision 1.3  2004/10/12 18:04:38  administrator
- * fiddled #include statements in LATS to work with LFS on Red Hat 9 (#define _POSIX_SOURCE caused off_t to be not defined)
- *
- * Revision 1.2  2002/10/28 19:08:33  joew
- * Preliminary change for 'autonconfiscation' of GrADS: added a conditional
- * #include "config.h" to each C file. The GNU configure script generates a unique config.h for each platform in place of -D arguments to the compiler.
- * The include is only done when GNU configure is used.
- *
- * Revision 1.1.1.1  2002/06/27 19:44:14  cvsadmin
- * initial GrADS CVS import - release 1.8sl10
- *
- * Revision 1.1.1.1  2001/10/18 02:00:56  Administrator
- * Initial repository: v1.8SL8 plus slight MSDOS mods
- *
- * Revision 1.22  1997/10/15 17:53:16  drach
- * - remove name collisions with cdunif
- * - only one vertical dimension with GrADS/GRIB
- * - in sync with Mike's GrADS src170
- * - parameter table in sync with standard model output listing
- *
+ * $Log: latsgrib.c,v $
  * Revision 1.21  1996/12/18 22:06:22  fiorino
  * initialize fltpnt in gagmap.c to cover c90 compiler problem
  * added support for climatological and 365-day calendars in GrADS
@@ -98,7 +37,7 @@
  *
  * Revision 1.17  1996/10/10 23:15:44  drach
  * - lats_create filetype changed to convention, with options LATS_PCMDI,
- *   LATS_GRADS_GRIB, and LATS_NC3.
+ *   LATS_GRADS_GRIB, and LATS_COARDS.
  * - monthly data defaults to 16-bit compression
  * - LATS_MONTHLY_TABLE_COMP option added to override 16-bit compression
  * - AMIP II standard parameter file
@@ -184,8 +123,6 @@
  *
  */
 
-#include <stdio.h>
-
 #define _POSIX_SOURCE 1
 #include <stdlib.h>
 #include <float.h>
@@ -218,9 +155,7 @@ typedef struct latsgribfile {
 ---*/
 
 int lats_pds_set(latsFile *file, latsVar *var, 
-		 int levindex, int timeindex, latsCompTime time, 
-		 int fhour, int fmin,
-		 grib_pds *);
+		 int levindex, int timeindex, latsCompTime time, grib_pds *);
 
 int lats_gds_set(latsFile *file, latsVar *var,
 		 int levindex, int timeindex, latsCompTime time, grib_gds_ll *);
@@ -255,14 +190,8 @@ latsTimeStatEntry* latsTimeStatLookup(latsTimeFreq frequency, int delta, latsTim
   case LATS_HOURLY:
     stat->grib_unit = 1;
     break;
-  case LATS_MINUTES:
-    stat->grib_unit = 0;
-    break;
   case LATS_FORECAST_HOURLY:
     stat->grib_unit = 1;
-    break;
-  case LATS_FORECAST_MINUTES:
-    stat->grib_unit = 0;
     break;
   case LATS_FIXED:
     stat->grib_unit = 1;
@@ -293,7 +222,6 @@ latsTimeStatEntry* latsTimeStatLookup(latsTimeFreq frequency, int delta, latsTim
 
   if(frequency == LATS_WEEKLY) stat->grib_p2 *= 7;
   if(frequency == LATS_FORECAST_HOURLY) stat->grib_timerange=10;
-  if(frequency == LATS_FORECAST_MINUTES) stat->grib_timerange=10;
 
   return stat;
 }
@@ -301,9 +229,6 @@ latsTimeStatEntry* latsTimeStatLookup(latsTimeFreq frequency, int delta, latsTim
 /*-------------
   Close a GRIB file. Returns 1 on success, 0 on failure.
  --------------*/
-
-static  char *mons[] = {"jan","feb","mar","apr","may","jun","jul","aug",
-	  	        "sep","oct","nov","dec"};
 
 int lats_close_grib(latsFile *file){
 
@@ -315,6 +240,9 @@ int lats_close_grib(latsFile *file){
   char gmppath[LATS_MAX_PATH];
   char gmpfile[LATS_MAX_PATH];
   char grbfile[LATS_MAX_PATH];
+
+  char *mons[12] = {"jan","feb","mar","apr","may","jun","jul","aug",
+		    "sep","oct","nov","dec"};
 
   char grads_options [3][50];
 
@@ -495,10 +423,10 @@ int lats_close_grib(latsFile *file){
       options
       ---*/
 
-    for (i=0; i<3; i++ ) {
-      grads_options[i][0] = ' ';
-      grads_options[i][1] = 0;
-    }
+    strcpy(grads_options[0]," ");
+    strcpy(grads_options[1]," ");
+    strcpy(grads_options[2]," ");
+    strcpy(grads_options[3]," ");
 
     if(latb>late) {
       ydir=1;
@@ -625,7 +553,7 @@ int lats_close_grib(latsFile *file){
 
     if(file->frequency == LATS_FIXED) {
 
-      fprintf(cfi,"tdef 1 linear 00Z1jan0001 1dy\n");
+      fprintf(cfi,"tdef 1 linear 00Z1jan1 1dy\n");
 
     } else {
 
@@ -637,20 +565,13 @@ int lats_close_grib(latsFile *file){
 	gbfile->time.year = GRADS_CLIM_YEAR;
       }
 
-      fprintf(cfi,"tdef %d linear %dZ%d%s%04d ",file->ndelta,
+      fprintf(cfi,"tdef %d linear %dZ%d%s%d ",file->ndelta,
 	      (int)gbfile->time.hour,
 	      gbfile->time.day,
 	      mons[gbfile->time.month-1],
-	      (int) gbfile->time.year );
-
-      if(VERB) {
-	printf(">>>>> t=%d, month is <%s>\n", gbfile->time.month-1,
-	       mons[gbfile->time.month-1]);
-      }
+	      gbfile->time.year );
 
       if(file->frequency == LATS_HOURLY)  fprintf(cfi," %dhr\n",file->delta);
-      if(file->frequency == LATS_MINUTES)  fprintf(cfi," %dmn\n",file->delta);
-      if(file->frequency == LATS_FORECAST_MINUTES)  fprintf(cfi," %dmn\n",file->delta);
       if(file->frequency == LATS_FORECAST_HOURLY)  fprintf(cfi," %dhr\n",file->delta);
       if(file->frequency == LATS_DAILY)   fprintf(cfi," %ddy\n",file->delta);
       if(file->frequency == LATS_WEEKLY)  fprintf(cfi," %ddy\n",file->delta*7);
@@ -895,7 +816,7 @@ int lats_vert_dim_grib(latsFile *file, latsVertDim *vertdim) {
  -----------------------------------------*/
 
 int lats_write_grib(latsFile *file, latsVar *var, 
-		    int levindex, int timeindex, latsCompTime time, int fhour, int fmin, void *data) {
+		    int levindex, int timeindex, latsCompTime time, void *data) {
 
   FILE *gfi;
   int i,j,k;
@@ -991,7 +912,7 @@ int lats_write_grib(latsFile *file, latsVar *var,
  * create the PDS, GDS and BDS (BMS)
  ---*/
 
-  rcp=lats_pds_set(file,var,levindex,timeindex,time,fhour,fmin,pds) ;
+  rcp=lats_pds_set(file,var,levindex,timeindex,time,pds) ;
   rcg=lats_gds_set(file,var,levindex,timeindex,time,gds) ;
   rcb=bds_set(data,pds,bds,bms,undef,gds->ni*gds->nj,pds->nbits,var->hasmissing,undef_delta);
 
@@ -1053,9 +974,7 @@ int is_set(grib_is *is, unsigned int glen) {
  -------------------------------------*/
 
 int lats_pds_set(latsFile *file, latsVar *var, 
-		 int levindex, int timeindex, latsCompTime time, 
-		 int fhour, int fmin,
-		 grib_pds *pds) {
+		    int levindex, int timeindex, latsCompTime time, grib_pds *pds) {
 
   unsigned char cent,yr,mo,da,hr,mn;
   float dum1;
@@ -1064,14 +983,14 @@ int lats_pds_set(latsFile *file, latsVar *var,
   time processing
 ---*/
 
-  if(file->frequency == LATS_FORECAST_HOURLY || file->frequency == LATS_FORECAST_MINUTES) {
+  if(file->frequency == LATS_FORECAST_HOURLY) {
 
     cent=(unsigned char)(((int)((float)(file->btime.year*0.01)+0.001))+1);
     yr=(unsigned char)(((float)file->btime.year-((float)cent-1.0)*100.0)+0.1);
     mo=(unsigned char)(file->btime.month);
     da=(unsigned char)(file->btime.day);
     hr=(unsigned char)((int)file->btime.hour+0.1);
-    mn=(unsigned char)((int)file->btime.min+0.1);
+    mn=0;                                      /* set minute to 0 */
 
 
   } else {
@@ -1081,7 +1000,7 @@ int lats_pds_set(latsFile *file, latsVar *var,
     mo=(unsigned char)(time.month);
     da=(unsigned char)(time.day);
     hr=(unsigned char)((int)time.hour+0.1);
-    mn=(unsigned char)((int)time.min+0.1);
+    mn=0;                                      /* set minute to 0 */
 
   }
 
@@ -1122,7 +1041,6 @@ int lats_pds_set(latsFile *file, latsVar *var,
     mo=1;
     da=1;
     hr=0;
-mn=0;
   }
 */
 
@@ -1136,8 +1054,8 @@ mn=0;
   }
 
   if(VERB) {
-    printf("------- %d %d %d %d %d %d\n",cent,yr,mo,da,hr,mn)  ;
-    printf("ttt %d %d %d %f %f\n",(int)time.year,time.month,time.day,time.hour,time.min);
+    printf("------- %d %d %d %d %d\n",cent,yr,mo,da,hr)  ;
+    printf("ttt %d %d %d %f\n",time.year,time.month,time.day,time.hour);
   }
 
 /*
@@ -1226,9 +1144,7 @@ if(var->timestat == NULL ) {
  */
 
   if(file->frequency == LATS_FORECAST_HOURLY) {
-    pds->p12=fhour;
-  } else if( file->frequency == LATS_FORECAST_MINUTES) {
-    pds->p12=fmin;
+    pds->p12=file->fhour;
   }
 
 
@@ -1286,8 +1202,7 @@ if(var->timestat == NULL ) {
  *
  */
 
-  if(var->vertdim != NULL ||
-     (var->parm->levelset==1 && var->parm->verttype->grib_p3 != 0)){
+  if(var->vertdim != NULL || var->parm->verttype->grib_p3 != 0 ){
      set_int2(&pds->pds[10],((int)pds->l12+0.5));
   } else {
     pds->pds[10]=pds->l1;
@@ -1523,14 +1438,10 @@ int lats_gds_set(latsFile *file, latsVar *var,
 ----*/
 
     gds->gds[27]=0;
-
-/*------------------ bug in setting scan mode -- wrong bit
-mf 20080619
---- */
     if(latb < late) gds->smj=1 ;
 
-    if(gds->smi) SETBIT(gds->gds[27],7);
-    if(gds->smj) SETBIT(gds->gds[27],6);
+    if(gds->smi) SETBIT(gds->gds[27],0);
+    if(gds->smj) SETBIT(gds->gds[27],1);
     if(gds->smdir) SETBIT(gds->gds[27],2);
 
 
