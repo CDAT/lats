@@ -1,0 +1,108 @@
+
+# Stuff that needs to be done locally
+# Needs to be run from SunOS for ptroff (except tar)
+
+# make all: make all the PostScript man pages
+# make install: copy them into the internal web pages
+# make tar: make a distribution tar file
+# make VERSION=<tag> version
+
+HTMLDIR = /pcmdi/htdocs/drach
+PSDIR = /pcmdi/scratch/ftp/pub/lats
+TMPDIR = /cricket3/drach/junk
+LATSPS = lats.ps
+PARMPS = parmfile.ps
+LATSHTML = lats.html
+PARMHTML = parmfile.html
+SHELL = /bin/sh
+INSTALL = ./install-sh
+TARFILE = lats.tar
+LDIR=	/usr/local/lats
+
+
+
+all:		$(LATSPS) $(PARMPS)
+
+# Run ptroff on the Suns
+
+$(LATSPS):	lats.3
+		-ptroff -t -man lats.3 > $(LATSPS)
+
+# Run ptroff on the Suns
+
+$(PARMPS):	lats.5
+		-ptroff -t -man lats.5 > $(PARMPS)
+
+$(LATSHTML):	lats.3
+		-man -d lats.3 | man2html > lats.html
+
+# ------- run on sgi
+
+$(PARMHTML):	lats.5
+		-man -d lats.5 | man2html > parmfile.html
+
+
+set:		
+		cp liblats.a $(LDIR)/lib
+		cp amip2.lats.table $(LDIR)/table
+		cp lats.h    $(LDIR)/include  	
+		cp lats.inc  $(LDIR)/include  	
+		cp wgrib  $(LDIR)/bin
+		cp latsls  $(LDIR)/bin
+
+
+install:	$(LATSPS) $(PARMPS) $(LATSHTML) $(PARMHTML)
+		$(INSTALL) -c -m 644 $(LATSPS) $(PSDIR)/$(LATSPS)
+		$(INSTALL) -c -m 644 $(PARMPS) $(PSDIR)/$(PARMPS)
+		$(INSTALL) -c -m 644 $(LATSHTML) $(HTMLDIR)/$(LATSHTML)
+		$(INSTALL) -c -m 644 $(PARMHTML) $(HTMLDIR)/$(PATMHTML)
+
+config:
+		./configure
+#
+#	original tar
+#
+otar:		
+		tar cvf $(TARFILE) Makefile.in amip2.lats.table cfortran.h configure fgbds.c \
+		fgrib.h fgrib_init.h fgutil.c genlatsparm.pl install-sh lats.3 lats.5 lats.c \
+		lats.h lats.inc latsfort.c latsgrib.c latsint.c latsint.h latsnc.c latsls.c \
+		latsparm.h latsstat.c latstime.c latstime.h grads.h gagmap.h latsgribmap.c \
+		gaddes.c gagmap.c gamach.c gautil.c \
+		testnc.c test.parms testgrib.c wgrib.c \
+		Makefile.local \
+		README testf.F $(LATSPS) $(PARMPS)
+
+#
+#	tar for porting out of $AFS_HOME/lats
+#
+tar:		
+		tar cvf $(TARFILE) Makefile.in table/amip2.lats.table cfortran.h configure fgbds.c \
+		fgrib.h fgrib_init.h fgutil.c  install-sh lats.c \
+		lats.h lats.inc latsfort.c latsgrib.c latsint.c latsint.h latsnc.c latsls.c \
+		latsparm.h latsstat.c latstime.c latstime.h grads.h gagmap.h latsgribmap.c \
+		gaddes.c gagmap.c gamach.c gautil.c \
+		testnc.c test.parms testgrib.c wgrib.c \
+		Makefile.local Makefile.* include/lats.h include/lats.inc bin/NOTES set.dist.sh \
+		README testf.F test/lats.sh test/testlats.f test/test.lats.sh lib/NOTES \
+
+#
+#	tar to set up the directory where the porting tar and distributions are made ($AFS_HOME)/lats
+#
+tarport:		
+		tar cvf $(TARFILE) Makefile.in cfortran.h configure install-sh fgbds.c \
+		table/amip2.lats.table fgrib.h fgrib_init.h fgutil.c lats.c \
+		lats.h lats.inc latsfort.c latsgrib.c latsint.c latsint.h latsnc.c latsls.c \
+		latsparm.h latsstat.c latstime.c latstime.h grads.h gx.h gagmap.h latsgribmap.c \
+		gaddes.c gagmap.c gamach.c gautil.c \
+		testnc.c test.parms testgrib.c wgrib.c \
+		Makefile.local \
+		README testf.F 
+
+version:	
+		cvs rtag $(VERSION) lats
+
+tags:
+		etags fgbds.c fgrib.h fgrib_init.h fgutil.c lats.c \
+		lats.h lats.inc latsfort.c latsgrib.c latsint.c latsint.h latsnc.c \
+		latsparm.h latsstat.c latstime.c latstime.h grads.h latsgribmap.c \
+		gaddes.c gagmap.c gamach.c gautil.c

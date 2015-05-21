@@ -1,0 +1,4 @@
+970401
+
+bug in latsgrib.c fixed for coding uas/vas the l12 parameter was
+not set in the PDS

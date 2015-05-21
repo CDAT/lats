@@ -1,0 +1,205 @@
+970222
+
+#
+#$AFS_HOME/lats/cp.libnetcdf.pl copies the netcdf library over to the lib source dir $AFS_HOME/lats/lib
+
+
+
+970131
+
+NOTES on porting:
+
+0a)	build netcdf and dump to support dir if on AFS machines
+
+e.g., from
+
+$AFS_HOME/netcdf-2.4.3/
+
+run put.netcdf.pl $MACH
+
+which dumps to 
+
+$AFS_HOME/support/$MACH/lib
+                       /bin
+                       /include
+
+
+#
+#0b)	cp  netcdf library and headers from support to lats dir
+#
+#$AFS_HOME/lats
+#
+#
+#cp.netcdf.pl $MACH
+
+0c)	set up the netcdf library and headers
+
+$AFS_HOME/lats
+
+set.netcdf.pl $MACH
+
+0d)	make the ps and html of the man pages
+
+on typhoon
+
+$AFS_HOME/lats/man
+
+m -f ../Makefile.local lats.ps
+m -f ../Makefile.local parmfile.ps
+
+on tenki
+
+$AFS_HOME/lats/man
+
+m -f ../Makefile.local lats.html
+m -f ../Makefile.local parmfile.html
+
+cp *.html ../doc
+cp *.ps ../doc
+
+
+1)	create the porting tar
+
+in $AFS_HOME/lats
+
+make -f Makefile.local tar  
+
+
+2)	go to target platform
+
+if [ !$AFS_HOME ] ; then
+  mkdir lats
+  ftp lats.tar
+  tar -xvf lats.tar
+fi
+
+if [ ! -e $AFS_HOME/lats/Makefile.$MACH ] ; then
+
+  ./configure 
+
+fi
+
+#
+#	make and test the version with GRIB and netcdf support
+#
+make
+
+make test
+
+#
+#	run the test 
+#
+
+cp Makefile Makefile.$MACH
+
+#
+# this loads the cu* utils, not used
+#
+#set.latsbin.pl $MACH
+
+#
+# cp the libraries and binaries (wgrib latsls) to the lib and bin dirs
+#
+
+make -f Makefile.c90 settest 
+
+cd test
+#
+#	run the master script
+#
+test.lats.sh $MACH
+
+cd ..
+
+#
+#	cp the libraries and binaries to the holding dir ./lib and ./bin for use
+#	in setting up the distribution
+#
+
+set.dist.sh $MACH (MACH is machine name, e.g., j90)
+
+#
+#	get the stuff from the porting machine if not on $AFS_HOME
+#
+
+
+back on $AFS_HOME (e.g., on tenki)
+
+ftp.getdist.sh $MACH
+
+
+#
+#	make the distribution
+#
+
+$AFS_HOME/lats (e.g., on tenki or typhoon)
+
+make.dist.pl $MACH
+
+3)	Comments on the ports
+
+irix5:	
+	no problems
+j90:	
+	cf77 not available used f90 instead
+
+alpha:
+	I got the netcdf library from unidata and installed in ~/lats/lib and ../include
+
+	./configure --with-ncinc=./include --with-nclib=./lib --with-ncincf=./include
+	FAILED to find netcdf.h
+
+	discovered the I had to make TWO versions of liblats - with and w/o netcdf	
+
+c90:	
+	./configure failed on finding F77 had to set to cf77
+
+
+aix:
+	./configure would not work with sets of netcdf stuff had to edit Makefile
+
+	netcdf on the system was old, brought over from unidata and put in ./lib and ./include
+
+	this library did NOT work, built latest netcdf... 
+
+irix4:
+
+	./confgure failed on netcdf setting
+
+	use -lsun to load xdr on creating nc apps
+
+	tried making netcdf-2.4.3 again...  in fortran/ dir cp
+	irix5.m4 irix4.m4 and added irix4 to Makefile.in
+
+	nc test routines succeeded but the testf routine in LATS failed!!
+	the problem was how an empty QC table in the INTERNAL table was handled.
+	most system set to 0, but not this one, consequently the fclose in latsstat.c 
+	bombed (closing undefined FILE pointer).  I put a check to close ONLY if
+	the file point had been set.
+	
+
+RECIPE for PORTING on AFS_HOME
+
+1)  in /d1/lats/
+
+	m -f Makefile.local tarport
+        mv to $AFS_HOME/lats and untar
+
+2)  set.netcdf.pl $dist
+
+3)  m -f Makefile.$dist
+
+      dist = aix | alpha | c90 | hpux | irix4 | irix5 | j90 | linux | sol2 | sunos4\n\n";
+
+4)  m -f Makefile.$dist test
+
+
+5)  m -f Makefile.$dist settest
+
+6)  cd test
+
+7)  test.lats.sh $dist
+
+8)  cd .. ; set.dist.sh to cp files to support dir
+
+
