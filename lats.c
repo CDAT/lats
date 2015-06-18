@@ -13,6 +13,8 @@
  * Revision History:
  *
  * $Log: lats.c,v $
+ * Revision 1.4  2015/06/17 jfpainter
+ *  stop truncating time when time frequency (hence units) are large.
  * Revision 1.3  1997/02/14 20:11:52  fiorino
  * before latsmode change
  *
@@ -931,7 +933,8 @@ int lats_write(int fileid, int varid, double lev, int year, int month, int day, 
   file->latsmode=LATS_MODE_DATA;
 
   /* Validity checks */
-
+  /* jfp 2015.06.17: really what this does is to truncate the time.
+     Uncomment if that's what you want to do...
   switch(file->frequency){
   case LATS_HOURLY:
     break;
@@ -957,6 +960,7 @@ int lats_write(int fileid, int varid, double lev, int year, int month, int day, 
     hour = 0;
     break;
   }
+  */
 
 /*mf---
    check if climo field for GRIB options
