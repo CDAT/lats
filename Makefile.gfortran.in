@@ -78,12 +78,12 @@ LIBDIR=$(exec_prefix)/lib
 MANDIR=$(prefix)/man
 PARMDIR=$(prefix)/lib/lats
 
-CC = cc
+#CC = cc
 CFLAGS = -I.  -I@cdat_EXTERNALS@/include $(DEBUG) -I/usr/include/malloc
 CPPFLAGS =  -DHAVE_NETCDF -DLATS_CHANGE_GRADS_NAMES -DSTNDALN=1 -DBYTEORDER=1 -DGRADS_CRAY=0
 DEBUG = -O
 DEFS =  -DOS_NAME=Linux -DOS_MAJOR=2 
-FC = gfortran
+#FC = gfortran
 FDEBUG =
 FFLAGS = -I.  $(FDEBUG)A -Wno-all
 INSTALL = /usr/bin/install -c
