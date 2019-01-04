@@ -1,0 +1,27 @@
+package:
+    name: lats
+    version: 1.0.2
+
+source:
+    git_rev: @UVCDAT_BRANCH@
+    git_url: git://github.com/cdat/lats.git
+
+build:
+  number: @BUILD_NUMBER@
+ 
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('fortran') }}
+  host:
+    - libnetcdf 4.*
+    - hdf5 1.10.*
+  run:
+    - libnetcdf 4.*
+    - hdf5 1.10.*
+
+about:
+    home:  http://github.com/cdat/lats
+
+
+
