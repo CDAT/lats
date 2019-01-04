@@ -115,7 +115,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <stdio.h>
-/*#include <malloc.h>*/
+#include <malloc.h>
 #include <string.h>
 #include "latsint.h"
 #include "latstime.h"
