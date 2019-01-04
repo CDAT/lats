@@ -79,13 +79,13 @@ MANDIR=$(prefix)/man
 PARMDIR=$(prefix)/lib/lats
 
 #CC = cc
-CFLAGS = -I.  -I@cdat_EXTERNALS@/include $(DEBUG) -I/usr/include/malloc
-CPPFLAGS =  -DHAVE_NETCDF -DLATS_CHANGE_GRADS_NAMES -DSTNDALN=1 -DBYTEORDER=1 -DGRADS_CRAY=0
+#CFLAGS = -I.  -I@cdat_EXTERNALS@/include $(DEBUG) -I/usr/include/malloc
+CPPOPTS =  -DHAVE_NETCDF -DLATS_CHANGE_GRADS_NAMES -DSTNDALN=1 -DBYTEORDER=1 -DGRADS_CRAY=0
 DEBUG = -O
 DEFS =  -DOS_NAME=Linux -DOS_MAJOR=2 
 #FC = gfortran
-FDEBUG =
-FFLAGS = -I.  $(FDEBUG)A -Wno-all
+#FDEBUG =
+#FFLAGS = -I.  $(FDEBUG) -Wno-all
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = /usr/bin/install -c
 LDFLAGS = -L. -llats -L@cdat_EXTERNALS@/lib -lnetcdf  -lm
@@ -110,7 +110,7 @@ OBJS		= lats.o latsint.o latsnc.o latsgrib.o latstime.o latsstat.o latsfort.o fg
 all:		$(LIBRARY) latsls
 
 latsls:	        latsls.o latsint.o
-		$(CC) latsls.o latsint.o $(CPPFLAGS) $(CFLAGS)  -o latsls
+		$(CC) latsls.o latsint.o $(CPPFLAGS) $(CPPOPTS) $(CFLAGS)  -o latsls
 
 $(LIBRARY):	$(OBJS)
 		ar rv $(LIBRARY) $?
@@ -172,25 +172,25 @@ gagmap.o:	grads.h gagmap.h
 gamach.o:	grads.h
 gautil.o:	grads.h
 latsls.o:	latsint.h latsls.c latsint.o
-		$(CC) -c latsls.c $(CPPFLAGS) $(DEFS) $(CFLAGS) -DLATSLS_VERSION=\"$(LATSLSVER)\"
+		$(CC) -c latsls.c $(CPPFLAGS) $(CPPOPTS) $(DEFS) $(CFLAGS) -DLATSLS_VERSION=\"$(LATSLSVER)\"
 
 .SUFFIXES: .F
 
 .c.o:
-	$(CC) $(CPPFLAGS) $(DEFS) $(CFLAGS) -c $<
+	$(CC) $(CPPFLAGS) $(CPPOPTS) $(DEFS) $(CFLAGS) -c $<
 
 .c:
-	$(CC) $(CPPFLAGS) $(DEFS) $(CFLAGS) -o $@ $< $(LDFLAGS)
+	$(CC) $(CPPFLAGS) $(CPPOPTS) $(DEFS) $(CFLAGS) -o $@ $< $(LDFLAGS)
 
 .F:
 	case $(OS) in \
 	     'aix') \
-		    /usr/ccs/lib/cpp -P $(CPPFLAGS) $(CFLAGS) $(INCLUDES) $(DEFS) $< $@.f; \
+		    /usr/ccs/lib/cpp -P $(CPPFLAGS) $(CPPOPTS) $(CFLAGS) $(INCLUDES) $(DEFS) $< $@.f; \
 		    $(FC) $(FFLAGS) $(LDFLAGS) $(LIBS) $@.f -o $@; \
 		    rm $@.f; \
 		    ;; \
 	     *) \
-		    $(FC) $(CPPFLAGS) $(INCLUDES) $(DEFS) $(FFLAGS) -o $@ $< $(LDFLAGS) $(LIBS); \
+		    $(FC) $(CPPFLAGS) $(CPPOPTS) $(INCLUDES) $(DEFS) $(FFLAGS) -o $@ $< $(LDFLAGS) $(LIBS); \
 		    ;; \
 	esac
 	
